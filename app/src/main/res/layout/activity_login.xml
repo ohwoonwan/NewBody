@@ -11,11 +11,12 @@
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/login2Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:text="LOGIN" />
 
         <Button
             android:layout_marginTop="20dp"
@@ -24,17 +25,5 @@
             android:layout_height="wrap_content"
             android:text="Join Membership" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </LinearLayout>
