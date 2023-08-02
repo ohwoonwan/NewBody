@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToOutline="true"
-    android:background="@drawable/welcome_scr1">
+    android:background="@drawable/welcome_scr3">
 
     <RelativeLayout
-        android:id="@+id/nextbutton1"
+        android:id="@+id/nextbutton3"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="285dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="630dp"
-        android:onClick="nextButtonClicked">
+        android:layout_marginTop="630dp">
 
         <View
             android:id="@+id/ellipse_1"
