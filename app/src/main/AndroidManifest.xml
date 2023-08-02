@@ -20,9 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity2"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".Membership"/>
+        <activity android:name=".Membership2"/>
+        <activity android:name=".Membership3"/>
         <activity android:name=".Menu"/>
         <activity android:name=".Posture"/>
         <activity android:name=".Record"/>
@@ -32,6 +33,7 @@
         <activity android:name=".mainInfo.MainActivityB"/>
         <activity android:name=".mainInfo.MainActivityC"/>
         <activity android:name=".mainInfo.MainActivityD"/>
+
 
     </application>
 

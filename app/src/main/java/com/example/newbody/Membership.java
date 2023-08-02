@@ -13,7 +13,16 @@ public class Membership extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership);
 
-        Button login = (Button) findViewById(R.id.login3Button);
+        View register = findViewById(R.id.register);
+        Button login = findViewById(R.id.login);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Membership2.class);
+                startActivity(intent);
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
