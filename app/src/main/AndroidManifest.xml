@@ -9,7 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NewBody"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -20,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity2"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".Membership"/>
+        <activity android:name=".Menu"/>
+        <activity android:name=".Posture"/>
+        <activity android:name=".Record"/>
+        <activity android:name=".Video"/>
+        <activity android:name=".Ranking"/>
     </application>
 
 </manifest>

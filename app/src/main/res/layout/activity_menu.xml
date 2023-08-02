@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/postureButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Posture Correction" />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/videoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Training Video" />
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/recordButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Record measurement" />
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/rankingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ranking" />
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/quitButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout" />
+    </LinearLayout>
+
+</LinearLayout>
