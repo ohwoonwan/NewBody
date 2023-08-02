@@ -21,6 +21,5 @@ public class Membership3 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }
