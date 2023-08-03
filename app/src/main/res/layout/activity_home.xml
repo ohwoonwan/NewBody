@@ -64,12 +64,12 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:background="@drawable/menu_button">
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 app:srcCompat="@drawable/video" />
 
             <TextView
@@ -114,6 +114,31 @@
                 android:gravity="center"
                 android:text="기록 측정"
                 android:textColor="#FE2E2E"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/ranking_button"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:background="@drawable/menu_button">
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/ranking" />
+
+            <TextView
+                android:id="@+id/myImageViewText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:text="랭 킹"
+                android:textColor="#0B610B"
                 android:textStyle="bold" />
         </FrameLayout>
 

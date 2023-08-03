@@ -22,7 +22,6 @@ public class Menu extends AppCompatActivity {
     private Friend friend;
     private Person person;
 
-    private View posture_button, video_button, record_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
