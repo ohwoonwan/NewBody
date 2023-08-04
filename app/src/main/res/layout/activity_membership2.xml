@@ -20,9 +20,31 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/sex"
+            android:id="@+id/username"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="8dp"
+            android:hint="이 름"
+            android:textColorHint="#333333"
+            android:padding="8dp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/sex"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_supervisor_account_24"
             android:drawablePadding="8dp"
             android:hint="성 별"
             android:textColorHint="#333333"
