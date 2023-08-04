@@ -8,29 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="170dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="30dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/username"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:drawablePadding="8dp"
-            android:hint="이 름"
-            android:textColorHint="#333333"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_marginTop="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -84,7 +62,7 @@
         android:elevation="22dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:onClick="startButtonClicked">
 
         <TextView
