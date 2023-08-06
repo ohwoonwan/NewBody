@@ -2,34 +2,45 @@ package com.example.newbody;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MemberChangeActivity extends AppCompatActivity {
 
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
-    EditText nameEditText, genderEditText, birthEditText, weightEditText, heightEditText;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    private StorageReference storageRef;
 
-    FirebaseUser user;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private EditText nameEditText, genderEditText, birthEditText, weightEditText, heightEditText;
+
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,11 @@ public class MemberChangeActivity extends AppCompatActivity {
         heightEditText = findViewById(R.id.height_fix);
 
         View updateButton = findViewById(R.id.fix_button);
+        View imageButton = findViewById(R.id.pic_button);
+
+        storageRef = FirebaseStorage.getInstance().getReference("profile_pics");
+
+        loadImageFromFirestore();
 
         if(user == null){
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -73,9 +89,20 @@ public class MemberChangeActivity extends AppCompatActivity {
                     });
         }
 
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (imageUri != null) {
+                    uploadFile();
+                }
+
                 String name = nameEditText.getText().toString();
                 String gender = genderEditText.getText().toString();
                 String birth = birthEditText.getText().toString();
@@ -132,4 +159,129 @@ public class MemberChangeActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+
+            ImageView selectedImageView = findViewById(R.id.profile_pic);
+            Glide.with(this).load(imageUri).into(selectedImageView);
+        }
+    }
+
+    private void uploadFile() {
+        final StorageReference oldFileReference = storageRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
+        oldFileReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // After deleting the old image, upload the new one
+                final StorageReference fileReference = storageRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
+                fileReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String downloadUrl = uri.toString();
+                                        updateImageUrlToFirestore(downloadUrl);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // If the old image doesn't exist, just upload the new one
+                final StorageReference fileReference = storageRef.child(mAuth.getCurrentUser().getUid() + ".jpg");
+                fileReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String downloadUrl = uri.toString();
+                                        updateImageUrlToFirestore(downloadUrl);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+            }
+        });
+    }
+
+    private void updateImageUrlToFirestore(String url) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("imageUrl", url);
+
+        db.collection("users").document(mAuth.getCurrentUser().getUid())
+                .update(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MemberChangeActivity.this, "Image updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MemberChangeActivity.this, "Failed to update image", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void loadImageFromFirestore() {
+        db.collection("users").document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String imageUrl = documentSnapshot.getString("imageUrl");
+                            if (!TextUtils.isEmpty(imageUrl)) {
+                                loadImageIntoImageView(imageUrl);
+                            } else {
+                            }
+                        } else {
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
+
+    private void loadImageIntoImageView(String imageUrl) {
+        ImageView userImageView = findViewById(R.id.profile_pic);
+
+        Glide.with(this)
+                .load(imageUrl)
+                .circleCrop()
+                .into(userImageView);
+    }
+
 }

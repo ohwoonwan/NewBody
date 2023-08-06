@@ -3,17 +3,23 @@ package com.example.newbody;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,6 +68,28 @@ public class Person extends Fragment {
                 startActivity(intent);
             }
         });
+
+        db.collection("users").document(user.getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String imageUrl = documentSnapshot.getString("imageUrl");
+                            if (!TextUtils.isEmpty(imageUrl)) {
+                                loadImageIntoImageView(imageUrl);
+                            } else {
+                            }
+                        } else {
+
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
 
         if(user == null){
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -114,5 +142,14 @@ public class Person extends Fragment {
         });
 
         return view;
+    }
+
+    private void loadImageIntoImageView(String imageUrl) {
+        ImageView userImageView = view.findViewById(R.id.profile_pic); // Replace with your ImageView's ID
+
+        Glide.with(this)
+                .load(imageUrl)
+                .circleCrop()
+                .into(userImageView);
     }
 }
