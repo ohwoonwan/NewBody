@@ -81,6 +81,7 @@ public class Membership2 extends AppCompatActivity {
                                 Toast.makeText(Membership2.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), Membership3.class);
                                 startActivity(intent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

@@ -90,6 +90,7 @@ public class Membership extends AppCompatActivity {
                                     Toast.makeText(Membership.this, "Account created.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Membership2.class);
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(Membership.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
@@ -146,6 +147,7 @@ public class Membership extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(getApplicationContext(), Membership2.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             // 인증 실패
                             Toast.makeText(Membership.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
