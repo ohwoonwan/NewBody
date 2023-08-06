@@ -35,6 +35,7 @@ public class Person extends Fragment {
 
     SimpleDateFormat yy, md;
     Date date;
+    View fixButton;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +52,16 @@ public class Person extends Fragment {
         date = new Date();
         yy = new SimpleDateFormat("yyyy");
         md = new SimpleDateFormat("MMdd");
+
+        fixButton = view.findViewById(R.id.fix);
+
+        fixButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MemberChangeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if(user == null){
             Intent intent = new Intent(getActivity(), LoginActivity.class);

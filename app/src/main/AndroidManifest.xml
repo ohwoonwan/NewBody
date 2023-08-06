@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,24 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".Membership"/>
-        <activity android:name=".Membership2"/>
-        <activity android:name=".Membership3"/>
-        <activity android:name=".Menu"/>
-        <activity android:name=".Posture"/>
-        <activity android:name=".Record"/>
-        <activity android:name=".Video"/>
-        <activity android:name=".Ranking"/>
-        <activity android:name=".mainInfo.MainActivityA"/>
-        <activity android:name=".mainInfo.MainActivityB"/>
-        <activity android:name=".mainInfo.MainActivityC"/>
-        <activity android:name=".mainInfo.MainActivityD"/>
-
-
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".Membership" />
+        <activity android:name=".Membership2" />
+        <activity android:name=".Membership3" />
+        <activity android:name=".Menu" />
+        <activity android:name=".Posture" />
+        <activity android:name=".Record" />
+        <activity android:name=".Video" />
+        <activity android:name=".Ranking" />
+        <activity android:name=".mainInfo.MainActivityA" />
+        <activity android:name=".mainInfo.MainActivityB" />
+        <activity android:name=".mainInfo.MainActivityC" />
+        <activity android:name=".mainInfo.MainActivityD" />
+        <activity android:name=".MemberChangeActivity" />
     </application>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
 
 </manifest>
