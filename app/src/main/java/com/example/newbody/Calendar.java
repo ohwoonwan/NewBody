@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,9 @@ public class Calendar extends Fragment {
     private TextView diaryTextView, textView2, textView3;
     private EditText contextEditText;
 
+    private FirebaseAuth auth;
+
+    private FirebaseUser user;
     private DatabaseReference databaseReference;
 
 
@@ -45,9 +50,10 @@ public class Calendar extends Fragment {
         cha_Btn = view.findViewById(R.id.cha_Btn);
         textView2 = view.findViewById(R.id.textView2);
         contextEditText = view.findViewById(R.id.contextEditText);
-
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         // Firebase 데이터베이스 참조를 초기화합니다.
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Calender").child(user.getUid());
 
         // Firebase에 접근하기위한 객체 초기화
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -177,3 +183,4 @@ public class Calendar extends Fragment {
     }
 
 }
+
