@@ -1,10 +1,5 @@
 package com.example.newbody;
 
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.videoio.VideoCapture;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,20 +39,17 @@ import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import java.util.Arrays;
 
 public class Posture extends AppCompatActivity {
 
     private boolean squatStartDetected = false;
     private boolean squatEndDetected = false;
     private int score = 0;
+    private TargetPose targetSquatStartSign;
+    private TargetPose targetSquatEndSign;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -71,6 +63,10 @@ public class Posture extends AppCompatActivity {
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
+
+    public Posture() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
