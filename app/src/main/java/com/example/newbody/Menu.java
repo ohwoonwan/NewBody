@@ -1,9 +1,7 @@
 package com.example.newbody;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +17,7 @@ public class Menu extends AppCompatActivity {
     private FragmentTransaction ft;
     private Home home;
     private Picture picture;
-    private Friend friend;
+    private Calendar calendar;
     private Person person;
 
     @Override
@@ -39,7 +37,7 @@ public class Menu extends AppCompatActivity {
                     case R.id.action_picture:
                         setFrag(1);
                         break;
-                    case R.id.action_friend:
+                    case R.id.action_calendar:
                         setFrag(2);
                         break;
                     case R.id.action_notifications:
@@ -51,7 +49,7 @@ public class Menu extends AppCompatActivity {
         });
         home = new Home();
         picture = new Picture();
-        friend = new Friend();
+        calendar = new Calendar();
         person = new Person();
 
         setFrag(0); // 첫 프래그먼트 화면
@@ -73,7 +71,7 @@ public class Menu extends AppCompatActivity {
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_frame, friend);
+                ft.replace(R.id.main_frame, calendar);
                 ft.commit();
                 break;
             case 3:
