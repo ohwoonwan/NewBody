@@ -44,12 +44,12 @@ public class Calendar extends Fragment {
         del_Btn = view.findViewById(R.id.del_Btn);
         cha_Btn = view.findViewById(R.id.cha_Btn);
         textView2 = view.findViewById(R.id.textView2);
-        textView3 = view.findViewById(R.id.textView3);
         contextEditText = view.findViewById(R.id.contextEditText);
 
         // Firebase 데이터베이스 참조를 초기화합니다.
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        // Firebase에 접근하기위한 객체 초기화
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -91,9 +91,19 @@ public class Calendar extends Fragment {
                     // Diary entry exists for the selected date
                     String content = snapshot.getValue(String.class);
                     textView2.setText(content);
+
+                    // 데이터가 있으므로 textView2를 보여주고 contextEditText를 숨깁니다.
+                    textView2.setVisibility(View.VISIBLE);
+                    contextEditText.setVisibility(View.INVISIBLE);
+
+                    // 저장 버튼을 보여주고 수정, 삭제 버튼을 숨깁니다.
+                    save_Btn.setVisibility(View.INVISIBLE);
+                    cha_Btn.setVisibility(View.VISIBLE);
+                    del_Btn.setVisibility(View.VISIBLE);
                 } else {
                     // Diary entry does not exist for the selected date
                     textView2.setVisibility(View.INVISIBLE);
+
                     diaryTextView.setVisibility(View.VISIBLE);
                     save_Btn.setVisibility(View.VISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
@@ -108,6 +118,8 @@ public class Calendar extends Fragment {
                 error.toException().printStackTrace();
             }
         });
+
+
 
         cha_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
