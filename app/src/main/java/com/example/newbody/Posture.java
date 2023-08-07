@@ -183,45 +183,6 @@ public class Posture extends AppCompatActivity {
                         return;
                     }
 
-                    String text = "";
-
-                    text += "LEFT_SHOULDER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().y) + "\n";
-                    text += "RIGHT_SHOULDER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().y) + "\n";
-                    text += "LEFT_ELBOW: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().y) + "\n";
-                    text += "RIGHT_ELBOW: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().y) + "\n";
-                    text += "LEFT_WRIST: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().y) + "\n";
-                    text += "RIGHT_WRIST: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().y) + "\n";
-                    text += "LEFT_HIP: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().y) + "\n";
-                    text += "RIGHT_HIP: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().y) + "\n";
-                    text += "LEFT_KNEE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().y) + "\n";
-                    text += "RIGHT_KNEE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().y) + "\n";
-                    text += "LEFT_ANKLE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().y) + "\n";
-                    text += "RIGHT_ANKLE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().y) + "\n";
-                    text += "LEFT_PINKY: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().y) + "\n";
-                    text += "RIGHT_PINKY: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().y) + "\n";
-                    text += "LEFT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().y) + "\n";
-                    text += "RIGHT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX).getPosition().y) + "\n";
-                    text += "LEFT_THUMB: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_THUMB).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_THUMB).getPosition().y) + "\n";
-                    text += "RIGHT_THUMB: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB).getPosition().y) + "\n";
-                    text += "LEFT_HEEL: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().y) + "\n";
-                    text += "RIGHT_HEEL: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().y) + "\n";
-                    text += "LEFT_FOOT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y) + "\n";
-                    text += "RIGHT_FOOT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y) + "\n";
-                    text += "NOSE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().y) + "\n";
-                    text += "LEFT_EYE_INNER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER).getPosition().y) + "\n";
-                    text += "LEFT_EYE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE).getPosition().y) + "\n";
-                    text += "LEFT_EYE_OUTER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_OUTER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_OUTER).getPosition().y) + "\n";
-                    text += "RIGHT_EYE_INNER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_INNER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_INNER).getPosition().y) + "\n";
-                    text += "RIGHT_EYE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE).getPosition().y) + "\n";
-                    text += "RIGHT_EYE_OUTER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_OUTER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_OUTER).getPosition().y) + "\n";
-                    text += "LEFT_EAR: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EAR).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EAR).getPosition().y) + "\n";
-                    text += "RIGHT_EAR: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EAR).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EAR).getPosition().y) + "\n";
-                    text += "LEFT_MOUTH: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH).getPosition().y) + "\n";
-                    text += "RIGHT_MOUTH: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH).getPosition().y) + "\n";
-
-//                    Toast.makeText(getApplicationContext(), "Results Loaded", Toast.LENGTH_SHORT).show();
-                    etResults.setText(text);
-
                     loadGuidelines(tempBitmap, pose);
                     isFrameBeingTested = false;
                 }else{
