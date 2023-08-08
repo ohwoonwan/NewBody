@@ -1,10 +1,5 @@
 package com.example.newbody;
 
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.videoio.VideoCapture;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,20 +39,17 @@ import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import java.util.Arrays;
 
 public class Posture extends AppCompatActivity {
 
     private boolean squatStartDetected = false;
     private boolean squatEndDetected = false;
     private int score = 0;
+    private TargetPose targetSquatStartSign;
+    private TargetPose targetSquatEndSign;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -71,11 +63,16 @@ public class Posture extends AppCompatActivity {
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
+
+    public Posture() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_posture);
 
+        initTargetPoses();
         initViews();
         checkPermissions();
     }
@@ -166,7 +163,6 @@ public class Posture extends AppCompatActivity {
 
         tempBitmap = previewView.getBitmap();
         if(previewView.getBitmap() == null){
-//            Toast.makeText(getApplicationContext(), "No Photo Visible", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -177,65 +173,62 @@ public class Posture extends AppCompatActivity {
             public void onComplete(@NonNull Task<Pose> task) {
                 if(task.isSuccessful()){
                     Pose pose = task.getResult();
+                    handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
                     List<PoseLandmark> landmarks = pose.getAllPoseLandmarks();
                     Log.d("debugg", "Landmarks found : " + landmarks.size());
                     if(landmarks.size() == 0){
-//                        Toast.makeText(getApplicationContext(), "No Point detected in image, please try another image", Toast.LENGTH_LONG).show();
                         isFrameBeingTested = false;
                         if(!canvasAlreadyClear)
                             loadGuidelines(tempBitmap, null);
                         return;
                     }
 
-                    String text = "";
-
-                    text += "LEFT_SHOULDER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition().y) + "\n";
-                    text += "RIGHT_SHOULDER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition().y) + "\n";
-                    text += "LEFT_ELBOW: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition().y) + "\n";
-                    text += "RIGHT_ELBOW: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition().y) + "\n";
-                    text += "LEFT_WRIST: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition().y) + "\n";
-                    text += "RIGHT_WRIST: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition().y) + "\n";
-                    text += "LEFT_HIP: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition().y) + "\n";
-                    text += "RIGHT_HIP: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition().y) + "\n";
-                    text += "LEFT_KNEE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition().y) + "\n";
-                    text += "RIGHT_KNEE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition().y) + "\n";
-                    text += "LEFT_ANKLE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition().y) + "\n";
-                    text += "RIGHT_ANKLE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition().y) + "\n";
-                    text += "LEFT_PINKY: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_PINKY).getPosition().y) + "\n";
-                    text += "RIGHT_PINKY: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY).getPosition().y) + "\n";
-                    text += "LEFT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_INDEX).getPosition().y) + "\n";
-                    text += "RIGHT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX).getPosition().y) + "\n";
-                    text += "LEFT_THUMB: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_THUMB).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_THUMB).getPosition().y) + "\n";
-                    text += "RIGHT_THUMB: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB).getPosition().y) + "\n";
-                    text += "LEFT_HEEL: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_HEEL).getPosition().y) + "\n";
-                    text += "RIGHT_HEEL: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL).getPosition().y) + "\n";
-                    text += "LEFT_FOOT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX).getPosition().y) + "\n";
-                    text += "RIGHT_FOOT_INDEX: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX).getPosition().y) + "\n";
-                    text += "NOSE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.NOSE).getPosition().y) + "\n";
-                    text += "LEFT_EYE_INNER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER).getPosition().y) + "\n";
-                    text += "LEFT_EYE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE).getPosition().y) + "\n";
-                    text += "LEFT_EYE_OUTER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_OUTER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EYE_OUTER).getPosition().y) + "\n";
-                    text += "RIGHT_EYE_INNER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_INNER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_INNER).getPosition().y) + "\n";
-                    text += "RIGHT_EYE: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE).getPosition().y) + "\n";
-                    text += "RIGHT_EYE_OUTER: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_OUTER).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_OUTER).getPosition().y) + "\n";
-                    text += "LEFT_EAR: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EAR).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_EAR).getPosition().y) + "\n";
-                    text += "RIGHT_EAR: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EAR).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_EAR).getPosition().y) + "\n";
-                    text += "LEFT_MOUTH: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH).getPosition().y) + "\n";
-                    text += "RIGHT_MOUTH: " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH).getPosition().x) + ", " + String.valueOf(pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH).getPosition().y) + "\n";
-
-//                    Toast.makeText(getApplicationContext(), "Results Loaded", Toast.LENGTH_SHORT).show();
-                    etResults.setText(text);
-
                     loadGuidelines(tempBitmap, pose);
                     isFrameBeingTested = false;
                 }else{
-//                    Toast.makeText(getApplicationContext(), "Error processing test", Toast.LENGTH_LONG).show();
                     Log.e("debugg", "Error in test", task.getException());
                     loadGuidelines(tempBitmap, null);
                     isFrameBeingTested = false;
                 }
             }
         });
+    }
+
+    private void initTargetPoses() {
+        targetSquatStartSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
+                )
+        );
+
+        targetSquatEndSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                )
+        );
+    }
+
+    private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
+        PoseMatcher matcher = new PoseMatcher(); // PoseMatcher 객체 생성. 이전에 제공된 코드에서 제공된 것처럼 생성해야 합니다.
+        return matcher.match(pose, targetPose);
+    }
+
+    private void handlePoseDetection(Pose pose) {
+        boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+
+        if (squatStartDetected && isSquatEnd) {
+            score++;
+            etResults.setText("Score: " + score); // etResults는 EditText이므로 점수를 여기에 표시할 수 있습니다.
+            squatStartDetected = false; // 다음 연속 감지를 위해 초기화
+            squatEndDetected = false;
+        } else if (isSquatStart) {
+            squatStartDetected = true;
+        }
     }
 
     private void startAnalysis(){
