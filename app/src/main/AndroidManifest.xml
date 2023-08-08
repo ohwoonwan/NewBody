@@ -42,6 +42,9 @@
         <activity android:name=".mainInfo.MainActivityC" />
         <activity android:name=".mainInfo.MainActivityD" />
         <activity android:name=".MemberChangeActivity" />
+        <activity android:name=".RecordSquat" />
+        <activity android:name=".RecordSquatMain" />
+        <activity android:name=".CustomDialog" />
     </application>
 
 </manifest>

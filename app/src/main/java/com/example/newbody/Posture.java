@@ -72,6 +72,7 @@ public class Posture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_posture);
 
+        initTargetPoses();
         initViews();
         checkPermissions();
     }
@@ -162,7 +163,6 @@ public class Posture extends AppCompatActivity {
 
         tempBitmap = previewView.getBitmap();
         if(previewView.getBitmap() == null){
-//            Toast.makeText(getApplicationContext(), "No Photo Visible", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -173,10 +173,10 @@ public class Posture extends AppCompatActivity {
             public void onComplete(@NonNull Task<Pose> task) {
                 if(task.isSuccessful()){
                     Pose pose = task.getResult();
+                    handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
                     List<PoseLandmark> landmarks = pose.getAllPoseLandmarks();
                     Log.d("debugg", "Landmarks found : " + landmarks.size());
                     if(landmarks.size() == 0){
-//                        Toast.makeText(getApplicationContext(), "No Point detected in image, please try another image", Toast.LENGTH_LONG).show();
                         isFrameBeingTested = false;
                         if(!canvasAlreadyClear)
                             loadGuidelines(tempBitmap, null);
@@ -186,13 +186,49 @@ public class Posture extends AppCompatActivity {
                     loadGuidelines(tempBitmap, pose);
                     isFrameBeingTested = false;
                 }else{
-//                    Toast.makeText(getApplicationContext(), "Error processing test", Toast.LENGTH_LONG).show();
                     Log.e("debugg", "Error in test", task.getException());
                     loadGuidelines(tempBitmap, null);
                     isFrameBeingTested = false;
                 }
             }
         });
+    }
+
+    private void initTargetPoses() {
+        targetSquatStartSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
+                )
+        );
+
+        targetSquatEndSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                )
+        );
+    }
+
+    private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
+        PoseMatcher matcher = new PoseMatcher(); // PoseMatcher 객체 생성. 이전에 제공된 코드에서 제공된 것처럼 생성해야 합니다.
+        return matcher.match(pose, targetPose);
+    }
+
+    private void handlePoseDetection(Pose pose) {
+        boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+
+        if (squatStartDetected && isSquatEnd) {
+            score++;
+            etResults.setText("Score: " + score); // etResults는 EditText이므로 점수를 여기에 표시할 수 있습니다.
+            squatStartDetected = false; // 다음 연속 감지를 위해 초기화
+            squatEndDetected = false;
+        } else if (isSquatStart) {
+            squatStartDetected = true;
+        }
     }
 
     private void startAnalysis(){

@@ -55,7 +55,7 @@ public class PoseMatcher {
     public double calculateAngle(PoseLandmark firstLandmark, PoseLandmark middleLandmark, PoseLandmark lastLandmark) {
         double angle = toDegrees(
                 atan2(
-                        lastLandmark.getPosition().x - middleLandmark.getPosition().y,
+                        lastLandmark.getPosition().y - middleLandmark.getPosition().y,
                         lastLandmark.getPosition().x - middleLandmark.getPosition().x
                 ) - atan2(
                         firstLandmark.getPosition().y - middleLandmark.getPosition().y,

@@ -1,15 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layout_default">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="기록 측정"
-        android:textSize="40sp"
-        android:textColor="@color/black"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/prevButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이전"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:background="#ffffff"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <TextView
+                    android:layout_marginRight="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기록 측정"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자신의 기록을 뛰어 넘어 보세요 !"
+            android:textColor="#9933ff"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="시간 설정"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/time"
+            android:layout_marginLeft="30dp"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="시간"
+            android:background="@drawable/button"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="운동 리스트"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/squat" />
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ex1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="스쿼트"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/ex1_time"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <RelativeLayout
+                    android:layout_marginRight="30dp"
+                    android:id="@+id/ex_button1"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:onClick="nextButtonClicked"
+                    android:background="@drawable/button">
+
+                    <TextView
+                        android:id="@+id/buttonText1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="선택"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/pushup" />
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ex2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="푸쉬업"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/ex2_time"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <RelativeLayout
+                    android:layout_marginRight="30dp"
+                    android:id="@+id/ex_button2"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:onClick="nextButtonClicked"
+                    android:background="@drawable/button">
+
+                    <TextView
+                        android:id="@+id/buttonText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="선택"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/dumbell" />
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ex3_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="덤벨 숄더 프레스"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/ex3_time"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <RelativeLayout
+                    android:layout_marginRight="30dp"
+                    android:id="@+id/ex_button3"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:onClick="nextButtonClicked"
+                    android:background="@drawable/button">
+
+                    <TextView
+                        android:id="@+id/buttonText3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="선택"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택한 항목"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/time_select"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/exercise_select"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운동"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginBottom="50dp"
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
+        android:elevation="22dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:onClick="startButtonClicked">
+
+        <TextView
+            android:id="@+id/buttonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운동 시작"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

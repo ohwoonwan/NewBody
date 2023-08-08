@@ -37,4 +37,8 @@ public class LandmarkTriple {
     public PoseLandmark extractLandmarkFromType(Pose pose, int landmarkType) {
         return pose.getPoseLandmark(landmarkType);
     }
+
+    public boolean landmarkNotFound() {
+        return firstLandmark == null || middleLandmark == null || lastLandmark == null;
+    }
 }
