@@ -12,6 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newbody.videoinfo.VideoDumbbell;
+import com.example.newbody.videoinfo.VideoPushups;
+import com.example.newbody.videoinfo.VideoSquat;
+import com.example.newbody.videoinfo.VideoWarmup;
+
 public class Video extends AppCompatActivity {
     private String selectedDifficulty; // 난이도를 저장할 변수
     private long[] totalTimesInMillis = {1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000};

@@ -1,4 +1,4 @@
-package com.example.newbody;
+package com.example.newbody.videoinfo;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.newbody.R;
 
 public class VideoDumbbell extends AppCompatActivity {
 

@@ -42,10 +42,10 @@
         <activity android:name=".mainInfo.MainActivityC" />
         <activity android:name=".mainInfo.MainActivityD" />
         <activity android:name=".MemberChangeActivity" />
-        <activity android:name=".VideoWarmup" />
-        <activity android:name=".VideoPushups" />
-        <activity android:name=".VideoSquat" />
-        <activity android:name=".VideoDumbbell" />
+        <activity android:name=".videoinfo.VideoWarmup" />
+        <activity android:name=".videoinfo.VideoPushups" />
+        <activity android:name=".videoinfo.VideoSquat" />
+        <activity android:name=".videoinfo.VideoDumbbell" />
     </application>
 
 </manifest>
