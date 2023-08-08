@@ -42,9 +42,13 @@
         <activity android:name=".mainInfo.MainActivityC" />
         <activity android:name=".mainInfo.MainActivityD" />
         <activity android:name=".MemberChangeActivity" />
-        <activity android:name=".RecordSquat" />
-        <activity android:name=".RecordSquatMain" />
+        <activity android:name=".record.RecordSquat" />
+        <activity android:name=".record.RecordSquatMain" />
         <activity android:name=".CustomDialog" />
+        <activity android:name=".record.RecordDumbbellMain" />
+        <activity android:name=".record.RecordPushupMain" />
+        <activity android:name=".record.RecordDumbbell" />
+        <activity android:name=".record.RecordPushup" />
     </application>
 
 </manifest>

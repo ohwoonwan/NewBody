@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.newbody.mainInfo.MainActivityA;
+import com.example.newbody.record.RecordDumbbell;
+import com.example.newbody.record.RecordPushup;
+import com.example.newbody.record.RecordSquat;
 
 public class Record extends AppCompatActivity {
 
@@ -71,6 +73,26 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 if(select_num == 1){
                     Intent intent = new Intent(Record.this, RecordSquat.class);
+                    if (select_time.equals("1분")) {
+                        intent.putExtra("time", totalTimesInMillis[0]);
+                    } else if (select_time.equals("2분")) {
+                        intent.putExtra("time", totalTimesInMillis[1]);
+                    } else if (select_time.equals("3분")) {
+                        intent.putExtra("time", totalTimesInMillis[2]);
+                    }
+                    startActivity(intent);
+                }else if(select_num == 2){
+                    Intent intent = new Intent(Record.this, RecordPushup.class);
+                    if (select_time.equals("1분")) {
+                        intent.putExtra("time", totalTimesInMillis[0]);
+                    } else if (select_time.equals("2분")) {
+                        intent.putExtra("time", totalTimesInMillis[1]);
+                    } else if (select_time.equals("3분")) {
+                        intent.putExtra("time", totalTimesInMillis[2]);
+                    }
+                    startActivity(intent);
+                }else if(select_num == 3){
+                    Intent intent = new Intent(Record.this, RecordDumbbell.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {

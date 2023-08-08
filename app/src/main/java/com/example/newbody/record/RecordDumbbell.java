@@ -1,4 +1,4 @@
-package com.example.newbody;
+package com.example.newbody.record;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class RecordSquat extends AppCompatActivity {
+import com.example.newbody.R;
+
+public class RecordDumbbell extends AppCompatActivity {
 
     Button start;
     long time;
@@ -16,9 +18,9 @@ public class RecordSquat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_squat);
+        setContentView(R.layout.activity_record_dumbbell);
 
-        start = findViewById(R.id.startSquat);
+        start = findViewById(R.id.startDumbbell);
         Intent intent = getIntent();
         time = intent.getLongExtra("time", 0);
 
@@ -27,7 +29,7 @@ public class RecordSquat extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecordSquat.this, RecordSquatMain.class);
+                Intent intent = new Intent(RecordDumbbell.this, RecordDumbbellMain.class);
                 intent.putExtra("time", time);
                 startActivity(intent);
             }

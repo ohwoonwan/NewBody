@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".record.RecordSquat"
-    android:background="@drawable/layout_default">
+    android:background="@drawable/layout_default"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="스쿼트 안내"
+        android:text="dumbbell 안내"
         android:textColor="@color/black"
         android:textSize="40sp"/>
     <Button
-        android:id="@+id/startSquat"
+        android:id="@+id/startDumbbell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="시작" />
