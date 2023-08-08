@@ -7,7 +7,7 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -42,6 +42,10 @@
         <activity android:name=".mainInfo.MainActivityC" />
         <activity android:name=".mainInfo.MainActivityD" />
         <activity android:name=".MemberChangeActivity" />
+        <activity android:name=".VideoWarmup" />
+        <activity android:name=".VideoPushups" />
+        <activity android:name=".VideoSquat" />
+        <activity android:name=".VideoDumbbell" />
     </application>
 
 </manifest>
