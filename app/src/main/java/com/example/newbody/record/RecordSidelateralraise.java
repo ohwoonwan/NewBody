@@ -36,7 +36,7 @@ public class RecordSidelateralraise extends AppCompatActivity {
         timeInput.setText((time/60000)+"분");
 
         mVideoView = findViewById(R.id.sideEx);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/pushups");
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/side");
         mVideoView.setVideoURI(uri);
 
         prev.setOnClickListener(new View.OnClickListener() {
