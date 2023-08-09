@@ -29,7 +29,7 @@ public class RecordSidelateralraise extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecordSidelateralraise.this, RecordPushupMain.class);
+                Intent intent = new Intent(RecordSidelateralraise.this, RecordSidelateralraiseMain.class);
                 intent.putExtra("time", time);
                 startActivity(intent);
             }
