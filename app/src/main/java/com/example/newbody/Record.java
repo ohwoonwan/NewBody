@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newbody.record.RecordDumbbell;
-import com.example.newbody.record.RecordDumbbellCurl;
+import com.example.newbody.record.RecordLegRaise;
 import com.example.newbody.record.RecordPushup;
 import com.example.newbody.record.RecordSidelateralraise;
 import com.example.newbody.record.RecordSquat;
@@ -130,7 +130,7 @@ public class Record extends AppCompatActivity {
                     }
                     startActivity(intent);
                 }else if(select_num == 5){
-                    Intent intent = new Intent(Record.this, RecordDumbbellCurl.class);
+                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {

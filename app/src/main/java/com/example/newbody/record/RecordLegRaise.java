@@ -14,7 +14,7 @@ import android.widget.VideoView;
 import com.example.newbody.R;
 import com.example.newbody.Record;
 
-public class RecordDumbbellCurl extends AppCompatActivity {
+public class RecordLegRaise extends AppCompatActivity {
 
     Button start, prev;
     long time;
@@ -23,18 +23,18 @@ public class RecordDumbbellCurl extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_dumbbellcurl);
+        setContentView(R.layout.activity_record_legraise);
 
-        prev = findViewById(R.id.prevButtonCurl);
+        prev = findViewById(R.id.prevButtonLegRaise);
         timeInput = findViewById(R.id.timeInput);
 
-        start = findViewById(R.id.startDumbbellCurl);
+        start = findViewById(R.id.startLegRaise);
         Intent intent = getIntent();
         time = intent.getLongExtra("time", 0);
 
         timeInput.setText((time/60000)+"분");
         //덤벨컬 여기서부터 수정
-        mVideoView = findViewById(R.id.curlEx);
+        mVideoView = findViewById(R.id.LegRaiseEx);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/curl");
         mVideoView.setVideoURI(uri);
 
@@ -64,7 +64,7 @@ public class RecordDumbbellCurl extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecordDumbbellCurl.this, RecordDumbbellCurlMain.class);
+                Intent intent = new Intent(RecordLegRaise.this, RecordLegRaiseMain.class);
                 intent.putExtra("time", time);
                 startActivity(intent);
             }

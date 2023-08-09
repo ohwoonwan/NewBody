@@ -53,17 +53,17 @@ import java.util.Map;
 
 import com.example.newbody.R;
 
-public class RecordDumbbellCurlMain extends AppCompatActivity {
+public class RecordLegRaiseMain extends AppCompatActivity {
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
-    private boolean dumbbellCurlStartDetected = false;
-    private boolean dumbbellCurlEndDetected = false;
+    private boolean legRaiseStartDetected = false;
+    private boolean legRaiseEndDetected = false;
     private long time;
     private int score = 0;
-    private TargetPose targetDumbbellCurlStartSign;
-    private TargetPose targetDumbbellCurlEndSign;
+    private TargetPose targetLegRaiseStartSign;
+    private TargetPose targetLegRaiseEndSign;
     private CountDownTimer timer;
 
     private CustomDialog customDialog;
@@ -85,7 +85,7 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_dumbbellcurl_main);
+        setContentView(R.layout.activity_record_legraise_main);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -137,11 +137,11 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
                     final String collectionName;  // 'final' 키워드 추가
 
                     if (time == 60000) {
-                        collectionName = "countDumbbell1Minute";
+                        collectionName = "countDumbbellCurl1Minute";
                     } else if (time == 120000) {
-                        collectionName = "countDumbbell2Minute";
+                        collectionName = "countDumbbellCurl2Minute";
                     } else if (time == 180000) {
-                        collectionName = "countDumbbell3Minute";
+                        collectionName = "countDumbbellCurl3Minute";
                     } else {
                         collectionName = "";  // 기본값 설정
                     }
@@ -153,21 +153,21 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Long dumbbellCountLong;
+                                    Long legRaiseCountLong;
                                     if (time == 60000) {
-                                        dumbbellCountLong = document.getLong("countDumbbell1Minute");
+                                        legRaiseCountLong = document.getLong("countDumbbellCurl1Minute");
                                     } else if (time == 120000) {
-                                        dumbbellCountLong = document.getLong("countDumbbell2Minute");
+                                        legRaiseCountLong = document.getLong("countDumbbellCurl2Minute");
                                     } else {
-                                        dumbbellCountLong = document.getLong("countDumbbell3Minute");
+                                        legRaiseCountLong = document.getLong("countDumbbellCurl3Minute");
                                     }
-                                    int existingDumbbellCount = 0; // 초기 값을 0으로 설정
+                                    int existingLegRaiseCount = 0; // 초기 값을 0으로 설정
 
-                                    if (dumbbellCountLong != null) {
-                                        existingDumbbellCount = dumbbellCountLong.intValue();
+                                    if (legRaiseCountLong != null) {
+                                        existingLegRaiseCount = legRaiseCountLong.intValue();
                                     }
 
-                                    if (existingDumbbellCount <= score) {
+                                    if (existingLegRaiseCount <= score) {
                                         userData.put(collectionName, score);
                                         db.collection(collectionName).document(user.getUid())
                                                 .set(userData)
@@ -210,7 +210,7 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
                     });
                 }
 
-                customDialog = new CustomDialog(RecordDumbbellCurlMain.this
+                customDialog = new CustomDialog(RecordLegRaiseMain.this
                         ,"시간 : " + (time/60000) + "분 \n기록 : " + score + "개");
                 customDialog.show();
             }
@@ -337,21 +337,19 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDumbbellCurlStartSign = new TargetPose(
+        targetLegRaiseStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,140.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,140.0)
+
                 )
         );
 
-        targetDumbbellCurlEndSign = new TargetPose(
+        targetLegRaiseEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 40.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 100.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 100.0)
+
                 )
         );
     }
@@ -362,16 +360,16 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellCurlStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellCurlEndSign);
+        boolean isSquatStart = isPoseMatching(pose, targetLegRaiseStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetLegRaiseEndSign);
 
-        if (dumbbellCurlStartDetected && isSquatEnd) {
+        if (legRaiseStartDetected && isSquatEnd) {
             score++;
             countEx.setText("개수 : " + score);
-            dumbbellCurlStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellCurlEndDetected = false;
+            legRaiseStartDetected = false; // 다음 연속 감지를 위해 초기화
+            legRaiseEndDetected = false;
         } else if (isSquatStart) {
-            dumbbellCurlStartDetected = true;
+            legRaiseStartDetected = true;
         }
     }
 
@@ -402,7 +400,7 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
                     imageCapture = new ImageCapture.Builder().build();
 
                     provider.unbindAll();
-                    provider.bindToLifecycle(RecordDumbbellCurlMain.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
+                    provider.bindToLifecycle(RecordLegRaiseMain.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
                     Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_SHORT).show();
 
                     startAnalysis();
@@ -411,7 +409,7 @@ public class RecordDumbbellCurlMain extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Errror Loading Camera Provider, Restart App", Toast.LENGTH_SHORT).show();
                 }
             }
-        }, ActivityCompat.getMainExecutor(RecordDumbbellCurlMain.this));
+        }, ActivityCompat.getMainExecutor(RecordLegRaiseMain.this));
     }
 
     private void checkPermissions(){

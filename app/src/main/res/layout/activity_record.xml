@@ -349,7 +349,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="덤벨 컬"
+                        android:text="레그 레이즈"
                         android:textSize="15sp"/>
                     <TextView
                         android:id="@+id/ex5_time"

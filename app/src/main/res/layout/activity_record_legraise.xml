@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".record.RecordDumbbellCurl"
+    tools:context=".record.RecordLegRaise"
     android:background="@drawable/layout_default"
     android:orientation="vertical">
 
@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         android:gravity="center">
         <Button
-            android:id="@+id/prevButtonCurl"
+            android:id="@+id/prevButtonLegRaise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이전"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="덤벨 컬 기록 측정"
+                android:text="레그 레이즈 기록 측정"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
         android:layout_weight="1"
         android:gravity="center">
         <VideoView
-            android:id="@+id/curlEx"
+            android:id="@+id/LegRaiseEx"
             android:layout_width="260dp"
             android:layout_height="300dp"/>
     </LinearLayout>
@@ -69,27 +69,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="'덤벨 컬은 덤벨을 들고 팔을 굽히는 운동입니다.'"
+            android:text="'레그레이즈는 하복부를 단련하는 대표적인 운동입니다.'"
             android:textColor="@color/black"
             android:textSize="17sp"/>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="덤벨은 양쪽 이두근의 균형잡힌 발달과"
+            android:text="다리를 들어올리는 복부 근육의 힘을"
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="높은 범용성의 장점이 있습니다. "
+            android:text="이용하여 복근을 단련합니다. "
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="강한 이두근을 발달시킬 수 있는 근력 운동 중 하나입니다.  "
+            android:text="복부의 긴장을 놓지 마세요 !!"
             android:textColor="@color/black"
             android:textSize="16sp"/>
 
@@ -101,7 +101,7 @@
         android:layout_weight="1"
         android:gravity="center">
         <Button
-            android:id="@+id/startDumbbellCurl"
+            android:id="@+id/startLegRaise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button"

@@ -55,8 +55,8 @@
         <activity android:name=".record.RecordPushup" />
         <activity android:name=".record.RecordSidelateralraiseMain" />
         <activity android:name=".record.RecordSidelateralraise" />
-        <activity android:name=".record.RecordDumbbellCurl" />
-        <activity android:name=".record.RecordDumbbellCurlMain" />
+        <activity android:name=".record.RecordLegRaise" />
+        <activity android:name=".record.RecordLegRaiseMain" />
 
     </application>
 
