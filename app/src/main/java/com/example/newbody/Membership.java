@@ -50,7 +50,6 @@ public class Membership extends AppCompatActivity {
         Button login = findViewById(R.id.login);
 
         google = findViewById(R.id.google);
-        kakao = findViewById(R.id.kakao);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

@@ -90,8 +90,7 @@
             android:text="- - - - - - - - - - - - - - - - - - - 또는 - - - - - - - - - - - - - - - - - - - -"
             android:textSize="18sp"
             android:gravity="center"
-            android:textColor="#333333"
-            android:marginTop="16dp"/>
+            android:textColor="#333333"/>
     </LinearLayout>
 
     <LinearLayout
