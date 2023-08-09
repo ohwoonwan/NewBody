@@ -338,7 +338,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:srcCompat="@drawable/curl" />
+                    app:srcCompat="@drawable/leg" />
                 <LinearLayout
                     android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"

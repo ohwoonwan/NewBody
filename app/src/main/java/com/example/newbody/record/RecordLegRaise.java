@@ -35,7 +35,7 @@ public class RecordLegRaise extends AppCompatActivity {
         timeInput.setText((time/60000)+"분");
         //덤벨컬 여기서부터 수정
         mVideoView = findViewById(R.id.LegRaiseEx);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/curl");
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         mVideoView.setVideoURI(uri);
 
         prev.setOnClickListener(new View.OnClickListener() {
