@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:text="가 입 완 료"
             android:textColor="#ffffff"
-            android:textSize="24sp" />
+            android:textSize="23sp" />
 
     </RelativeLayout>
 
