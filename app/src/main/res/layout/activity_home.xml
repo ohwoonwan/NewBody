@@ -85,59 +85,67 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="33dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
-        <FrameLayout
-            android:id="@+id/posture_button"
-            android:layout_marginTop="50dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_button">
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:srcCompat="@drawable/trainerpic" />
-
+            android:orientation="vertical"
+            android:gravity="center">
+            <FrameLayout
+                android:id="@+id/posture_button"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/pose_fix" />
+            </FrameLayout>
             <TextView
                 android:id="@+id/myImageViewText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="1dp"
+                android:layout_marginTop="8.5dp"
                 android:gravity="center"
                 android:text="자세 교정"
-                android:textColor="#9933ff"
+                android:textColor="#000000"
                 android:textStyle="bold" />
-        </FrameLayout>
+        </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/video_button"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/menu_button">
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/video" />
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="50dp"
+            android:gravity="center">
+            <FrameLayout
+                android:id="@+id/video_button"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/home_training" />
+            </FrameLayout>
             <TextView
                 android:id="@+id/myImageViewText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="1dp"
+                android:layout_marginTop="8.5dp"
                 android:gravity="center"
-                android:text="홈트레이닝"
-                android:textColor="#0101DF"
+                android:text="홈 트레이닝"
+                android:textColor="#000000"
                 android:textStyle="bold" />
-        </FrameLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -148,54 +156,61 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
-        <FrameLayout
-            android:id="@+id/record_button"
-            android:layout_marginTop="50dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_button">
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:srcCompat="@drawable/record" />
-
+            android:orientation="vertical"
+            android:gravity="center">
+            <FrameLayout
+                android:id="@+id/record_button"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/record_count" />
+            </FrameLayout>
             <TextView
                 android:id="@+id/myImageViewText3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="1dp"
+                android:layout_marginTop="8.5dp"
                 android:gravity="center"
                 android:text="기록 측정"
-                android:textColor="#FE2E2E"
+                android:textColor="#000000"
                 android:textStyle="bold" />
-        </FrameLayout>
+        </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/ranking_button"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="50dp"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/menu_button">
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/ranking" />
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="50dp"
+            android:gravity="center">
+            <FrameLayout
+                android:id="@+id/ranking_button"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/pose_ranking" />
+            </FrameLayout>
             <TextView
                 android:id="@+id/myImageViewText4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="1dp"
+                android:layout_marginTop="8.5dp"
                 android:gravity="center"
-                android:text="랭 킹"
-                android:textColor="#0B610B"
+                android:text="랭킹"
+                android:textColor="#000000"
                 android:textStyle="bold" />
-        </FrameLayout>
+        </LinearLayout>
 
 
     </LinearLayout>

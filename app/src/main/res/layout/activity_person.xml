@@ -73,21 +73,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
+
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/custom_edittext2"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/height_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="키input"
-                android:textSize="16sp"
-                android:textColor="#00ccff"/>
+                android:textColor="#00ccff"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,9 +100,11 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:layout_width="100dp"
             android:layout_height="70dp"
             android:orientation="vertical"
@@ -124,6 +129,7 @@
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:layout_width="100dp"
             android:layout_height="70dp"
             android:orientation="vertical"
@@ -148,6 +154,8 @@
     </LinearLayout>
 
     <Button
+        android:layout_marginTop="430dp"
+        android:layout_marginLeft="280dp"
         android:text="LOGOUT"
         android:id="@+id/logout"
         android:layout_width="wrap_content"

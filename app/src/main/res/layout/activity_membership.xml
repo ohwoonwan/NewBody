@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="220dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -18,16 +18,17 @@
         android:layout_marginBottom="30dp">
 
         <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/email"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/baseline_email_24"
-            android:drawablePadding="8dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
             android:hint="E - mail"
-            android:textColorHint="#333333"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
+            android:padding="14dp"
+            android:textColor="@color/black"
+            android:textColorHint="#333333"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,17 +40,18 @@
         android:layout_marginLeft="40dp">
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/password"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
             android:hint="비 밀 번 호"
-            android:textColorHint="#333333"
-            android:padding="8dp"
+            android:padding="14dp"
+            android:textColor="@color/black"
             android:inputType="textPassword"
-            android:textColor="@color/black"/>
+            android:textColorHint="#333333"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -62,21 +64,21 @@
         android:elevation="22dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:onClick="startButtonClicked">
 
         <TextView
             android:id="@+id/buttonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="등 록 하 기"
             android:textColor="#ffffff"
             android:textSize="24sp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -85,8 +87,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="- - - - - - - - - - - - 또는 - - - - - - - - - - - - -"
-            android:textSize="20sp"
+            android:text="- - - - - - - - - - - - - - - - - - - 또는 - - - - - - - - - - - - - - - - - - - -"
+            android:textSize="18sp"
             android:gravity="center"
             android:textColor="#333333"/>
     </LinearLayout>
@@ -105,16 +107,10 @@
             android:layout_marginRight="15dp"
             app:srcCompat="@drawable/google" />
 
-        <ImageView
-            android:id="@+id/kakao"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:srcCompat="@drawable/kakao" />
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -125,13 +121,14 @@
             android:layout_height="wrap_content"
             android:text="이미 계정이 있나요?"
             android:textColor="@color/black"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:layout_marginRight="-8dp"/>
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:text="Login"
+            android:background="@null"
+            android:text="로그인"
             android:textColor="#9933ff"
             android:textSize="15sp"/>
     </LinearLayout>

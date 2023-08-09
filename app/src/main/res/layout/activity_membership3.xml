@@ -17,7 +17,7 @@
         android:elevation="22dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="570dp"
+        android:layout_marginTop="620dp"
         android:onClick="startButtonClicked">
 
         <TextView
@@ -26,6 +26,6 @@
             android:layout_height="wrap_content"
             android:text="로 그 인"
             android:textColor="#ffffff"
-            android:textSize="24sp" />
+            android:textSize="23sp" />
     </RelativeLayout>
 </LinearLayout>
