@@ -32,14 +32,14 @@ public class VideoWarmup extends AppCompatActivity {
                 int videoWidth = mp.getVideoWidth();
                 int videoHeight = mp.getVideoHeight();
 
-                // 화면의 너비에 대한 비디오의 비율을 계산합니다.
+                // 화면의 너비에 대한 비디오의 비율 계산
                 float videoProportion = (float) videoWidth / (float) videoHeight;
 
-                // VideoView의 너비와 높이를 얻습니다.
+                // VideoView의 너비와 높이를 얻기
                 int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
                 int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
 
-                // 화면의 비율을 계산합니다.
+                // 화면의 비율 계산
                 float screenProportion = (float) screenWidth / (float) screenHeight;
 
                 android.view.ViewGroup.LayoutParams lp = mVideoView.getLayoutParams();
@@ -54,7 +54,7 @@ public class VideoWarmup extends AppCompatActivity {
                     lp.height = screenHeight;
                 }
 
-                // 계산된 너비와 높이로 VideoView의 크기를 업데이트합니다.
+                // 계산된 너비와 높이로 VideoView의 크기를 업데이트
                 mVideoView.setLayoutParams(lp);
 
                 // 비디오를 시작합니다.
