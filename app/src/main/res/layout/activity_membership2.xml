@@ -114,7 +114,7 @@
             android:drawableLeft="@drawable/baseline_monitor_weight_24"
             android:drawablePadding="10dp"
             android:fontFamily="sans-serif-light"
-            android:hint="몸 무 게 ( K G )"
+            android:hint="몸 무 게 ( k g )"
             android:textColorHint="#333333"
             android:textSize="16dp"
             android:padding="8dp"
