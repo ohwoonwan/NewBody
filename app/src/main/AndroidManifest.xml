@@ -50,7 +50,7 @@
         <activity android:name=".record.RecordDumbbell" />
         <activity android:name=".record.RecordPushup" />
         <activity android:name=".record.RecordSidelateralraiseMain" />
-        <activity android:name=".record.RecordSidelateralraise"
+        <activity android:name=".record.RecordSidelateralraise" />
     </application>
 
 </manifest>
