@@ -25,7 +25,7 @@
             android:text="기록 측정 결과"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="23sp"
             android:textColor="#9933ff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
