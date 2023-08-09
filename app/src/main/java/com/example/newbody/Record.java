@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newbody.record.RecordDumbbell;
+import com.example.newbody.record.RecordDumbbellCurl;
 import com.example.newbody.record.RecordPushup;
 import com.example.newbody.record.RecordSidelateralraise;
 import com.example.newbody.record.RecordSquat;
@@ -21,8 +22,8 @@ public class Record extends AppCompatActivity {
     private long[] totalTimesInMillis = {1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000};
     private Button time;
     private View ex_start;
-    private View []ex = new View[4];
-    private TextView []exName = new TextView[4];
+    private View []ex = new View[5];
+    private TextView []exName = new TextView[5];
     private TextView selectT, selectE;
     private int select_num;
     private Button prev;
@@ -77,6 +78,14 @@ public class Record extends AppCompatActivity {
             }
         });
 
+        ex[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[4].getText());
+                select_num =5;
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +129,16 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                }else if(select_num == 5){
+                    Intent intent = new Intent(Record.this, RecordDumbbellCurl.class);
+                    if (select_time.equals("1분")) {
+                        intent.putExtra("time", totalTimesInMillis[0]);
+                    } else if (select_time.equals("2분")) {
+                        intent.putExtra("time", totalTimesInMillis[1]);
+                    } else if (select_time.equals("3분")) {
+                        intent.putExtra("time", totalTimesInMillis[2]);
+                    }
+                    startActivity(intent);
                 }
             }
         });
@@ -133,10 +152,12 @@ public class Record extends AppCompatActivity {
         ex[1] = findViewById(R.id.ex_button2);
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
+        ex[4] = findViewById(R.id.ex_button5);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
+        exName[4] = findViewById(R.id.ex5_name);
         selectT = findViewById(R.id.time_select);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
