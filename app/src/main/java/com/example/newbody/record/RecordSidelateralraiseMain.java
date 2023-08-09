@@ -136,11 +136,11 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
                     final String collectionName;  // 'final' 키워드 추가
 
                     if (time == 60000) {
-                        collectionName = "countPushUp1Minute";
+                        collectionName = "countSideLateralRaise1Minute";
                     } else if (time == 120000) {
-                        collectionName = "countPushUp2Minute";
+                        collectionName = "countSideLateralRaise2Minute";
                     } else if (time == 180000) {
-                        collectionName = "countPushUp3Minute";
+                        collectionName = "countSideLateralRaise3Minute";
                     } else {
                         collectionName = "";  // 기본값 설정
                     }
@@ -152,21 +152,21 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Long pushupCountLong;
+                                    Long sideCountLong;
                                     if (time == 60000) {
-                                        pushupCountLong = document.getLong("countPushUp1Minute");
+                                        sideCountLong = document.getLong("countSideLateralRaise1Minute");
                                     } else if (time == 120000) {
-                                        pushupCountLong = document.getLong("countPushUp2Minute");
+                                        sideCountLong = document.getLong("countSideLateralRaise2Minute");
                                     } else {
-                                        pushupCountLong = document.getLong("countPushUp3Minute");
+                                        sideCountLong = document.getLong("countSideLateralRaise3Minute");
                                     }
-                                    int existingPushUpCount = 0; // 초기 값을 0으로 설정
+                                    int existingSideCount = 0; // 초기 값을 0으로 설정
 
-                                    if (pushupCountLong != null) {
-                                        existingPushUpCount = pushupCountLong.intValue();
+                                    if (sideCountLong != null) {
+                                        existingSideCount = sideCountLong.intValue();
                                     }
 
-                                    if (existingPushUpCount <= score) {
+                                    if (existingSideCount <= score) {
                                         userData.put(collectionName, score);
                                         db.collection(collectionName).document(user.getUid())
                                                 .set(userData)
@@ -338,8 +338,8 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
     private void initTargetPoses() {
         targetSideStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, 60.0),
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, 60.0)
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, 90.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, 90.0)
                 )
         );
 
