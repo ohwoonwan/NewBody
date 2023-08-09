@@ -1,7 +1,6 @@
-package com.example.newbody;
+package com.example.newbody.record;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -14,25 +13,33 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.newbody.CustomDialog;
+import com.example.newbody.PoseMatcher;
+import com.example.newbody.R;
+import com.example.newbody.TargetPose;
+import com.example.newbody.TargetShape;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
@@ -40,22 +47,32 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Posture extends AppCompatActivity {
+public class RecordPushupMain extends AppCompatActivity {
 
-    private boolean squatStartDetected = false;
-    private boolean squatEndDetected = false;
+    FirebaseFirestore db;
+    FirebaseAuth mAuth;
+
+    private boolean pushupStartDetected = false;
+    private boolean pushupEndDetected = false;
+    private long time;
     private int score = 0;
-    private TargetPose targetSquatStartSign;
-    private TargetPose targetSquatEndSign;
+    private TargetPose targetPushUpStartSign;
+    private TargetPose targetPushUpEndSign;
+    private CountDownTimer timer;
+
+    private CustomDialog customDialog;
 
     PreviewView previewView;
     PoseDetector detector;
-    EditText etResults;
     ImageView guidelineView;
     ImageCapture imageCapture;
+
+    TextView count, timeEx, countEx;
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
@@ -64,17 +81,139 @@ public class Posture extends AppCompatActivity {
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
 
-    public Posture() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acticity_posture);
+        setContentView(R.layout.activity_record_squat_main);
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        time = intent.getLongExtra("time", 0);
 
         initTargetPoses();
         initViews();
-        checkPermissions();
+
+        startCountdown(5000);
+    }
+
+    private void startCountdown(long duration) {
+        new CountDownTimer(duration, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                count.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            public void onFinish() {
+                count.setText("시작!");
+                count.setVisibility(View.INVISIBLE);
+                startTimer();
+                countEx.setText("개수 : " + score);
+                checkPermissions();
+            }
+
+        }.start();
+    }
+
+    private void startTimer() {
+
+        timer = new CountDownTimer(time, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // 남은 시간을 분과 초로 변환하여 표시
+                long minutes = millisUntilFinished / 60000;
+                long seconds = (millisUntilFinished % 60000) / 1000;
+                String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+                timeEx.setText("남은 시간 : " + timeLeftFormatted);
+            }
+
+            @Override
+            public void onFinish() {
+                FirebaseUser user = mAuth.getCurrentUser();
+                Map<String, Object> userData = new HashMap<>();
+                if (user != null) {
+                    final String collectionName;  // 'final' 키워드 추가
+
+                    if (time == 60000) {
+                        collectionName = "countPushUp1Minute";
+                    } else if (time == 120000) {
+                        collectionName = "countPushUp2Minute";
+                    } else if (time == 180000) {
+                        collectionName = "countPushUp3Minute";
+                    } else {
+                        collectionName = "";  // 기본값 설정
+                    }
+
+                    DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
+                    userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Long pushupCountLong;
+                                    if (time == 60000) {
+                                        pushupCountLong = document.getLong("countPushUp1Minute");
+                                    } else if (time == 120000) {
+                                        pushupCountLong = document.getLong("countPushUp2Minute");
+                                    } else {
+                                        pushupCountLong = document.getLong("countPushUp3Minute");
+                                    }
+                                    int existingPushUpCount = 0; // 초기 값을 0으로 설정
+
+                                    if (pushupCountLong != null) {
+                                        existingPushUpCount = pushupCountLong.intValue();
+                                    }
+
+                                    if (existingPushUpCount <= score) {
+                                        userData.put(collectionName, score);
+                                        db.collection(collectionName).document(user.getUid())
+                                                .set(userData)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid){
+                                                        // 성공적으로 업데이트했을 때의 로직
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                                        // 업데이트 실패했을 때의 로직
+                                                    }
+                                                });
+                                    } else {
+                                        Log.d("Firestore", "User's score is not higher than the existing record.");
+                                    }
+                                } else {
+                                    // 만약 문서가 없다면, 바로 점수를 저장합니다.
+                                    userData.put(collectionName, score);
+                                    userRecordRef.set(userData)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Firestore", "Data successfully written!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                                    Log.w("Firestore", "Error writing document", e);
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.d("Firestore", "Failed to get document", task.getException());
+                            }
+                        }
+                    });
+                }
+
+                customDialog = new CustomDialog(RecordPushupMain.this
+                        ,"시간 : " + (time/60000) + "분 \n기록 : " + score + "개");
+                customDialog.show();
+            }
+        }.start();
     }
 
     private void loadGuidelines(Bitmap bmp, Pose pose){
@@ -151,8 +290,10 @@ public class Posture extends AppCompatActivity {
 
     private void initViews(){
         previewView = findViewById(R.id.viewFinder);
-        etResults = findViewById(R.id.etResults);
         guidelineView = findViewById(R.id.canvas);
+        count = findViewById(R.id.count);
+        timeEx = findViewById(R.id.timeEx);
+        countEx = findViewById(R.id.countEx);
     }
 
     private void runTest(){
@@ -195,19 +336,17 @@ public class Posture extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetSquatStartSign = new TargetPose(
+        targetPushUpStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 80.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 80.0)
                 )
         );
 
-        targetSquatEndSign = new TargetPose(
+        targetPushUpEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 160.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 160.0)
                 )
         );
     }
@@ -218,16 +357,16 @@ public class Posture extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+        boolean isSquatStart = isPoseMatching(pose, targetPushUpStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetPushUpEndSign);
 
-        if (squatStartDetected && isSquatEnd) {
+        if (pushupStartDetected && isSquatEnd) {
             score++;
-            etResults.setText("Score: " + score); // etResults는 EditText이므로 점수를 여기에 표시할 수 있습니다.
-            squatStartDetected = false; // 다음 연속 감지를 위해 초기화
-            squatEndDetected = false;
+            countEx.setText("개수 : " + score);
+            pushupStartDetected = false; // 다음 연속 감지를 위해 초기화
+            pushupEndDetected = false;
         } else if (isSquatStart) {
-            squatStartDetected = true;
+            pushupStartDetected = true;
         }
     }
 
@@ -258,7 +397,7 @@ public class Posture extends AppCompatActivity {
                     imageCapture = new ImageCapture.Builder().build();
 
                     provider.unbindAll();
-                    provider.bindToLifecycle(Posture.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
+                    provider.bindToLifecycle(RecordPushupMain.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
                     Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_SHORT).show();
 
                     startAnalysis();
@@ -267,7 +406,7 @@ public class Posture extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Errror Loading Camera Provider, Restart App", Toast.LENGTH_SHORT).show();
                 }
             }
-        },ActivityCompat.getMainExecutor(Posture.this));
+        }, ActivityCompat.getMainExecutor(RecordPushupMain.this));
     }
 
     private void checkPermissions(){
@@ -293,5 +432,4 @@ public class Posture extends AppCompatActivity {
             }
         }
     }
-
 }
