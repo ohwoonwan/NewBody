@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NewBody"
 include ':app'
-include ':OpenCV'
