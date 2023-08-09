@@ -58,15 +58,6 @@
             android:id="@+id/squatEx"
             android:layout_width="260dp"
             android:layout_height="300dp"/>
-        <ImageView
-            android:id="@+id/canvas"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:elevation="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -114,7 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
-            android:text="시작" />
+            android:text="시작"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </LinearLayout>
