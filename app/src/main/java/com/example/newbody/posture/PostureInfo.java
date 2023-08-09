@@ -41,6 +41,8 @@ public class PostureInfo extends AppCompatActivity {
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
         }else if(exName.equals("사이드 레터럴 레이즈")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
+        }else if(exName.equals("레그 레이즈")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
         }
         postureVideo.setVideoURI(uri);
 
@@ -63,6 +65,26 @@ public class PostureInfo extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Posture.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentN = null;
+                if (exName.equals("스쿼트")) {
+                    intentN = new Intent(getApplicationContext(), PostureSquat.class);
+                }else if(exName.equals("푸쉬업")){
+                    intentN = new Intent(getApplicationContext(), PosturePushup.class);
+                }else if(exName.equals("덤벨 숄더 프레스")){
+                    intentN = new Intent(getApplicationContext(), PostureDumbbell.class);
+                }else if(exName.equals("사이드 레터럴 레이즈")){
+                    intentN = new Intent(getApplicationContext(), PostureSide.class);
+                }else if(exName.equals("레그 레이즈")){
+                    intentN = new Intent(getApplicationContext(), PostureLeg.class);
+                }
+                startActivity(intentN);
                 finish();
             }
         });
