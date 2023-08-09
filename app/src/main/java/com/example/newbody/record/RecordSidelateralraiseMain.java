@@ -84,7 +84,7 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_squat_main);
+        setContentView(R.layout.activity_record_sidelateralraise_main);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
