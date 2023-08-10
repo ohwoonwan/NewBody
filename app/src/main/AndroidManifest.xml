@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -63,6 +64,7 @@
         <activity android:name=".posture.PosturePushup" />
         <activity android:name=".posture.PostureSquat" />
         <activity android:name=".posture.PostureLeg" />
+        <service android:name=".VoiceRecognitionService" />
     </application>
 
 </manifest>
