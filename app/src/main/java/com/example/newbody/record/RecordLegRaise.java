@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.newbody.R;
 import com.example.newbody.Record;
 
-public class RecordSidelateralraise extends AppCompatActivity {
+public class RecordLegRaise extends AppCompatActivity {
 
     Button start, prev;
     long time;
@@ -24,19 +23,19 @@ public class RecordSidelateralraise extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_sidelateralraise);
+        setContentView(R.layout.activity_record_legraise);
 
-        prev = findViewById(R.id.prevButtonSide);
+        prev = findViewById(R.id.prevButtonLegRaise);
         timeInput = findViewById(R.id.timeInput);
 
-        start = findViewById(R.id.startside);
+        start = findViewById(R.id.startLegRaise);
         Intent intent = getIntent();
         time = intent.getLongExtra("time", 0);
 
         timeInput.setText((time/60000)+"분");
-
-        mVideoView = findViewById(R.id.sideEx);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/side");
+        //덤벨컬 여기서부터 수정
+        mVideoView = findViewById(R.id.LegRaiseEx);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         mVideoView.setVideoURI(uri);
 
         prev.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,7 @@ public class RecordSidelateralraise extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecordSidelateralraise.this, RecordSidelateralraiseMain.class);
+                Intent intent = new Intent(RecordLegRaise.this, RecordLegRaiseMain.class);
                 intent.putExtra("time", time);
                 startActivity(intent);
             }
