@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="레그레이즈는 하복부를 단련하는 대표적인 운동입니다."
+            android:text="레그 레이즈는 하복부를 단련하는 대표적인 운동입니다."
             android:textColor="@color/black"
             android:textSize="17sp"/>
         <TextView
