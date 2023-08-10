@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="   푸쉬업 기록 측정"
+                android:text="     푸쉬업 기록 측정"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -82,14 +82,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="양팔을 늘리는 힘에 의해 신체를 들어 올리는 운동"
+            android:text="양팔을 늘리는 힘에 의해 신체를 들어 올리는 운동입니다."
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="팔 근육을 발달시킬 수 있는 근력 운동 중 하나입니다.  "
+            android:text="팔 근육을 발달시킬 수 있는 근력 운동 중 하나입니다."
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="팔꿈치와 어깨를 일직선으로 유지하세요."
             android:textColor="@color/black"
             android:textSize="16sp"/>
 

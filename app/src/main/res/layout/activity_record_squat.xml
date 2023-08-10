@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="   스쿼트 기록 측정"
+                android:text="       스쿼트 기록 측정"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -90,6 +90,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="스쿼트는 엉덩이, 허벅지 등 하체 근육 단련에 도움이 됩니다."
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="충분히 앉는 것을 명심하세요."
             android:textColor="@color/black"
             android:textSize="16sp"/>
 
