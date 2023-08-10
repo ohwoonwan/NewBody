@@ -135,7 +135,7 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_supervisor_account_24"
                 android:drawablePadding="8dp"
-                android:hint="성 별"
+                android:hint="성 별(M / W)"
                 android:textColorHint="#333333"
                 android:padding="8dp"
                 android:textColor="@color/black"/>

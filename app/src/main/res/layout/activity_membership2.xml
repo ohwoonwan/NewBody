@@ -49,7 +49,7 @@
             android:drawableLeft="@drawable/baseline_supervisor_account_24"
             android:drawablePadding="10dp"
             android:fontFamily="sans-serif-light"
-            android:hint="성 별 (남/여)"
+            android:hint="성 별 (M / W)"
             android:textSize="16dp"
             android:textColorHint="#333333"
             android:padding="8dp"
