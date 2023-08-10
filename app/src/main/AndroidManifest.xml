@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -28,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LoginActivity" />
         <activity android:name=".Membership" />
         <activity android:name=".Membership2" />
@@ -53,6 +55,27 @@
         <activity android:name=".record.RecordPushupMain" />
         <activity android:name=".record.RecordDumbbell" />
         <activity android:name=".record.RecordPushup" />
+        <activity android:name=".workout.Home_Training_WarmUp" />
+        <activity android:name=".workout.Home_Training_Squat1" />
+        <activity android:name=".workout.Home_Training_Squat2" />
+        <activity android:name=".workout.Home_Training_Pushup1" />
+        <activity android:name=".workout.Home_Training_Pushup2" />
+        <activity android:name=".workout.Home_Training_Rest1" />
+        <activity android:name=".workout.Home_Training_Rest2" />
+        <activity android:name=".workout.Home_Training_Rest3" />
+        <activity android:name=".workout.Home_Training_Rest4" />
+        <activity android:name=".workout.Home_Training_Rest5" />
+        <activity android:name=".workout.Home_Training_Rest6" />
+        <activity android:name=".workout.Home_Training_Rest7" />
+        <activity android:name=".workout.Home_Training_Rest8" />
+        <activity android:name=".workout.Home_Training_Rest9" />
+        <activity android:name=".workout.Home_Training_Shoulder_Press1" />
+        <activity android:name=".workout.Home_Training_Shoulder_Press2" />
+        <activity android:name=".workout.Home_Training_Leg_Raise1" />
+        <activity android:name=".workout.Home_Training_Leg_Raise2" />
+        <activity android:name=".workout.Home_Training_side_lateral_raise1" />
+        <activity android:name=".workout.Home_Training_side_lateral_raise2" />
+        <activity android:name=".workout.Home_Training_End" />
     </application>
 
 </manifest>

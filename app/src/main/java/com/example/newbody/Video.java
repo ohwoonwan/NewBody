@@ -16,6 +16,7 @@ import com.example.newbody.videoinfo.VideoDumbbell;
 import com.example.newbody.videoinfo.VideoPushups;
 import com.example.newbody.videoinfo.VideoSquat;
 import com.example.newbody.videoinfo.VideoWarmup;
+import com.example.newbody.workout.Home_Training_WarmUp;
 
 public class Video extends AppCompatActivity {
     private String selectedDifficulty; // 난이도를 저장할 변수
@@ -36,6 +37,7 @@ public class Video extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         difficulty = findViewById(R.id.difficulty);
+
         ex[0] = findViewById(R.id.ex_button1);
         ex[1] = findViewById(R.id.ex_button2);
         ex[2] = findViewById(R.id.ex_button3);
@@ -50,6 +52,11 @@ public class Video extends AppCompatActivity {
         squatVideo = findViewById(R.id.ellipse_2);
         pushupsVideo = findViewById(R.id.ellipse_3);
         dumbbellVideo = findViewById(R.id.ellipse_4);
+
+        if(selectedDifficulty == null){
+            selectedDifficulty = "쉬움"; // 초기 값은 쉬움
+            difficulty.setText(selectedDifficulty);
+        }
 
         difficulty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +111,23 @@ public class Video extends AppCompatActivity {
                 }
             });
         }
+        start.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                if (selectedDifficulty != null) {
+
+                    Intent intentSub1 = new Intent(Video.this, Home_Training_WarmUp.class);
+                    intentSub1.putExtra("difficulty", selectedDifficulty); // 선택한 난이도 정보를 넘겨줌
+                    startActivity(intentSub1);
+
+                }
+                else {
+                    Toast.makeText(Video.this, "난이도를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

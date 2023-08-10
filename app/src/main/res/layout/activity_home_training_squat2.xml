@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".workout.Home_Training_Squat2">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/warmup"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- 이전 액티비티로 이동하는 버튼 -->
+    <Button
+        android:id="@+id/prev_button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이전"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- 다음 액티비티로 이동하는 버튼 -->
+    <Button
+        android:id="@+id/next_button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <!-- 타이머 버튼 -->
+    <Button
+        android:id="@+id/startbutton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="타이머 시작"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 타이머 텍스트뷰 -->
+    <TextView
+        android:id="@+id/timerTextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="타이머"
+        app:layout_constraintBottom_toTopOf="@id/startbutton4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
