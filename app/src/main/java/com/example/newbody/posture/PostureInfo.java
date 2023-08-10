@@ -40,9 +40,9 @@ public class PostureInfo extends AppCompatActivity {
         }else if(exName.equals("덤벨 숄더 프레스")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
         }else if(exName.equals("사이드 레터럴 레이즈")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/side");
         }else if(exName.equals("레그 레이즈")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         }
         postureVideo.setVideoURI(uri);
 

@@ -13,8 +13,8 @@ import com.example.newbody.posture.PostureInfo;
 
 public class Posture extends AppCompatActivity {
     private View ex_start;
-    private View []ex = new View[4];
-    private TextView[]exName = new TextView[4];
+    private View []ex = new View[5];
+    private TextView[]exName = new TextView[5];
     private TextView selectE;
     private Button prev;
     @Override
@@ -58,6 +58,13 @@ public class Posture extends AppCompatActivity {
             }
         });
 
+        ex[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[4].getText());
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,11 +82,14 @@ public class Posture extends AppCompatActivity {
         ex[1] = findViewById(R.id.ex_button2);
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
+        ex[4] = findViewById(R.id.ex_button5);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
+        exName[4] = findViewById(R.id.ex5_name);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
+
     }
 }
