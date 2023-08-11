@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".workout.Home_Training_Rest6"
     android:background="@drawable/layout_default"
+    android:gravity="center"
     android:orientation="vertical">
 
     <VideoView
@@ -24,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="스쿼트는 최고의 하제 운동입니다!"
+            android:text="다음 운동을 위해 준비해주세요!"
             android:textColor="#9933ff"
             android:textSize="15sp" />
 

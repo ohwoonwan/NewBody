@@ -1,11 +1,14 @@
 package com.example.newbody.workout;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,11 +26,23 @@ public class Home_Training_WarmUp extends AppCompatActivity {
     private CountDownTimer timer;
     private long timeLeftInMillis; // 타이머 남은 시간을 저장할 변수
     private boolean isTimerRunning; // 타이머가 동작 중인지 여부를 저장할 변수
+    private VideoView mVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_training_warmup);
+
+        mVideoView = findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/warmup");
+        mVideoView.setVideoURI(uri);
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
 
         // 이전 액티비티로 이동하는 버튼
         prevButton = findViewById(R.id.prev_button);

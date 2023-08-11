@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".workout.Home_Training_Squat1"
     android:background="@drawable/layout_default"
+    android:gravity="center"
     android:orientation="vertical">
 
     <VideoView

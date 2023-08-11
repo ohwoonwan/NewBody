@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".workout.Home_Training_Leg_Raise1"
     android:background="@drawable/layout_default"
+    android:gravity="center"
     android:orientation="vertical">
+
 
     <VideoView
         android:id="@+id/videoView"
@@ -24,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="스쿼트는 최고의 하제 운동입니다!"
+            android:text="선명한 복근은 누구에게나 로망이죠"
             android:textColor="#9933ff"
             android:textSize="15sp" />
 
