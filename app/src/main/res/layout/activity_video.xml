@@ -128,8 +128,7 @@
                     android:layout_marginRight="30dp"
                     android:id="@+id/ex_button1"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:onClick="nextButtonClicked">
+                    android:layout_height="50dp">
 
                     <View
                         android:id="@+id/ellipse_1"
@@ -141,14 +140,12 @@
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/ellipse_1" />
 
-                    <TextView
-                        android:id="@+id/buttonText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@id/buttonText"
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
                         android:layout_centerInParent="true"
-                        android:text=">"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp" />
+                        android:src="@drawable/next_button" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -206,8 +203,7 @@
                     android:layout_marginRight="30dp"
                     android:id="@+id/ex_button2"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:onClick="nextButtonClicked">
+                    android:layout_height="50dp">
 
                     <View
                         android:id="@+id/ellipse_2"
@@ -219,14 +215,12 @@
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/ellipse_1" />
 
-                    <TextView
-                        android:id="@+id/buttonText2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text=">"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp" />
+                    <ImageView
+                        android:id="@id/buttonText"
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/next_button"
+                        android:layout_centerInParent="true" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -284,8 +278,7 @@
                     android:layout_marginRight="30dp"
                     android:id="@+id/ex_button3"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:onClick="nextButtonClicked">
+                    android:layout_height="50dp">
 
                     <View
                         android:id="@+id/ellipse_3"
@@ -297,14 +290,12 @@
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/ellipse_1" />
 
-                    <TextView
-                        android:id="@+id/buttonText3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text=">"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp" />
+                    <ImageView
+                        android:id="@id/buttonText"
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/next_button"
+                        android:layout_centerInParent="true" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -362,8 +353,7 @@
                     android:layout_marginRight="30dp"
                     android:id="@+id/ex_button4"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:onClick="nextButtonClicked">
+                    android:layout_height="50dp">
 
                     <View
                         android:id="@+id/ellipse_4"
@@ -375,14 +365,12 @@
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/ellipse_1" />
 
-                    <TextView
-                        android:id="@+id/buttonText4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text=">"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp" />
+                    <ImageView
+                        android:id="@id/buttonText"
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/next_button"
+                        android:layout_centerInParent="true" />
 
                 </RelativeLayout>
 
@@ -441,8 +429,7 @@
                     android:layout_marginRight="30dp"
                     android:id="@+id/ex_button5"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:onClick="nextButtonClicked">
+                    android:layout_height="50dp">
 
                     <View
                         android:id="@+id/ellipse_5"
@@ -454,14 +441,12 @@
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/ellipse_1" />
 
-                    <TextView
-                        android:id="@+id/buttonText5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text=">"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp" />
+                    <ImageView
+                        android:id="@id/buttonText"
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/next_button"
+                        android:layout_centerInParent="true" />
 
                 </RelativeLayout>
             </LinearLayout>

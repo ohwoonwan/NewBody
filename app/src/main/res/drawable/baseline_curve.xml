@@ -1,10 +1,35 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="60dp"
     android:height="60dp"
     android:viewportWidth="60"
     android:viewportHeight="60">
+
+    <!-- 첫 번째 벡터 (배경) -->
     <path
         android:strokeColor="#FFF7F8F8"
         android:strokeWidth="0.5"
         android:pathData="M30 0.25A29.75 29.75 0 1 0 30 59.75 29.75 29.75 0 1 0 30 0.25z"/>
+
+    <!-- 두 번째 벡터 (y좌표를 15만큼 올림) -->
+    <path
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M60 30C60 13.43 46.57 0 30 0">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:type="linear"
+                android:startX="60"
+                android:startY="30"
+                android:endX="20.02"
+                android:endY="26.91">
+                <item
+                    android:color="#FF92A3FD"
+                    android:offset="0"/>
+                <item
+                    android:color="#FF9DCEFF"
+                    android:offset="1"/>
+            </gradient>
+        </aapt:attr>
+    </path>
 </vector>
