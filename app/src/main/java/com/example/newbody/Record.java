@@ -301,6 +301,9 @@ public class Record extends AppCompatActivity {
                     }
                     startActivity(intent);
                 }
+            }else if(str.equals("이전")){
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
             }
         }
     }
