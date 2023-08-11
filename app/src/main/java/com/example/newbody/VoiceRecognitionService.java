@@ -82,12 +82,11 @@ public class VoiceRecognitionService extends Service {
             public void onResults(Bundle results) {
                 ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 if (matches != null && matches.size() > 0) {
-                    if (matches.contains("시리야")) {
+                    if (matches.contains("바디야") || matches.contains("뉴바디")) {
                         sendResult(1);
-                        return;
                     }
                 }
-                mSpeechRecognizer.startListening(mRecognizerIntent);
+                new android.os.Handler().postDelayed(() -> mSpeechRecognizer.startListening(mRecognizerIntent), 2000);
             }
 
 
@@ -97,7 +96,6 @@ public class VoiceRecognitionService extends Service {
             @Override
             public void onEvent(int eventType, Bundle params) {}
         });
-
         mSpeechRecognizer.startListening(mRecognizerIntent);
     }
 
