@@ -231,21 +231,21 @@ public class Record extends AppCompatActivity {
                     time.setText(select_time);
                     selectT.setText("3분");
                 }
-            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") ||
-                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("레그 레이즈")){
+            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
                 if(str.equals("스쿼트")){
                     selectE.setText(exName[0].getText());
                     select_num = 1;
                 }else if(str.equals("푸쉬업")){
                     selectE.setText(exName[1].getText());
                     select_num = 2;
-                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨")){
+                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
                     selectE.setText(exName[2].getText());
                     select_num = 3;
-                }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레")){
+                }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
                     selectE.setText(exName[3].getText());
                     select_num = 4;
-                }else if(str.equals("레그 레이즈")){
+                }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
                     selectE.setText(exName[4].getText());
                     select_num = 5;
                 }
@@ -332,8 +332,8 @@ public class Record extends AppCompatActivity {
         String language = "ko-KR";
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 5000);
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 2000);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 10000);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 3000);
         startActivityForResult(intent, 2);
     }
 
