@@ -69,9 +69,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="'덤벨 숄더 프레스는 덤벨을 이용하는 운동입니다.'"
+            android:text="덤벨 숄더 프레스는 덤벨을 이용하는 운동입니다."
             android:textColor="@color/black"
             android:textSize="17sp"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전면 삼각근을 발달시킬 수 있는 근력 운동 중 하나입니다.  "
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -89,7 +97,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전면 삼각근을 발달시킬 수 있는 근력 운동 중 하나입니다.  "
+            android:text="허리가 꺾이지 않도록 주의하세요."
             android:textColor="@color/black"
             android:textSize="16sp"/>
 

@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="이름"
+            android:text="이 름"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -119,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="성별"
+            android:text="성 별"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -135,7 +135,7 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_supervisor_account_24"
                 android:drawablePadding="8dp"
-                android:hint="성 별"
+                android:hint="성 별(M / W)"
                 android:textColorHint="#333333"
                 android:padding="8dp"
                 android:textColor="@color/black"/>

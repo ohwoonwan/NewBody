@@ -74,20 +74,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="신체를 효과적이고 효율적으로 사용할 수 있게 해준다. "
+            android:text="신체를 효과적이고 효율적으로 사용할 수 있게 해줍니다."
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="그리고 잘못된 자세는 근육의 밸런스를 떨어뜨리고"
+            android:text="잘못된 자세는 근육의 밸런스를 떨어뜨리고"
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="관절과 근육에 스트레스를 주어 통증을 유발합니다. "
+            android:text="관절과 근육에 스트레스를 주어 통증을 유발합니다."
             android:textColor="@color/black"
             android:textSize="16sp"/>
     </LinearLayout>

@@ -25,7 +25,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="60dp"
-            android:onClick="nextButtonClicked">
+            android:onClick="nextButtonClicked"
+            android:contentDescription="다음 페이지로 이동">
 
             <View
                 android:id="@+id/ellipse_1"
@@ -37,15 +38,12 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/ellipse_1" />
 
-            <TextView
-                android:id="@+id/buttonText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:text=">"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
+            <ImageView
+                android:id="@id/buttonText"
+                android:layout_width="10dp"
+                android:layout_height="14dp"
+                android:src="@drawable/next_button"
+                android:layout_centerInParent="true" />
 
         </RelativeLayout>
     </LinearLayout>
