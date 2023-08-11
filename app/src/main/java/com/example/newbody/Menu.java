@@ -184,6 +184,7 @@ public class Menu extends AppCompatActivity {
                 }
             }
         }
+        restartVoiceRecognitionService();
     }
 
     private void restartVoiceRecognitionService() {
