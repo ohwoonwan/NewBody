@@ -35,6 +35,9 @@ public class Home_Training_Pushup2 extends AppCompatActivity {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/pushups");
         mVideoView.setVideoURI(uri);
 
+        startVideo();//반복재생
+
+
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -69,9 +72,11 @@ public class Home_Training_Pushup2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isTimerRunning) {
-                    pauseTimer(); // 타이머가 동작 중이면 일시정지
+                    pauseTimer(); // 타이머 일시정지
+                    pauseVideo(); // 동영상 일시정지
                 } else {
-                    startTimer(); // 타이머가 동작 중이 아니면 시작
+                    startTimer(); // 타이머 시작
+                    startVideo(); // 동영상 재생
                 }
             }
         });
@@ -167,6 +172,27 @@ public class Home_Training_Pushup2 extends AppCompatActivity {
             timerButton.setText("PAUSE");
         }
     }
+    private void startVideo() {
+        if (mVideoView != null) {
+            mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // 동영상이 끝나면 다시 재생
+                    mp.start();
+                }
+            });
+
+            if (!mVideoView.isPlaying()) {
+                mVideoView.start();
+            }
+        }
+    }
+
+    private void pauseVideo() {
+        if (mVideoView != null && mVideoView.isPlaying()) {
+            mVideoView.pause();
+        }
+    }
 
     private void pauseTimer() {
         if (timer != null) {
@@ -185,6 +211,7 @@ public class Home_Training_Pushup2 extends AppCompatActivity {
             timer.cancel();
         }
     }
+
     @Override
     public void onBackPressed() {
         // 액티비티 넘어가면 종료되면 타이머도 함께 종료

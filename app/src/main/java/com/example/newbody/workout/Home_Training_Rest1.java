@@ -35,6 +35,8 @@ public class Home_Training_Rest1 extends AppCompatActivity {
         mVideoView = findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/rest");
         mVideoView.setVideoURI(uri);
+        startVideo();//반복재생
+
 
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -70,12 +72,15 @@ public class Home_Training_Rest1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isTimerRunning) {
-                    pauseTimer(); // 타이머가 동작 중이면 일시정지
+                    pauseTimer(); // 타이머 일시정지
+                    pauseVideo(); // 동영상 일시정지
                 } else {
-                    startTimer(); // 타이머가 동작 중이 아니면 시작
+                    startTimer(); // 타이머 시작
+                    startVideo(); // 동영상 재생
                 }
             }
         });
+
 
         // MainActivity로부터 선택한 난이도를 받아옴
         Intent intent = getIntent();
@@ -166,6 +171,27 @@ public class Home_Training_Rest1 extends AppCompatActivity {
 
             isTimerRunning = true;
             timerButton.setText("PAUSE");
+        }
+    }
+    private void startVideo() {
+        if (mVideoView != null) {
+            mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // 동영상이 끝나면 다시 재생
+                    mp.start();
+                }
+            });
+
+            if (!mVideoView.isPlaying()) {
+                mVideoView.start();
+            }
+        }
+    }
+
+    private void pauseVideo() {
+        if (mVideoView != null && mVideoView.isPlaying()) {
+            mVideoView.pause();
         }
     }
 
