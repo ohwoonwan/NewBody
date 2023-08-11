@@ -10,6 +10,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
@@ -84,6 +85,7 @@ public class VoiceRecognitionService extends Service {
                 if (matches != null && matches.size() > 0) {
                     if (matches.contains("바디야") || matches.contains("뉴바디")) {
                         sendResult(1);
+                        Log.d("bodyTest", "body");
                     }
                 }
                 new android.os.Handler().postDelayed(() -> mSpeechRecognizer.startListening(mRecognizerIntent), 2000);

@@ -5,15 +5,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,6 +26,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
+
+    private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fm;
@@ -41,6 +47,7 @@ public class Menu extends AppCompatActivity {
         selectMenu = 0;
         bottomNavigationView = findViewById(R.id.bottomNavi);
 
+        requestMicrophonePermission();
         Intent intent = new Intent(this, VoiceRecognitionService.class);
         startService(intent);
 
@@ -131,6 +138,30 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void requestMicrophonePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 허용되지 않은 경우 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_RECORD_AUDIO);
+        } else {
+            // 권한이 이미 허용된 경우
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_RECORD_AUDIO:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 허용됨
+                } else {
+                    // 권한이 거부됨
+                    Toast.makeText(this, "Microphone permission is required for this feature.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
