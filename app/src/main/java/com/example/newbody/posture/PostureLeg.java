@@ -1,6 +1,7 @@
 package com.example.newbody.posture;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -10,14 +11,20 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +36,7 @@ import com.example.newbody.Posture;
 import com.example.newbody.R;
 import com.example.newbody.TargetPose;
 import com.example.newbody.TargetShape;
+import com.example.newbody.VoiceRecognitionService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -39,6 +47,7 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,6 +76,9 @@ public class PostureLeg extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posture_leg);
+
+        Intent intentS = new Intent(this, VoiceRecognitionService.class);
+        startService(intentS);
 
         initTargetPoses();
         initViews();
@@ -296,5 +308,72 @@ public class PostureLeg extends AppCompatActivity {
                 startInit();
             }
         }
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int resultCode = intent.getIntExtra("resultCode", Activity.RESULT_CANCELED);
+            if (resultCode == 1) {
+                VoiceTask voiceTask = new VoiceTask();
+                voiceTask.execute();
+            }
+        }
+    };
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String str = results.get(0);
+            if(str.equals("나가기") || str.equals("종료")){
+                Intent intent = new Intent(PostureLeg.this, Posture.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    private void restartVoiceRecognitionService() {
+        Intent intent = new Intent(this, VoiceRecognitionService.class);
+        startService(intent);
+    }
+
+    public class VoiceTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getVoice();
+        }
+    }
+
+    private void getVoice() {
+        Intent intent = new Intent();
+        intent.setAction(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        String language = "ko-KR";
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 5000);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 2000);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 브로드캐스트 리시버 등록
+        registerReceiver(receiver, new IntentFilter("com.example.newbody.RESULT_ACTION"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 브로드캐스트 리시버 등록 해제
+        unregisterReceiver(receiver);
     }
 }

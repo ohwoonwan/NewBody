@@ -1,7 +1,11 @@
 package com.example.newbody;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +26,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 public class Calendar extends Fragment {
-    private View view;
+    private View view, mic_button;
     private String readDay = null;
     private String str = null;
     private CalendarView calendarView;
@@ -50,6 +56,7 @@ public class Calendar extends Fragment {
         cha_Btn = view.findViewById(R.id.cha_Btn);
         textView2 = view.findViewById(R.id.textView2);
         contextEditText = view.findViewById(R.id.contextEditText);
+        mic_button = view.findViewById(R.id.mic_button);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         // Firebase 데이터베이스 참조를 초기화합니다.
@@ -65,9 +72,18 @@ public class Calendar extends Fragment {
                 textView2.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
+                mic_button.setVisibility(View.VISIBLE);
                 diaryTextView.setText(String.format("%d / %d / %d", year, month + 1, dayOfMonth));
                 contextEditText.setText("");
                 checkDay(year, month, dayOfMonth);
+            }
+        });
+
+        mic_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VoiceTask voiceTask = new VoiceTask();
+                voiceTask.execute();
             }
         });
 
@@ -80,11 +96,47 @@ public class Calendar extends Fragment {
                 save_Btn.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.VISIBLE);
                 del_Btn.setVisibility(View.VISIBLE);
+                mic_button.setVisibility(View.INVISIBLE);
                 contextEditText.setVisibility(View.INVISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
         });
         return view;
+    }
+
+    public class VoiceTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getVoice();
+        }
+    }
+
+    private void getVoice() {
+        Intent intent = new Intent();
+        intent.setAction(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        String language = "ko-KR";
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 10000);  // 10초
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 5000);  // 5초
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String str = results.get(0);
+            contextEditText.setText(str);
+        }
     }
     public void checkDay(int cYear, int cMonth, int cDay) {
         readDay = "" + cYear + "-" + (cMonth + 1) + "" + "-" + cDay;
@@ -101,6 +153,7 @@ public class Calendar extends Fragment {
                     // 데이터가 있으므로 textView2를 보여주고 contextEditText를 숨깁니다.
                     textView2.setVisibility(View.VISIBLE);
                     contextEditText.setVisibility(View.INVISIBLE);
+                    mic_button.setVisibility(View.INVISIBLE);
 
                     // 저장 버튼을 보여주고 수정, 삭제 버튼을 숨깁니다.
                     save_Btn.setVisibility(View.INVISIBLE);
@@ -111,6 +164,7 @@ public class Calendar extends Fragment {
                     textView2.setVisibility(View.INVISIBLE);
 
                     diaryTextView.setVisibility(View.VISIBLE);
+                    mic_button.setVisibility(View.VISIBLE);
                     save_Btn.setVisibility(View.VISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
                     del_Btn.setVisibility(View.INVISIBLE);
