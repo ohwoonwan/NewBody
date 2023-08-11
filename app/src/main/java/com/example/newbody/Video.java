@@ -1,31 +1,39 @@
 package com.example.newbody;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newbody.posture.PostureInfo;
 import com.example.newbody.videoinfo.VideoDumbbell;
 import com.example.newbody.videoinfo.VideoPushups;
 import com.example.newbody.videoinfo.VideoSquat;
 import com.example.newbody.videoinfo.VideoWarmup;
 
+import java.util.ArrayList;
+
 public class Video extends AppCompatActivity {
     private String selectedDifficulty; // 난이도를 저장할 변수
     private long[] totalTimesInMillis = {1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000};
 
-    private Button difficulty, start;
+    private Button difficulty, start, prev;
     private View []ex = new View[4];
     private TextView []exTime = new TextView[4];
-    private CountDownTimer[] countDownTimers = new CountDownTimer[4];// 타이머 객체들을 저장할 배열
-    private boolean isTimerRunning = false; // 타이머 실행 여부를 확인하는 변수
     private View warmupVideo;
     private View pushupsVideo;
     private View squatVideo;
@@ -34,6 +42,9 @@ public class Video extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
+        Intent intent = new Intent(this, VoiceRecognitionService.class);
+        startService(intent);
 
         difficulty = findViewById(R.id.difficulty);
         ex[0] = findViewById(R.id.ex_button1);
@@ -45,11 +56,21 @@ public class Video extends AppCompatActivity {
         exTime[2] = findViewById(R.id.time3);
         exTime[3] = findViewById(R.id.time4);
         start = findViewById(R.id.start_b);
+        prev = findViewById(R.id.prevButtonTraning);
 
         warmupVideo = findViewById(R.id.ellipse_1);
         squatVideo = findViewById(R.id.ellipse_2);
         pushupsVideo = findViewById(R.id.ellipse_3);
         dumbbellVideo = findViewById(R.id.ellipse_4);
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         difficulty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,21 +111,6 @@ public class Video extends AppCompatActivity {
             }
         });
 
-        // 버튼들에 대해 클릭 이벤트 리스너를 설정
-        for (int i = 0; i < ex.length; i++) {
-            final int index = i;
-            ex[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isTimerRunning) { // 타이머가 실행 중이 아닐 때만 타이머 시작
-                        startTimer(index);
-                    } else {
-                        Toast.makeText(Video.this, "다른 타이머가 실행 중입니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-
     }
 
     private void showDifficultyDialog() {
@@ -130,36 +136,104 @@ public class Video extends AppCompatActivity {
         });
         builder.show();
     }
-    // 타이머 시작 메소드
-    private void startTimer(final int index) {
-        // 기존에 존재하는 타이머를 취소하고 새로운 타이머를 생성하여 시작
-        if (countDownTimers[index] != null) {
-            countDownTimers[index].cancel();
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int resultCode = intent.getIntExtra("resultCode", Activity.RESULT_CANCELED);
+            if (resultCode == 1) {
+                VoiceTask voiceTask = new VoiceTask();
+                voiceTask.execute();
+            }
+        }
+    };
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String str = results.get(0);
+            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") ||
+                    str.equals("레그레이즈") || str.equals("준비 운동") || str.equals("준비운동")){
+                if(str.equals("스쿼트")){
+                    Intent intent = new Intent(getApplicationContext(), VideoSquat.class);
+                    startActivity(intent);
+                }else if(str.equals("푸쉬업")){
+                    Intent intent = new Intent(getApplicationContext(), VideoPushups.class);
+                    startActivity(intent);
+                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
+                    Intent intent = new Intent(getApplicationContext(), VideoDumbbell.class);
+                    startActivity(intent);
+                }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
+                    Intent intent = new Intent(getApplicationContext(), VideoSquat.class);
+                    startActivity(intent);
+                }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
+                    Intent intent = new Intent(getApplicationContext(), VideoWarmup.class);
+                    startActivity(intent);
+                }else if(str.equals("준비 운동") || str.equals("준비운동")){
+                    Intent intent = new Intent(getApplicationContext(), VideoWarmup.class);
+                    startActivity(intent);
+                }
+            }else if(str.equals("쉬움") || str.equals("보통") || str.equals("어려움")){
+                difficulty.setText(str);
+                // 선택한 난이도에 따라 시간 배열을 업데이트
+                if (str.equals("쉬움")) {
+                    totalTimesInMillis = new long[]{1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000, 4 * 60 * 1000};
+                } else if (str.equals("보통")) {
+                    totalTimesInMillis = new long[]{2 * 10 * 1000, 4 * 60 * 1000, 6 * 60 * 1000, 7 * 60 * 1000};
+                } else if (str.equals("어려움")) {
+                    totalTimesInMillis = new long[]{4 * 10 * 1000, 4 * 60 * 1000, 12 * 60 * 1000, 14 * 60 * 1000};
+                }
+            }else if(str.equals("이전")){
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    private void restartVoiceRecognitionService() {
+        Intent intent = new Intent(this, VoiceRecognitionService.class);
+        startService(intent);
+    }
+
+    public class VoiceTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            return null;
         }
 
-        ex[index].setVisibility(View.GONE);
-        exTime[index].setVisibility(View.VISIBLE);
-        countDownTimers[index] = new CountDownTimer(totalTimesInMillis[index], 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // 남은 시간을 분과 초로 변환하여 버튼에 표시
-                long minutes = millisUntilFinished / 60000;
-                long seconds = (millisUntilFinished % 60000) / 1000;
-                String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
-                exTime[index].setText(timeLeftFormatted);
-            }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getVoice();
+        }
+    }
 
-            @Override
-            public void onFinish() {
-                exTime[index].setText("END"); // 타이머가 종료되면 버튼 텍스트를 "END"로 변경
-                // 타이머가 끝난 후 처리할 작업을 추가 가능
-                isTimerRunning = false; // 타이머 종료 시 isTimerRunning을 false로 변경
+    private void getVoice() {
+        Intent intent = new Intent();
+        intent.setAction(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        String language = "ko-KR";
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 10000);
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 3000);
+        startActivityForResult(intent, 2);
+    }
 
-                ex[index].setVisibility(View.VISIBLE);
-                exTime[index].setVisibility(View.GONE);
-            }
-        };
-        countDownTimers[index].start();
-        isTimerRunning = true; // 타이머 시작 시 isTimerRunning을 true로 변경
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 브로드캐스트 리시버 등록
+        registerReceiver(receiver, new IntentFilter("com.example.newbody.RESULT_ACTION"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 브로드캐스트 리시버 등록 해제
+        unregisterReceiver(receiver);
     }
 }
