@@ -51,7 +51,7 @@ public class Home_Training_WarmUp extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
 
         // 타이머 버튼
-        timerButton = findViewById(R.id.startButton);
+        timerButton = findViewById(R.id.startbutton);
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

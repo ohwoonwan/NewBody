@@ -50,7 +50,7 @@ public class Home_Training_Squat1 extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView2);
 
         // 타이머 버튼
-        timerButton = findViewById(R.id.startButton2);
+        timerButton = findViewById(R.id.startbutton2);
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,63 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".workout.Home_Training_Squat1">
+    tools:context=".workout.Home_Training_Squat1"
+    android:background="@drawable/layout_default"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="532dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="스쿼트는 최고의 하제 운동입니다!"
+            android:textColor="#9933ff"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/warmup"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <!-- 이전 액티비티로 이동하는 버튼 -->
-    <Button
-        android:id="@+id/prev_button2"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/timerTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="타이머"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="이전"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp" />
+        android:layout_weight="0"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-    <!-- 다음 액티비티로 이동하는 버튼 -->
-    <Button
-        android:id="@+id/next_button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="다음"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp" />
+        <Button
+            android:id="@+id/prev_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="이전"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
 
-    <!-- 타이머 버튼 -->
-    <Button
-        android:id="@+id/startButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="타이머 시작"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
 
-    <!-- 타이머 텍스트뷰 -->
-    <TextView
-        android:id="@+id/timerTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="타이머"
-        app:layout_constraintBottom_toTopOf="@id/startButton2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp" />
+            <Button
+                android:id="@+id/startbutton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="타이머 시작"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="다음"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
