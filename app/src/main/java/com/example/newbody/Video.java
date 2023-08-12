@@ -130,6 +130,14 @@ public class Video extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+        // 모든 액티비티를 종료하고 Home 액티비티로 이동
+        Intent intent = new Intent(this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 다른 액티비티 스택을 모두 제거
+        startActivity(intent);
+        finish(); // 현재 액티비티 종료
+    }
 
     private void showDifficultyDialog() {
         final String[] difficultyOptions = {"쉬움", "보통", "어려움"};

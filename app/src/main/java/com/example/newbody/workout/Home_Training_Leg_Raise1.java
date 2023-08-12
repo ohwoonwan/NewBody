@@ -20,7 +20,7 @@ public class Home_Training_Leg_Raise1 extends AppCompatActivity {
     private Button nextButton;
     private Button timerButton; // 타이머 버튼
     private TextView timerTextView;
-
+    private TextView CountView;
     private String selectedDifficulty;
     private CountDownTimer timer;
     private long timeLeftInMillis; // 타이머 남은 시간을 저장할 변수
@@ -31,6 +31,8 @@ public class Home_Training_Leg_Raise1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_training_leg_raise1);
+
+        CountView = findViewById(R.id.CountView14);
 
         mVideoView = findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
@@ -98,16 +100,20 @@ public class Home_Training_Leg_Raise1 extends AppCompatActivity {
         int timerDuration; // 타이머 길이를 담을 변수
         switch (selectedDifficulty) {
             case "쉬움":
-                timerDuration = 1 * 10 * 1000; // 분*초*1000
+                timerDuration = 21 * 1000; // 분*초*1000
+                CountView.setText("주어진 시간 동안 10개를 성공 시키세요!");
                 break;
             case "보통":
-                timerDuration = 1 * 20 * 1000; // 분*초*1000
+                timerDuration = 35 * 1000; // 분*초*1000
+                CountView.setText("주어진 시간 동안 15개를 성공 시키세요!");
                 break;
             case "어려움":
-                timerDuration = 1 * 30 * 1000; // 분*초*1000
+                timerDuration = 63 * 1000; // 분*초*1000
+                CountView.setText("주어진 시간 동안 20개를 성공 시키세요!");
                 break;
             default:
-                timerDuration = 1 * 30 * 1000; // 기본값은 30초로 설정
+                timerDuration = 21 * 1000; // 기본값은 30초로 설정
+                CountView.setText("주어진 시간 동안 10개를 성공 시키세요!");
         }
 
         if (isTimerRunning) {

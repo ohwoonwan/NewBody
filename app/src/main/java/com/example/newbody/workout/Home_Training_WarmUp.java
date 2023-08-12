@@ -21,6 +21,7 @@ public class Home_Training_WarmUp extends AppCompatActivity {
     private Button nextButton;
     private Button timerButton; // 타이머 버튼
     private TextView timerTextView;
+    private TextView CountView;
 
     private String selectedDifficulty;
     private CountDownTimer timer;
@@ -99,16 +100,17 @@ public class Home_Training_WarmUp extends AppCompatActivity {
         int timerDuration; // 타이머 길이를 담을 변수
         switch (selectedDifficulty) {
             case "쉬움":
-                timerDuration = 1 * 10 * 1000; // 분*초*1000
+                timerDuration = 5 * 60 * 1000; // 분*초*1000
+
                 break;
             case "보통":
-                timerDuration = 1 * 20 * 1000; // 분*초*1000
+                timerDuration = 5 * 60 * 1000; // 분*초*1000
                 break;
             case "어려움":
-                timerDuration = 1 * 30 * 1000; // 분*초*1000
+                timerDuration = 5 * 60 * 1000; // 분*초*1000
                 break;
             default:
-                timerDuration = 1 * 30 * 1000; // 기본값은 30초로 설정
+                timerDuration = 5 * 60 * 1000;
         }
 
         if (isTimerRunning) {

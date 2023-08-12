@@ -76,6 +76,11 @@
         <activity android:name=".workout.Home_Training_side_lateral_raise1" />
         <activity android:name=".workout.Home_Training_side_lateral_raise2" />
         <activity android:name=".workout.Home_Training_End" />
+        <activity
+            android:name=".Home"
+            android:label="HomeActivity">
+
+        </activity>
     </application>
 
 </manifest>
