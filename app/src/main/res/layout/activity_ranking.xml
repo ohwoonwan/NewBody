@@ -118,11 +118,16 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_weight="20"
+        android:layout_weight="15"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rankingRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp" />
     </ScrollView>
 </LinearLayout>
