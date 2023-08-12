@@ -90,9 +90,6 @@ public class Membership2 extends AppCompatActivity {
                                 Toast.makeText(Membership2.this, "Failed to save data.", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-                Intent intent = new Intent(getApplicationContext(), Membership3.class);
-                startActivity(intent);
             }
         });
 
