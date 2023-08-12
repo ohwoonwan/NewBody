@@ -24,16 +24,14 @@ import com.example.newbody.videoinfo.VideoDumbbell;
 import com.example.newbody.videoinfo.VideoPushups;
 import com.example.newbody.videoinfo.VideoSquat;
 import com.example.newbody.videoinfo.VideoWarmup;
+import com.example.newbody.workout.Home_Training_WarmUp;
 
 import java.util.ArrayList;
 
 public class Video extends AppCompatActivity {
     private String selectedDifficulty; // 난이도를 저장할 변수
-    private long[] totalTimesInMillis = {1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000};
-
     private Button difficulty, start, prev;
     private View []ex = new View[4];
-    private TextView []exTime = new TextView[4];
     private View warmupVideo;
     private View pushupsVideo;
     private View squatVideo;
@@ -51,10 +49,6 @@ public class Video extends AppCompatActivity {
         ex[1] = findViewById(R.id.ex_button2);
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
-        exTime[0] = findViewById(R.id.time1);
-        exTime[1] = findViewById(R.id.time2);
-        exTime[2] = findViewById(R.id.time3);
-        exTime[3] = findViewById(R.id.time4);
         start = findViewById(R.id.start_b);
         prev = findViewById(R.id.prevButtonTraning);
 
@@ -111,6 +105,24 @@ public class Video extends AppCompatActivity {
             }
         });
 
+        start.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                if (selectedDifficulty != null) {
+
+                    Intent intentSub1 = new Intent(Video.this, Home_Training_WarmUp.class);
+                    intentSub1.putExtra("difficulty", selectedDifficulty); // 선택한 난이도 정보를 넘겨줌
+                    startActivity(intentSub1);
+
+                }
+                else {
+                    Toast.makeText(Video.this, "난이도를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void showDifficultyDialog() {
@@ -123,15 +135,6 @@ public class Video extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 selectedDifficulty = difficultyOptions[which];
                 difficulty.setText(selectedDifficulty);
-
-                // 선택한 난이도에 따라 시간 배열을 업데이트
-                if (selectedDifficulty.equals("쉬움")) {
-                    totalTimesInMillis = new long[]{1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000, 4 * 60 * 1000};
-                } else if (selectedDifficulty.equals("보통")) {
-                    totalTimesInMillis = new long[]{2 * 10 * 1000, 4 * 60 * 1000, 6 * 60 * 1000, 7 * 60 * 1000};
-                } else if (selectedDifficulty.equals("어려움")) {
-                    totalTimesInMillis = new long[]{4 * 10 * 1000, 4 * 60 * 1000, 12 * 60 * 1000, 14 * 60 * 1000};
-                }
             }
         });
         builder.show();
@@ -178,18 +181,22 @@ public class Video extends AppCompatActivity {
                 }
             }else if(str.equals("쉬움") || str.equals("보통") || str.equals("어려움")){
                 difficulty.setText(str);
-                // 선택한 난이도에 따라 시간 배열을 업데이트
-                if (str.equals("쉬움")) {
-                    totalTimesInMillis = new long[]{1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000, 4 * 60 * 1000};
-                } else if (str.equals("보통")) {
-                    totalTimesInMillis = new long[]{2 * 10 * 1000, 4 * 60 * 1000, 6 * 60 * 1000, 7 * 60 * 1000};
-                } else if (str.equals("어려움")) {
-                    totalTimesInMillis = new long[]{4 * 10 * 1000, 4 * 60 * 1000, 12 * 60 * 1000, 14 * 60 * 1000};
-                }
+                selectedDifficulty = difficulty.getText().toString();
             }else if(str.equals("이전")){
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                 startActivity(intent);
                 finish();
+            }else if(str.equals("시작") || str.equals("운동 시작")){
+                if (selectedDifficulty != null) {
+
+                    Intent intentSub1 = new Intent(Video.this, Home_Training_WarmUp.class);
+                    intentSub1.putExtra("difficulty", selectedDifficulty); // 선택한 난이도 정보를 넘겨줌
+                    startActivity(intentSub1);
+
+                }
+                else {
+                    Toast.makeText(Video.this, "난이도를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

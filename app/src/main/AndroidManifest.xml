@@ -64,6 +64,27 @@
         <activity android:name=".posture.PosturePushup" />
         <activity android:name=".posture.PostureSquat" />
         <activity android:name=".posture.PostureLeg" />
+        <activity android:name=".workout.Home_Training_WarmUp" />
+        <activity android:name=".workout.Home_Training_Squat1" />
+        <activity android:name=".workout.Home_Training_Squat2" />
+        <activity android:name=".workout.Home_Training_Pushup1" />
+        <activity android:name=".workout.Home_Training_Pushup2" />
+        <activity android:name=".workout.Home_Training_Rest1" />
+        <activity android:name=".workout.Home_Training_Rest2" />
+        <activity android:name=".workout.Home_Training_Rest3" />
+        <activity android:name=".workout.Home_Training_Rest4" />
+        <activity android:name=".workout.Home_Training_Rest5" />
+        <activity android:name=".workout.Home_Training_Rest6" />
+        <activity android:name=".workout.Home_Training_Rest7" />
+        <activity android:name=".workout.Home_Training_Rest8" />
+        <activity android:name=".workout.Home_Training_Rest9" />
+        <activity android:name=".workout.Home_Training_Shoulder_Press1" />
+        <activity android:name=".workout.Home_Training_Shoulder_Press2" />
+        <activity android:name=".workout.Home_Training_Leg_Raise1" />
+        <activity android:name=".workout.Home_Training_Leg_Raise2" />
+        <activity android:name=".workout.Home_Training_side_lateral_raise1" />
+        <activity android:name=".workout.Home_Training_side_lateral_raise2" />
+        <activity android:name=".workout.Home_Training_End" />
         <service android:name=".VoiceRecognitionService" />
     </application>
 
