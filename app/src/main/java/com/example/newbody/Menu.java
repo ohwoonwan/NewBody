@@ -163,15 +163,19 @@ public class Menu extends AppCompatActivity {
                 if(str.equals("자세교정") || str.equals("자세 교정")){
                     Intent intent = new Intent(getApplicationContext(), Posture.class);
                     startActivity(intent);
+                    finish();
                 }else if(str.equals("홈트레이닝") || str.equals("홈 트레이닝")){
                     Intent intent = new Intent(getApplicationContext(), Video.class);
                     startActivity(intent);
+                    finish();
                 }else if(str.equals("기록측정") || str.equals("기록 측정")){
                     Intent intent = new Intent(getApplicationContext(), Record.class);
                     startActivity(intent);
+                    finish();
                 }else if(str.equals("랭킹") || str.equals("순위")){
                     Intent intent = new Intent(getApplicationContext(), Ranking.class);
                     startActivity(intent);
+                    finish();
                 }
             }else if(selectMenu == 1){
                 if(str.equals("사진 촬영") || str.equals("사진촬영")) {
