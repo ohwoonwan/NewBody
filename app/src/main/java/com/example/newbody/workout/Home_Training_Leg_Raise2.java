@@ -223,7 +223,7 @@ public class Home_Training_Leg_Raise2 extends AppCompatActivity {
         if (timer != null) {
             timer.cancel();
         }
-        Intent prevIntent = new Intent(Home_Training_Leg_Raise2.this, Home_Training_Rest7.class);
+        Intent prevIntent = new Intent(Home_Training_Leg_Raise2.this, Home_Training_Rest9.class);
         prevIntent.putExtra("difficulty", selectedDifficulty); // 선택된 난이도를 이전 액티비티로 전달
         startActivity(prevIntent);
         finish();
@@ -243,7 +243,7 @@ public class Home_Training_Leg_Raise2 extends AppCompatActivity {
         if (timer != null) {
             timer.cancel();
         }
-        Intent intentSub2 = new Intent(Home_Training_Leg_Raise2.this, Home_Training_Rest8.class);
+        Intent intentSub2 = new Intent(Home_Training_Leg_Raise2.this, Home_Training_End.class);
         intentSub2.putExtra("difficulty", selectedDifficulty); // 선택된 난이도를 Home_Training_Squaut1로 전달
         startActivity(intentSub2);
     }

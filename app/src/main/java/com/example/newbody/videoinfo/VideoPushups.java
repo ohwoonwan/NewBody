@@ -21,6 +21,8 @@ public class VideoPushups extends AppCompatActivity {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/pushups");
         mVideoView.setVideoURI(uri);
 
+        startVideo();
+
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -28,5 +30,21 @@ public class VideoPushups extends AppCompatActivity {
             }
         });
     }
+    private void startVideo() {
+        if (mVideoView != null) {
+            mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // 동영상이 끝나면 다시 재생
+                    mp.start();
+                }
+            });
+
+            if (!mVideoView.isPlaying()) {
+                mVideoView.start();
+            }
+        }
+    }
+
 
 }

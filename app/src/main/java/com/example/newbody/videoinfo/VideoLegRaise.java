@@ -9,20 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newbody.R;
 
-public class VideoDumbbell extends AppCompatActivity {
+public class VideoLegRaise extends AppCompatActivity {
 
     private VideoView mVideoView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_dumbbell);
+        setContentView(R.layout.activity_video_legraise);
 
-        mVideoView = findViewById(R.id.dumbbell);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbell");
+        mVideoView = findViewById(R.id.legraise);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         mVideoView.setVideoURI(uri);
 
         startVideo();
-
 
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -31,6 +30,7 @@ public class VideoDumbbell extends AppCompatActivity {
             }
         });
     }
+
     private void startVideo() {
         if (mVideoView != null) {
             mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
