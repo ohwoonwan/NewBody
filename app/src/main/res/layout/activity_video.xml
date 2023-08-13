@@ -17,25 +17,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <Button
                 android:id="@+id/prevButtonTraning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="이전"
+                android:layout_marginLeft="15dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:textSize="15sp"
                 android:textColor="@color/black"
-                android:background="#ffffff"/>
+                android:background="@drawable/prevbutton"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center">
                 <TextView
-                    android:layout_marginRight="100dp"
+                    android:layout_marginRight="70dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="홈트레이닝"
+                    android:text="홈 트레이닝"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
