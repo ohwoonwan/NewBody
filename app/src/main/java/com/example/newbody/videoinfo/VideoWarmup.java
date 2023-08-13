@@ -62,6 +62,14 @@ public class VideoWarmup extends AppCompatActivity {
             }
         });
 
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                // 동영상 재생이 완료되면 다시 시작
+                mVideoView.start();
+            }
+        });
+
 
     }
 

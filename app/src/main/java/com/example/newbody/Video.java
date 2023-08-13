@@ -21,23 +21,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newbody.posture.PostureInfo;
 import com.example.newbody.videoinfo.VideoDumbbell;
+import com.example.newbody.videoinfo.VideoLegRaise;
 import com.example.newbody.videoinfo.VideoPushups;
+import com.example.newbody.videoinfo.VideoSide;
 import com.example.newbody.videoinfo.VideoSquat;
 import com.example.newbody.videoinfo.VideoWarmup;
+import com.example.newbody.workout.Home_Training_WarmUp;
 
 import java.util.ArrayList;
 
 public class Video extends AppCompatActivity {
     private String selectedDifficulty; // 난이도를 저장할 변수
-    private long[] totalTimesInMillis = {1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000, 1 * 10 * 1000};
-
     private Button difficulty, start, prev;
-    private View []ex = new View[4];
-    private TextView []exTime = new TextView[4];
+    private View []ex = new View[6];
+    private TextView[] LevelCountView = new TextView[6];
     private View warmupVideo;
     private View pushupsVideo;
     private View squatVideo;
     private View dumbbellVideo;
+    private View sideVideo;
+    private View legraiseVideo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +54,14 @@ public class Video extends AppCompatActivity {
         ex[1] = findViewById(R.id.ex_button2);
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
-        exTime[0] = findViewById(R.id.time1);
-        exTime[1] = findViewById(R.id.time2);
-        exTime[2] = findViewById(R.id.time3);
-        exTime[3] = findViewById(R.id.time4);
+        ex[4] = findViewById(R.id.ex_button5);
+        ex[5] = findViewById(R.id.ex_button6);
+        LevelCountView[0] = findViewById(R.id.levelcountview1);
+        LevelCountView[1] = findViewById(R.id.levelcountview2);
+        LevelCountView[2] = findViewById(R.id.levelcountview3);
+        LevelCountView[3] = findViewById(R.id.levelcountview4);
+        LevelCountView[4] = findViewById(R.id.levelcountview5);
+        LevelCountView[5] = findViewById(R.id.levelcountview6);
         start = findViewById(R.id.start_b);
         prev = findViewById(R.id.prevButtonTraning);
 
@@ -62,6 +69,8 @@ public class Video extends AppCompatActivity {
         squatVideo = findViewById(R.id.ellipse_2);
         pushupsVideo = findViewById(R.id.ellipse_3);
         dumbbellVideo = findViewById(R.id.ellipse_4);
+        sideVideo = findViewById(R.id.ellipse_5);
+        legraiseVideo = findViewById(R.id.ellipse_6);
 
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +120,40 @@ public class Video extends AppCompatActivity {
             }
         });
 
+        sideVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), VideoSide.class);
+                startActivity(intent);
+            }
+        });
+
+        legraiseVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), VideoLegRaise.class);
+                startActivity(intent);
+            }
+        });
+
+        start.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                if (selectedDifficulty != null) {
+
+                    Intent intentSub1 = new Intent(Video.this, Home_Training_WarmUp.class);
+                    intentSub1.putExtra("difficulty", selectedDifficulty); // 선택한 난이도 정보를 넘겨줌
+                    startActivity(intentSub1);
+
+                }
+                else {
+                    Toast.makeText(Video.this, "난이도를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void showDifficultyDialog() {
@@ -126,11 +169,20 @@ public class Video extends AppCompatActivity {
 
                 // 선택한 난이도에 따라 시간 배열을 업데이트
                 if (selectedDifficulty.equals("쉬움")) {
-                    totalTimesInMillis = new long[]{1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000, 4 * 60 * 1000};
+                    LevelCountView[1].setText("15"); // 스쿼트
+                    LevelCountView[2].setText("7"); // 푸시업
+                    LevelCountView[4].setText("15"); // 사레레
+                    LevelCountView[5].setText("7"); // 레그라이즈
                 } else if (selectedDifficulty.equals("보통")) {
-                    totalTimesInMillis = new long[]{2 * 10 * 1000, 4 * 60 * 1000, 6 * 60 * 1000, 7 * 60 * 1000};
+                    LevelCountView[1].setText("20"); // 스쿼트
+                    LevelCountView[2].setText("20"); // 푸시업
+                    LevelCountView[4].setText("25"); // 사레레
+                    LevelCountView[5].setText("15"); // 레그라이즈
                 } else if (selectedDifficulty.equals("어려움")) {
-                    totalTimesInMillis = new long[]{4 * 10 * 1000, 4 * 60 * 1000, 12 * 60 * 1000, 14 * 60 * 1000};
+                    LevelCountView[1].setText("25"); // 스쿼트
+                    LevelCountView[2].setText("35"); // 푸시업
+                    LevelCountView[4].setText("35"); // 사레레
+                    LevelCountView[5].setText("20"); // 레그라이즈
                 }
             }
         });
@@ -167,10 +219,10 @@ public class Video extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), VideoDumbbell.class);
                     startActivity(intent);
                 }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
-                    Intent intent = new Intent(getApplicationContext(), VideoSquat.class);
+                    Intent intent = new Intent(getApplicationContext(), VideoSide.class);
                     startActivity(intent);
                 }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
-                    Intent intent = new Intent(getApplicationContext(), VideoWarmup.class);
+                    Intent intent = new Intent(getApplicationContext(), VideoLegRaise.class);
                     startActivity(intent);
                 }else if(str.equals("준비 운동") || str.equals("준비운동")){
                     Intent intent = new Intent(getApplicationContext(), VideoWarmup.class);
@@ -178,18 +230,40 @@ public class Video extends AppCompatActivity {
                 }
             }else if(str.equals("쉬움") || str.equals("보통") || str.equals("어려움")){
                 difficulty.setText(str);
+                selectedDifficulty = difficulty.getText().toString();
+
                 // 선택한 난이도에 따라 시간 배열을 업데이트
-                if (str.equals("쉬움")) {
-                    totalTimesInMillis = new long[]{1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000, 4 * 60 * 1000};
-                } else if (str.equals("보통")) {
-                    totalTimesInMillis = new long[]{2 * 10 * 1000, 4 * 60 * 1000, 6 * 60 * 1000, 7 * 60 * 1000};
-                } else if (str.equals("어려움")) {
-                    totalTimesInMillis = new long[]{4 * 10 * 1000, 4 * 60 * 1000, 12 * 60 * 1000, 14 * 60 * 1000};
+                if (selectedDifficulty.equals("쉬움")) {
+                    LevelCountView[1].setText("15"); // 스쿼트
+                    LevelCountView[2].setText("7"); // 푸시업
+                    LevelCountView[4].setText("15"); // 사레레
+                    LevelCountView[5].setText("7"); // 레그라이즈
+                } else if (selectedDifficulty.equals("보통")) {
+                    LevelCountView[1].setText("20"); // 스쿼트
+                    LevelCountView[2].setText("20"); // 푸시업
+                    LevelCountView[4].setText("25"); // 사레레
+                    LevelCountView[5].setText("15"); // 레그라이즈
+                } else if (selectedDifficulty.equals("어려움")) {
+                    LevelCountView[1].setText("25"); // 스쿼트
+                    LevelCountView[2].setText("35"); // 푸시업
+                    LevelCountView[4].setText("35"); // 사레레
+                    LevelCountView[5].setText("20"); // 레그라이즈
                 }
             }else if(str.equals("이전")){
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                 startActivity(intent);
                 finish();
+            }else if(str.equals("시작") || str.equals("운동 시작")){
+                if (selectedDifficulty != null) {
+
+                    Intent intentSub1 = new Intent(Video.this, Home_Training_WarmUp.class);
+                    intentSub1.putExtra("difficulty", selectedDifficulty); // 선택한 난이도 정보를 넘겨줌
+                    startActivity(intentSub1);
+
+                }
+                else {
+                    Toast.makeText(Video.this, "난이도를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
