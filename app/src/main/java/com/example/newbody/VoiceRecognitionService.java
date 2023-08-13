@@ -15,10 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Locale;
+import android.speech.tts.TextToSpeech;
 
 public class VoiceRecognitionService extends Service {
     protected SpeechRecognizer mSpeechRecognizer;
     protected Intent mRecognizerIntent;
+    private TextToSpeech mTextToSpeech;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,17 @@ public class VoiceRecognitionService extends Service {
         }
 
         startVoiceRecognition();
+        initTTS();
+    }
+
+    private void initTTS() {
+        mTextToSpeech = new TextToSpeech(this, status -> {
+            if (status != TextToSpeech.ERROR) {
+                mTextToSpeech.setLanguage(Locale.KOREAN);
+                mTextToSpeech.setSpeechRate(0.3f);
+                mTextToSpeech.setPitch(1.25f);
+            }
+        });
     }
 
     private void startVoiceRecognition() {
@@ -85,7 +98,7 @@ public class VoiceRecognitionService extends Service {
                 if (matches != null && matches.size() > 0) {
                     if (matches.contains("바디야") || matches.contains("뉴바디")) {
                         sendResult(1);
-                        Log.d("bodyTest", "body");
+                        speakOut("네");
                     }
                 }
                 new android.os.Handler().postDelayed(() -> mSpeechRecognizer.startListening(mRecognizerIntent), 2000);
@@ -107,11 +120,19 @@ public class VoiceRecognitionService extends Service {
         return null; // For this use-case, we don't need binding.
     }
 
+    private void speakOut(String text) {
+        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mSpeechRecognizer != null) {
             mSpeechRecognizer.destroy();
+        }
+        if (mTextToSpeech != null) {
+            mTextToSpeech.stop();
+            mTextToSpeech.shutdown();
         }
     }
 
