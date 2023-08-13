@@ -41,8 +41,8 @@ public class VoiceRecognitionService extends Service {
         mTextToSpeech = new TextToSpeech(this, status -> {
             if (status != TextToSpeech.ERROR) {
                 mTextToSpeech.setLanguage(Locale.KOREAN);
-                mTextToSpeech.setSpeechRate(0.3f);
-                mTextToSpeech.setPitch(1.25f);
+                mTextToSpeech.setSpeechRate(0.7f);
+                mTextToSpeech.setPitch(1.1f);
             }
         });
     }
