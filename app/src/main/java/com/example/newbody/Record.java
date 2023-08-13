@@ -51,6 +51,7 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                 startActivity(intent);
+                finish();
             }
         });
         time.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +112,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 2){
                     Intent intent = new Intent(Record.this, RecordPushup.class);
                     if (select_time.equals("1분")) {
@@ -121,6 +123,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 3){
                     Intent intent = new Intent(Record.this, RecordDumbbell.class);
                     if (select_time.equals("1분")) {
@@ -131,6 +134,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 4){
                     Intent intent = new Intent(Record.this, RecordSidelateralraise.class);
                     if (select_time.equals("1분")) {
@@ -141,6 +145,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 5){
                     Intent intent = new Intent(Record.this, RecordLegRaise.class);
                     if (select_time.equals("1분")) {
@@ -151,6 +156,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -260,6 +266,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 2){
                     Intent intent = new Intent(Record.this, RecordPushup.class);
                     if (select_time.equals("1분")) {
@@ -270,6 +277,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 3){
                     Intent intent = new Intent(Record.this, RecordDumbbell.class);
                     if (select_time.equals("1분")) {
@@ -280,6 +288,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 4){
                     Intent intent = new Intent(Record.this, RecordSidelateralraise.class);
                     if (select_time.equals("1분")) {
@@ -290,6 +299,7 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }else if(select_num == 5){
                     Intent intent = new Intent(Record.this, RecordLegRaise.class);
                     if (select_time.equals("1분")) {
@@ -300,10 +310,12 @@ public class Record extends AppCompatActivity {
                         intent.putExtra("time", totalTimesInMillis[2]);
                     }
                     startActivity(intent);
+                    finish();
                 }
             }else if(str.equals("이전")){
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                 startActivity(intent);
+                finish();
             }
         }
     }

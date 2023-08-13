@@ -144,89 +144,113 @@ public class RecordPushupMain extends AppCompatActivity {
             @Override
             public void onFinish() {
                 FirebaseUser user = mAuth.getCurrentUser();
-                Map<String, Object> userData = new HashMap<>();
                 if (user != null) {
-                    final String collectionName;  // 'final' 키워드 추가
-
-                    if (time == 60000) {
-                        collectionName = "countPushUp1Minute";
-                    } else if (time == 120000) {
-                        collectionName = "countPushUp2Minute";
-                    } else if (time == 180000) {
-                        collectionName = "countPushUp3Minute";
-                    } else {
-                        collectionName = "";  // 기본값 설정
-                    }
-
-                    DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
-                    userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    // 사용자의 정보를 가져오는 부분
+                    DocumentReference userRef = db.collection("users").document(user.getUid());
+                    userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Long pushupCountLong;
-                                    if (time == 60000) {
-                                        pushupCountLong = document.getLong("countPushUp1Minute");
-                                    } else if (time == 120000) {
-                                        pushupCountLong = document.getLong("countPushUp2Minute");
-                                    } else {
-                                        pushupCountLong = document.getLong("countPushUp3Minute");
-                                    }
-                                    int existingPushUpCount = 0; // 초기 값을 0으로 설정
+                                    // 사용자의 이름을 가져옵니다.
+                                    String userName = document.getString("name");
 
-                                    if (pushupCountLong != null) {
-                                        existingPushUpCount = pushupCountLong.intValue();
-                                    }
-
-                                    if (existingPushUpCount <= score) {
-                                        userData.put(collectionName, score);
-                                        db.collection(collectionName).document(user.getUid())
-                                                .set(userData)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid){
-                                                        // 성공적으로 업데이트했을 때의 로직
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
-                                                        // 업데이트 실패했을 때의 로직
-                                                    }
-                                                });
-                                    } else {
-                                        Log.d("Firestore", "User's score is not higher than the existing record.");
-                                    }
-                                } else {
-                                    // 만약 문서가 없다면, 바로 점수를 저장합니다.
-                                    userData.put(collectionName, score);
-                                    userRecordRef.set(userData)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("Firestore", "Data successfully written!");
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
-                                                    Log.w("Firestore", "Error writing document", e);
-                                                }
-                                            });
+                                    // 스쿼트 점수와 사용자의 이름을 저장하는 로직
+                                    savePushupScoreWithName(userName, user);
                                 }
-                            } else {
-                                Log.d("Firestore", "Failed to get document", task.getException());
                             }
                         }
                     });
                 }
-
                 customDialog = new CustomDialog(RecordPushupMain.this
                         ,"시간 : " + (time/60000) + "분 \n기록 : " + score + "개");
                 customDialog.show();
             }
         }.start();
+    }
+
+    private void savePushupScoreWithName(String userName, FirebaseUser user){
+        Map<String, Object> userData = new HashMap<>();
+        final String collectionName;
+
+        if (time == 60000) {
+            collectionName = "countPushup1Minute";
+        } else if (time == 120000) {
+            collectionName = "countPushup2Minute";
+        } else if (time == 180000) {
+            collectionName = "countPushup3Minute";
+        } else {
+            collectionName = "";
+        }
+
+        // userName을 추가합니다.
+        userData.put("name", userName);
+        userData.put(collectionName, score);
+
+        DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
+        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Long pushupCountLong;
+                        if (time == 60000) {
+                            pushupCountLong = document.getLong("countPushup1Minute");
+                        } else if (time == 120000) {
+                            pushupCountLong = document.getLong("countPushup2Minute");
+                        } else {
+                            pushupCountLong = document.getLong("countPushup3Minute");
+                        }
+                        int existingPushupCount = 0; // 초기 값을 0으로 설정
+
+                        if (pushupCountLong != null) {
+                            existingPushupCount = pushupCountLong.intValue();
+                        }
+
+                        if (existingPushupCount <= score) {
+                            userData.put(collectionName, score);
+                            db.collection(collectionName).document(user.getUid())
+                                    .set(userData)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid){
+                                            // 성공적으로 업데이트했을 때의 로직
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                            // 업데이트 실패했을 때의 로직
+                                        }
+                                    });
+                        } else {
+                            Log.d("Firestore", "User's score is not higher than the existing record.");
+                        }
+                    } else {
+                        // 만약 문서가 없다면, 바로 점수를 저장합니다.
+                        userData.put(collectionName, score);
+                        userRecordRef.set(userData)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Firestore", "Data successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                        Log.w("Firestore", "Error writing document", e);
+                                    }
+                                });
+                    }
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
+
     }
 
     private void loadGuidelines(Bitmap bmp, Pose pose){
