@@ -9,22 +9,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newbody.R;
 
-public class VideoSquat extends AppCompatActivity {
+public class VideoLegRaise extends AppCompatActivity {
 
     private VideoView mVideoView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_squat);
+        setContentView(R.layout.activity_video_legraise);
 
-        mVideoView = findViewById(R.id.squat);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/squat");
+        mVideoView = findViewById(R.id.legraise);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         mVideoView.setVideoURI(uri);
 
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
                 mp.start();
             }
         });
