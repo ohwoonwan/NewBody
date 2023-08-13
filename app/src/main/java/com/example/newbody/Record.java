@@ -12,6 +12,7 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -102,6 +103,10 @@ public class Record extends AppCompatActivity {
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(selectT.getText().equals("시간") || selectE.getText().equals("운동")){
+                    Toast.makeText(Record.this, "시간 또는 운동을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(select_num == 1){
                     Intent intent = new Intent(Record.this, RecordSquat.class);
                     if (select_time.equals("1분")) {
@@ -256,6 +261,10 @@ public class Record extends AppCompatActivity {
                     select_num = 5;
                 }
             }else if(str.equals("시작") || str.equals("운동 시작")){
+                if(selectT.getText().equals("시간") || selectE.getText().equals("운동")){
+                    Toast.makeText(Record.this, "시간 또는 운동을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(select_num == 1){
                     Intent intent = new Intent(Record.this, RecordSquat.class);
                     if (select_time.equals("1분")) {
