@@ -172,7 +172,7 @@ public class Record extends AppCompatActivity {
         exName[4] = findViewById(R.id.ex5_name);
         selectT = findViewById(R.id.time_select);
         selectE = findViewById(R.id.exercise_select);
-        prev = findViewById(R.id.prevButton);
+        prev = findViewById(R.id.prevButtonRecord);
     }
 
     private void showTimeDialog() {
