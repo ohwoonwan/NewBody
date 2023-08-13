@@ -47,6 +47,8 @@
         <activity android:name=".videoinfo.VideoPushups" />
         <activity android:name=".videoinfo.VideoSquat" />
         <activity android:name=".videoinfo.VideoDumbbell" />
+        <activity android:name=".videoinfo.VideoLegRaise"/>
+        <activity android:name=".videoinfo.VideoSide"/>
         <activity android:name=".record.RecordSquat" />
         <activity android:name=".record.RecordSquatMain" />
         <activity android:name=".CustomDialog" />
