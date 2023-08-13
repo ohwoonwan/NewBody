@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.PoseMatcher;
@@ -55,15 +56,17 @@ import java.util.List;
 
 public class PostureSquat extends AppCompatActivity {
 
-    private boolean dumbbellStartDetected = false;
-    private boolean dumbbellEndDetected = false;
-    private TargetPose targetDumbbellStartSign;
-    private TargetPose targetDumbbellEndSign;
+    private boolean goodMotionDetected = false;
+    private TargetPose targetSquatStartSign;
+    private TargetPose targetSquatEndSign;
+    private TargetPose targetSquatHipOverSign;
+    private TargetPose targetSquatKneeOverSign;
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView squatPosture;
 
     Button exit;
 
@@ -122,7 +125,6 @@ public class PostureSquat extends AppCompatActivity {
 
                 // setting everything as transparent
                 guidelineCanvas.drawColor(Color.TRANSPARENT);
-//                guidelineCanvas.drawRect(0, 0, guidelineBmp.getWidth(), guidelineBmp.getHeight(), transPaint);
 
                 // drawing just a rect
                 if(pose != null){
@@ -168,6 +170,7 @@ public class PostureSquat extends AppCompatActivity {
     }
 
     private void initViews(){
+        squatPosture = findViewById(R.id.postureSquatEx);
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
@@ -213,21 +216,33 @@ public class PostureSquat extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDumbbellStartSign = new TargetPose(
+        targetSquatStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
                 )
         );
 
-        targetDumbbellEndSign = new TargetPose(
+        targetSquatEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 40.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                )
+        );
+
+        targetSquatHipOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 25.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 25.0)
+                )
+        );
+
+        targetSquatKneeOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 50.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 50.0)
                 )
         );
     }
@@ -238,14 +253,23 @@ public class PostureSquat extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        Handler h = new Handler();
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
-        } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+        boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+        boolean isSquatHipOver = isPoseMatching(pose, targetSquatHipOverSign);
+        boolean isSquatKneeOver = isPoseMatching(pose, targetSquatKneeOverSign);
+
+        if (isSquatStart && !isSquatHipOver && !isSquatKneeOver) {
+            squatPosture.setText("Good Motion");
+        } else if (isSquatHipOver) {
+            squatPosture.setText("허리를 더 올리세요");
+        } else if (isSquatKneeOver) {
+            squatPosture.setText("엉덩이를 더 올리세요");
+        } else if (!isSquatStart) {
+            squatPosture.setText("더 앉으세요");
+        } else if (isSquatEnd) {
+            squatPosture.setText("스쿼트 시작");
         }
     }
 
