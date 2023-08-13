@@ -14,6 +14,7 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newbody.posture.PostureInfo;
 import com.example.newbody.record.RecordDumbbell;
@@ -85,6 +86,10 @@ public class Posture extends AppCompatActivity {
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(selectE.getText().equals("운동")){
+                    Toast.makeText(Posture.this, "운동을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getApplicationContext(), PostureInfo.class);
                 intent.putExtra("exercise", selectE.getText());
                 startActivity(intent);
@@ -141,6 +146,10 @@ public class Posture extends AppCompatActivity {
                     selectE.setText(exName[4].getText());
                 }
             }else if(str.equals("시작") || str.equals("운동 시작")){
+                if(selectE.getText().equals("운동")){
+                    Toast.makeText(Posture.this, "운동을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getApplicationContext(), PostureInfo.class);
                 intent.putExtra("exercise", selectE.getText());
                 startActivity(intent);

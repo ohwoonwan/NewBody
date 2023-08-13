@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 
 import android.os.CountDownTimer;
@@ -77,6 +79,8 @@ public class RecordSquatMain extends AppCompatActivity {
     private CountDownTimer timer;
 
     private CustomDialog customDialog;
+    private TextToSpeech tts;
+
 
     PreviewView previewView;
     PoseDetector detector;
@@ -99,6 +103,25 @@ public class RecordSquatMain extends AppCompatActivity {
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int langResult = tts.setLanguage(Locale.KOREAN);
+                    if (langResult == TextToSpeech.LANG_MISSING_DATA |
+                            langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported or missing data");
+                    }else {
+                        // 피치와 속도를 조절합니다.
+                        tts.setPitch(0.8f); // 높은 톤
+                        tts.setSpeechRate(0.9f); // 약간 빠른 속도
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -164,11 +187,17 @@ public class RecordSquatMain extends AppCompatActivity {
                         }
                     });
                 }
+                speakSquatResult(score);
                 customDialog = new CustomDialog(RecordSquatMain.this
                         ,"시간 : " + (time/60000) + "분 \n기록 : " + score + "개");
                 customDialog.show();
             }
         }.start();
+    }
+
+    private void speakSquatResult(int count) {
+        String textToSpeak ="총 기록은 " + count + "개 입니다. ";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void saveSquatScoreWithName(String userName, FirebaseUser user){
@@ -403,11 +432,17 @@ public class RecordSquatMain extends AppCompatActivity {
         if (squatStartDetected && isSquatEnd) {
             score++;
             countEx.setText("개수 : " + score);
+            speakSquatCount(score);
             squatStartDetected = false; // 다음 연속 감지를 위해 초기화
             squatEndDetected = false;
         } else if (isSquatStart) {
             squatStartDetected = true;
         }
+    }
+
+    private void speakSquatCount(int count) {
+        String textToSpeak = count + "개";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startAnalysis(){
@@ -539,5 +574,15 @@ public class RecordSquatMain extends AppCompatActivity {
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
     }
+    @Override
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
+
 
 }

@@ -53,13 +53,15 @@
         <activity android:name=".record.RecordSquatMain" />
         <activity android:name=".CustomDialog" />
         <activity android:name=".record.RecordDumbbellMain" />
-        <activity android:name=".record.RecordPushupMain" />
+        <activity android:name=".record.RecordPushupMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".record.RecordDumbbell" />
         <activity android:name=".record.RecordPushup" />
         <activity android:name=".record.RecordSidelateralraiseMain" />
         <activity android:name=".record.RecordSidelateralraise" />
         <activity android:name=".record.RecordLegRaise" />
-        <activity android:name=".record.RecordLegRaiseMain" />
+        <activity android:name=".record.RecordLegRaiseMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
