@@ -348,12 +348,10 @@ public class PostureSquat extends AppCompatActivity {
 
                     provider.unbindAll();
                     provider.bindToLifecycle(PostureSquat.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
-                    Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_SHORT).show();
 
                     startAnalysis();
                 } catch (Exception e) {
                     Log.e("debugg", "Error Getting camera Provider", e);
-                    Toast.makeText(getApplicationContext(), "Errror Loading Camera Provider, Restart App", Toast.LENGTH_SHORT).show();
                 }
             }
         }, ActivityCompat.getMainExecutor(PostureSquat.this));
@@ -361,10 +359,8 @@ public class PostureSquat extends AppCompatActivity {
 
     private void checkPermissions(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(getApplicationContext(), "Camera Permission Request", Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 455);
         }else{
-            Toast.makeText(getApplicationContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
             startInit();
         }
     }
@@ -374,10 +370,8 @@ public class PostureSquat extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 455) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "Permission not granted !", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(getApplicationContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
                 startInit();
             }
         }
