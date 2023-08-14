@@ -71,6 +71,7 @@ public class RecordPushupMain extends AppCompatActivity {
 
     private boolean pushupStartDetected = false;
     private boolean pushupEndDetected = false;
+    private boolean checkPushup = false;
     private long time;
     private int score = 0;
     private TargetPose targetPushUpStartSign;
@@ -431,8 +432,13 @@ public class RecordPushupMain extends AppCompatActivity {
             speakPushupCount(score);
             pushupStartDetected = false; // 다음 연속 감지를 위해 초기화
             pushupEndDetected = false;
+            checkPushup = false;
         } else if (isSquatStart) {
             pushupStartDetected = true;
+            if(!checkPushup){
+                speakPushup();
+                checkPushup = true;
+            }
         }
     }
 
@@ -440,6 +446,22 @@ public class RecordPushupMain extends AppCompatActivity {
         String textToSpeak = count + "개";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
+    private void speakPushup() {
+        double randomValue = Math.random();
+        int value = (int)(randomValue*4)+1;
+        String textToSpeak = null;
+        if(value == 1){
+            textToSpeak = "완벽해요";
+        }else if(value == 2){
+            textToSpeak = "좋아요";
+        }else if(value == 3){
+            textToSpeak = "훌륭해요";
+        }else if(value == 4){
+            textToSpeak = "잘했어요";
+        }
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
 
     private void startAnalysis(){
         Handler handler = new Handler(getMainLooper());

@@ -71,6 +71,7 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
 
     private boolean SideStartDetected = false;
     private boolean SideEndDetected = false;
+    private boolean checkSide = false;
     private long time;
     private int score = 0;
     private TargetPose targetSideStartSign;
@@ -431,13 +432,34 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
             speakSideCount(score);
             SideStartDetected = false; // 다음 연속 감지를 위해 초기화
             SideEndDetected = false;
+            checkSide = false;
         } else if (isSideStart) {
             SideStartDetected = true;
+            if(!checkSide){
+                speakSide();
+                checkSide = true;
+            }
         }
     }
 
     private void speakSideCount(int count) {
         String textToSpeak = count + "개";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void speakSide() {
+        double randomValue = Math.random();
+        int value = (int)(randomValue*4)+1;
+        String textToSpeak = null;
+        if(value == 1){
+            textToSpeak = "완벽해요";
+        }else if(value == 2){
+            textToSpeak = "좋아요";
+        }else if(value == 3){
+            textToSpeak = "훌륭해요";
+        }else if(value == 4){
+            textToSpeak = "잘했어요";
+        }
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
