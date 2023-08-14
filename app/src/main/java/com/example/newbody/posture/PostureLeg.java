@@ -59,6 +59,7 @@ public class PostureLeg extends AppCompatActivity {
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
     private boolean check = false;
+    private boolean checkLeg = false;
     private TargetPose targetLegRaiseStartSign;
     private TargetPose targetLegRaiseEndSign;
     private TargetPose targetLegRaiseOverSign;
@@ -278,6 +279,7 @@ public class PostureLeg extends AppCompatActivity {
             if (check) {
                 legPosture.setText("잘했어요");
                 speakLegEnd();
+                checkLeg = false;
             }
             check = false;
         } else if (isLegOver) {
@@ -286,17 +288,20 @@ public class PostureLeg extends AppCompatActivity {
             legPosture.setText("다리을 더 올리세요");
         } else if (isLegStart) {
             legPosture.setText("다리를 내리세요");
-            speakLegStart();
+            if(!checkLeg){
+                speakLegStart();
+                checkLeg = true;
+            }
             check = true;
         }
     }
 
     private void speakLegEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요";
+        String textToSpeak ="잘했어요 다시 해볼까요?";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
     private void speakLegStart() {
-        String textToSpeak ="종아요";
+        String textToSpeak ="좋아요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 

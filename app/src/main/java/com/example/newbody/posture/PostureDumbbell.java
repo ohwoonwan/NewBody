@@ -61,6 +61,7 @@ public class PostureDumbbell extends AppCompatActivity {
     private boolean dumbbellEndDetected = false;
     private boolean checkUp = false;
     private boolean checkDown = false;
+    private boolean checkDumbbell = false;
     private TargetPose targetDumbbellStartSign;
     private TargetPose targetDumbbellEndSign;
     private TargetPose targetDumbbellLowSign;
@@ -282,12 +283,16 @@ public class PostureDumbbell extends AppCompatActivity {
 
         if (isDumbbellEnd) {
             dumbbellPosture.setText("올리세요");
-            speakDumbbellStart();
+            if(!checkDumbbell){
+                speakDumbbellStart();
+                checkDumbbell = true;
+            }
             checkDown = true;
         } else if (isDumbbellStart) {
             if (checkDown) {
                 dumbbellPosture.setText("잘했습니다");
                 speakDumbbellEnd();
+                checkDumbbell = false;
             }
             checkDown = false;
         } else if (!checkDown && !isDumbbellLow) {
@@ -296,11 +301,11 @@ public class PostureDumbbell extends AppCompatActivity {
     }
 
     private void speakDumbbellEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요";
+        String textToSpeak ="잘했어요 다시 해볼까요?";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
     private void speakDumbbellStart() {
-        String textToSpeak ="종아요";
+        String textToSpeak ="좋아요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 

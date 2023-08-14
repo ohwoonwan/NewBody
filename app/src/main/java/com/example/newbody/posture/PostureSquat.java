@@ -64,6 +64,7 @@ public class PostureSquat extends AppCompatActivity {
     private TargetPose targetSquatHipOverSign;
     private TargetPose targetSquatKneeOverSign;
     private boolean check = false;
+    private boolean checkSquat = false;
     private TextToSpeech tts;
 
     PreviewView previewView;
@@ -292,12 +293,16 @@ public class PostureSquat extends AppCompatActivity {
             if (check) {
                 squatPosture.setText("잘했어요 다시 해볼까요?");
                 speakSquatEnd();
+                checkSquat = false;
             }
             check = false;
         } else if (isSquatStart) {
             check = true;
             squatPosture.setText("Good Motion ! 이제 올라가세요");
-            speakSquatStart();
+            if(!checkSquat){
+                speakSquatStart();
+                checkSquat = true;
+            }
         } else if (!check && isSquatHipOver && !isSquatEnd) {
             squatPosture.setText("허리를 더 올리세요");
         } else if (!check && !isSquatKneeOver && !isSquatEnd) {
@@ -307,11 +312,11 @@ public class PostureSquat extends AppCompatActivity {
         }
     }
     private void speakSquatEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요";
+        String textToSpeak ="잘했어요 다시 해볼까요?";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
     private void speakSquatStart() {
-        String textToSpeak ="종아요";
+        String textToSpeak ="좋아요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 

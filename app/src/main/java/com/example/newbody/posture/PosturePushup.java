@@ -57,6 +57,7 @@ import java.util.Locale;
 public class PosturePushup extends AppCompatActivity {
 
     private boolean check = false;
+    private boolean checkPushup = false;
     private TargetPose targetPushupStartSign;
     private TargetPose targetPushupEndSign;
     private TargetPose targetPushupHipOverSign;
@@ -275,12 +276,16 @@ public class PosturePushup extends AppCompatActivity {
             if (check) {
                 pushupPosture.setText("잘했어요");
                 speakPushupEnd();
+                checkPushup = false;
             }
             check = false;
         } else if (isPushupStart) {
             check = true;
             pushupPosture.setText("올라가세요");
-            speakPushupStart();
+            if(!checkPushup){
+                speakPushupStart();
+                checkPushup = true;
+            }
         } else if (isPushupHipOver) {
             pushupPosture.setText("허리를 내리세요");
         } else if (!check && !isPushupStart) {
@@ -289,11 +294,11 @@ public class PosturePushup extends AppCompatActivity {
     }
 
     private void speakPushupEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요";
+        String textToSpeak ="잘했어요 다시 해볼까요?";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
     private void speakPushupStart() {
-        String textToSpeak ="종아요";
+        String textToSpeak ="좋아요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 

@@ -60,6 +60,7 @@ public class PostureSide extends AppCompatActivity {
     private boolean dumbbellEndDetected = false;
 
     private boolean check = false;
+    private boolean checkSide = false;
     private TargetPose targetSideStartSign;
     private TargetPose targetSideEndSign;
     private TargetPose targetSideArmOverSign;
@@ -274,7 +275,10 @@ public class PostureSide extends AppCompatActivity {
 
         if (isSideStart) {
             sidePosture.setText("팔을 내리세요");
-            speakSideStart();
+            if(!checkSide){
+                speakSideStart();
+                checkSide = true;
+            }
             check = true;
         } else if (isSideOver) {
             sidePosture.setText("팔을 너무 올리셨습니다");
@@ -284,16 +288,17 @@ public class PostureSide extends AppCompatActivity {
             if (check) {
                 sidePosture.setText("잘했어요");
                 speakSideEnd();
+                checkSide = false;
             }
         }
     }
 
     private void speakSideEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요";
+        String textToSpeak ="잘했어요 다시 해볼까요?";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
     private void speakSideStart() {
-        String textToSpeak ="종아요";
+        String textToSpeak ="좋아요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
