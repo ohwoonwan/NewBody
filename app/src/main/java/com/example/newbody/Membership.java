@@ -36,7 +36,7 @@ import java.util.Map;
 public class Membership extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     EditText email, password;
-    View google, kakao;
+    View google;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
