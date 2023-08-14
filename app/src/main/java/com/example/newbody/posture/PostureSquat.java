@@ -265,18 +265,6 @@ public class PostureSquat extends AppCompatActivity {
         boolean isSquatHipOver = isPoseMatching(pose, targetSquatHipOverSign);
         boolean isSquatKneeOver = isPoseMatching(pose, targetSquatKneeOverSign);
 
-//        if (isSquatStart && !isSquatHipOver && !isSquatKneeOver) {
-//            squatPosture.setText("Good Motion");
-//        } else if (isSquatHipOver) {
-//            squatPosture.setText("허리를 더 올리세요");
-//        } else if (isSquatKneeOver) {
-//            squatPosture.setText("엉덩이를 더 올리세요");
-//        } else if (!isSquatStart) {
-//            squatPosture.setText("더 앉으세요");
-//        } else if (isSquatEnd) {
-//            squatPosture.setText("스쿼트 시작");
-//        }
-
         if (isSquatEnd) {
             if (check) {
                 squatPosture.setText("잘했어요 다시 해볼까요?");

@@ -56,6 +56,8 @@ public class PostureSide extends AppCompatActivity {
 
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
+
+    private boolean check = false;
     private TargetPose targetSideStartSign;
     private TargetPose targetSideEndSign;
     private TargetPose targetSideArmOverSign;
@@ -247,14 +249,17 @@ public class PostureSide extends AppCompatActivity {
         boolean isSideOver = isPoseMatching(pose, targetSideArmOverSign);
 
 
-        if (isSideStart && !isSideOver) {
-            sidePosture.setText("Good Motion");
+        if (isSideStart) {
+            sidePosture.setText("팔을 내리세요");
+            check = true;
         } else if (isSideOver) {
-            sidePosture.setText("팔을 더이상 올리지 마세요");
-        } else if (!isSideStart) {
-            sidePosture.setText("팔을 더이상 내리지 마세요");
+            sidePosture.setText("팔을 너무 올리셨습니다");
+        } else if (!check && !isSideStart) {
+            sidePosture.setText("더 올리세요");
         } else if (isSideEnd) {
-            sidePosture.setText("사이드 레터럴 레이즈 시작");
+            if (check) {
+                sidePosture.setText("잘했어요");
+            }
         }
     }
 
