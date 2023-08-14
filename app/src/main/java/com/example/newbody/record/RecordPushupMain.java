@@ -31,7 +31,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newbody.CustomDialog;
 import com.example.newbody.PoseMatcher;
@@ -491,12 +490,10 @@ public class RecordPushupMain extends AppCompatActivity {
 
                     provider.unbindAll();
                     provider.bindToLifecycle(RecordPushupMain.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
-                    Toast.makeText(getApplicationContext(), "Camera started", Toast.LENGTH_SHORT).show();
 
                     startAnalysis();
                 } catch (Exception e) {
                     Log.e("debugg", "Error Getting camera Provider", e);
-                    Toast.makeText(getApplicationContext(), "Errror Loading Camera Provider, Restart App", Toast.LENGTH_SHORT).show();
                 }
             }
         }, ActivityCompat.getMainExecutor(RecordPushupMain.this));
@@ -504,10 +501,8 @@ public class RecordPushupMain extends AppCompatActivity {
 
     private void checkPermissions(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(getApplicationContext(), "Camera Permission Request", Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 455);
         }else{
-            Toast.makeText(getApplicationContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
             startInit();
         }
     }
@@ -517,10 +512,8 @@ public class RecordPushupMain extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 455) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "Permission not granted !", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(getApplicationContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
                 startInit();
             }
         }
