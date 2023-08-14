@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.PoseMatcher;
@@ -53,15 +54,18 @@ import java.util.List;
 
 public class PosturePushup extends AppCompatActivity {
 
-    private boolean dumbbellStartDetected = false;
-    private boolean dumbbellEndDetected = false;
-    private TargetPose targetDumbbellStartSign;
-    private TargetPose targetDumbbellEndSign;
+    private boolean check = false;
+    private TargetPose targetPushupStartSign;
+    private TargetPose targetPushupEndSign;
+    private TargetPose targetPushupHipOverSign;
+    private TargetPose targetPushupUpSign;
+
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView pushupPosture;
 
     Button exit;
 
@@ -169,6 +173,7 @@ public class PosturePushup extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
+        pushupPosture = findViewById(R.id.posturePushupEx);
     }
 
     private void runTest(){
@@ -211,21 +216,24 @@ public class PosturePushup extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDumbbellStartSign = new TargetPose(
+        targetPushupStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 80.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 80.0)
                 )
         );
 
-        targetDumbbellEndSign = new TargetPose(
+        targetPushupEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 40.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0)
+                )
+        );
+
+        targetPushupHipOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 100.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 100.0)
                 )
         );
     }
@@ -236,14 +244,22 @@ public class PosturePushup extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isPushupStart = isPoseMatching(pose, targetPushupStartSign);
+        boolean isPushupEnd = isPoseMatching(pose, targetPushupEndSign);
+        boolean isPushupHipOver = isPoseMatching(pose, targetPushupHipOverSign);
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
-        } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+        if (isPushupEnd) {
+            if (check) {
+                pushupPosture.setText("잘했어요");
+            }
+            check = false;
+        } else if (isPushupStart) {
+            check = true;
+            pushupPosture.setText("올라가세요");
+        } else if (isPushupHipOver) {
+            pushupPosture.setText("허리를 내리세요");
+        } else if (!check && !isPushupStart) {
+            pushupPosture.setText("더 내려가세요");
         }
     }
 

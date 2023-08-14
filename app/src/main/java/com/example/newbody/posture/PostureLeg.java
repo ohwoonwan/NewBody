@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.PoseMatcher;
@@ -55,13 +56,15 @@ public class PostureLeg extends AppCompatActivity {
 
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
-    private TargetPose targetDumbbellStartSign;
-    private TargetPose targetDumbbellEndSign;
+    private TargetPose targetLegRaiseStartSign;
+    private TargetPose targetLegRaiseEndSign;
+    private TargetPose targetLegRaiseOverSign;
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView legPosture;
 
     Button exit;
 
@@ -166,6 +169,7 @@ public class PostureLeg extends AppCompatActivity {
     }
 
     private void initViews(){
+        legPosture = findViewById(R.id.postureLegEx);
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
@@ -211,21 +215,27 @@ public class PostureLeg extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDumbbellStartSign = new TargetPose(
+        targetLegRaiseStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,100.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,100.0)
+
                 )
         );
 
-        targetDumbbellEndSign = new TargetPose(
+        targetLegRaiseEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 40.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 170.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 170.0)
+
+                )
+        );
+
+        targetLegRaiseOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 85.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 85.0)
+
                 )
         );
     }
@@ -236,14 +246,18 @@ public class PostureLeg extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isLegStart = isPoseMatching(pose, targetLegRaiseStartSign);
+        boolean isLegEnd = isPoseMatching(pose, targetLegRaiseEndSign);
+        boolean isLegOver = isPoseMatching(pose, targetLegRaiseOverSign);
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
-        } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+        if (isLegStart && !isLegOver) {
+            legPosture.setText("Good Motion");
+        } else if (isLegOver) {
+            legPosture.setText("다리을 더이상 올리지 마세요");
+        } else if (!isLegStart) {
+            legPosture.setText("다리을 더이상 내리지 마세요");
+        } else if (isLegEnd) {
+            legPosture.setText("사이드 레터럴 레이즈 시작");
         }
     }
 

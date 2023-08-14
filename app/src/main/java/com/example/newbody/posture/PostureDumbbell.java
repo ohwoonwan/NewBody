@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.Membership2;
@@ -56,13 +57,18 @@ public class PostureDumbbell extends AppCompatActivity {
 
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
+    private boolean checkUp = false;
+    private boolean checkDown = false;
     private TargetPose targetDumbbellStartSign;
     private TargetPose targetDumbbellEndSign;
+    private TargetPose targetDumbbellLowSign;
+
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView dumbbellPosture;
 
     Button exit;
 
@@ -170,6 +176,7 @@ public class PostureDumbbell extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
+        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
     }
 
     private void runTest(){
@@ -214,10 +221,10 @@ public class PostureDumbbell extends AppCompatActivity {
     private void initTargetPoses() {
         targetDumbbellStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,180.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,180.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 180.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 180.0 )
                 )
         );
 
@@ -229,6 +236,15 @@ public class PostureDumbbell extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
                 )
         );
+
+        targetDumbbellLowSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 120.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 120.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 120.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 120.0 )
+                )
+        );
     }
 
     private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
@@ -237,14 +253,20 @@ public class PostureDumbbell extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isDumbbellStart = isPoseMatching(pose, targetDumbbellStartSign);
+        boolean isDumbbellEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isDumbbellLow = isPoseMatching(pose, targetDumbbellLowSign);
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
-        } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+        if (isDumbbellEnd) {
+            dumbbellPosture.setText("올리세요");
+            checkDown = true;
+        } else if (isDumbbellStart) {
+            if (checkDown) {
+                dumbbellPosture.setText("잘했습니다");
+            }
+            checkDown = false;
+        } else if (!checkDown && !isDumbbellLow) {
+            dumbbellPosture.setText("더 내리세요");
         }
     }
 
