@@ -132,11 +132,11 @@ public class Posture extends AppCompatActivity {
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
-            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
+            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
                     str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
                 if(str.equals("스쿼트")){
                     selectE.setText(exName[0].getText());
-                }else if(str.equals("푸쉬업")){
+                }else if(str.equals("푸쉬업") || str.equals("푸시업")){
                     selectE.setText(exName[1].getText());
                 }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
                     selectE.setText(exName[2].getText());

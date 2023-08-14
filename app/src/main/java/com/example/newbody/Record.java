@@ -242,12 +242,12 @@ public class Record extends AppCompatActivity {
                     time.setText(select_time);
                     selectT.setText("3분");
                 }
-            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
+            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
                     str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
                 if(str.equals("스쿼트")){
                     selectE.setText(exName[0].getText());
                     select_num = 1;
-                }else if(str.equals("푸쉬업")){
+                }else if(str.equals("푸쉬업") || str.equals("푸시업")){
                     selectE.setText(exName[1].getText());
                     select_num = 2;
                 }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){

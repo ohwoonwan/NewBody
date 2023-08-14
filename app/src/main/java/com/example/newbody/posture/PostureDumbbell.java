@@ -25,10 +25,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.Membership2;
@@ -51,18 +53,26 @@ import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class PostureDumbbell extends AppCompatActivity {
 
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
+    private boolean checkUp = false;
+    private boolean checkDown = false;
+    private boolean checkDumbbell = false;
     private TargetPose targetDumbbellStartSign;
     private TargetPose targetDumbbellEndSign;
+    private TargetPose targetDumbbellLowSign;
+    private TextToSpeech tts;
+
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView dumbbellPosture;
 
     Button exit;
 
@@ -80,6 +90,26 @@ public class PostureDumbbell extends AppCompatActivity {
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int langResult = tts.setLanguage(Locale.KOREAN);
+                    if (langResult == TextToSpeech.LANG_MISSING_DATA |
+                            langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported or missing data");
+                    }else {
+                        // 피치와 속도를 조절합니다.
+                        tts.setPitch(0.8f); // 높은 톤
+                        tts.setSpeechRate(0.9f); // 약간 빠른 속도
+                        tts.speak("덤벨숄더프레스를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
 
         initTargetPoses();
         initViews();
@@ -170,6 +200,7 @@ public class PostureDumbbell extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
+        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
     }
 
     private void runTest(){
@@ -214,10 +245,10 @@ public class PostureDumbbell extends AppCompatActivity {
     private void initTargetPoses() {
         targetDumbbellStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,180.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,180.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 180.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 180.0 )
                 )
         );
 
@@ -229,6 +260,15 @@ public class PostureDumbbell extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
                 )
         );
+
+        targetDumbbellLowSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 120.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 120.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 120.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 120.0 )
+                )
+        );
     }
 
     private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
@@ -237,15 +277,36 @@ public class PostureDumbbell extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isDumbbellStart = isPoseMatching(pose, targetDumbbellStartSign);
+        boolean isDumbbellEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isDumbbellLow = isPoseMatching(pose, targetDumbbellLowSign);
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
-        } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+        if (isDumbbellEnd) {
+            dumbbellPosture.setText("올리세요");
+            if(!checkDumbbell){
+                speakDumbbellStart();
+                checkDumbbell = true;
+            }
+            checkDown = true;
+        } else if (isDumbbellStart) {
+            if (checkDown) {
+                dumbbellPosture.setText("잘했습니다");
+                speakDumbbellEnd();
+                checkDumbbell = false;
+            }
+            checkDown = false;
+        } else if (!checkDown && !isDumbbellLow) {
+            dumbbellPosture.setText("더 내리세요");
         }
+    }
+
+    private void speakDumbbellEnd() {
+        String textToSpeak ="잘했어요 다시 해볼까요?";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakDumbbellStart() {
+        String textToSpeak ="좋아요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startAnalysis(){

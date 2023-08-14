@@ -25,10 +25,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newbody.PoseMatcher;
@@ -52,18 +54,24 @@ import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class PostureSquat extends AppCompatActivity {
 
-    private boolean dumbbellStartDetected = false;
-    private boolean dumbbellEndDetected = false;
-    private TargetPose targetDumbbellStartSign;
-    private TargetPose targetDumbbellEndSign;
+    private boolean goodMotionDetected = false;
+    private TargetPose targetSquatStartSign;
+    private TargetPose targetSquatEndSign;
+    private TargetPose targetSquatHipOverSign;
+    private TargetPose targetSquatKneeOverSign;
+    private boolean check = false;
+    private boolean checkSquat = false;
+    private TextToSpeech tts;
 
     PreviewView previewView;
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
+    TextView squatPosture;
 
     Button exit;
 
@@ -81,6 +89,26 @@ public class PostureSquat extends AppCompatActivity {
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int langResult = tts.setLanguage(Locale.KOREAN);
+                    if (langResult == TextToSpeech.LANG_MISSING_DATA |
+                            langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported or missing data");
+                    }else {
+                        // 피치와 속도를 조절합니다.
+                        tts.setPitch(0.8f); // 높은 톤
+                        tts.setSpeechRate(0.9f); // 약간 빠른 속도
+                        tts.speak("스쿼트를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
 
         initTargetPoses();
         initViews();
@@ -122,7 +150,6 @@ public class PostureSquat extends AppCompatActivity {
 
                 // setting everything as transparent
                 guidelineCanvas.drawColor(Color.TRANSPARENT);
-//                guidelineCanvas.drawRect(0, 0, guidelineBmp.getWidth(), guidelineBmp.getHeight(), transPaint);
 
                 // drawing just a rect
                 if(pose != null){
@@ -168,6 +195,7 @@ public class PostureSquat extends AppCompatActivity {
     }
 
     private void initViews(){
+        squatPosture = findViewById(R.id.postureSquatEx);
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
@@ -191,7 +219,11 @@ public class PostureSquat extends AppCompatActivity {
             public void onComplete(@NonNull Task<Pose> task) {
                 if(task.isSuccessful()){
                     Pose pose = task.getResult();
-                    handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
+                    try {
+                        handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     List<PoseLandmark> landmarks = pose.getAllPoseLandmarks();
                     Log.d("debugg", "Landmarks found : " + landmarks.size());
                     if(landmarks.size() == 0){
@@ -213,21 +245,33 @@ public class PostureSquat extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDumbbellStartSign = new TargetPose(
+        targetSquatStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,160.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 160.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 160.0 )
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
                 )
         );
 
-        targetDumbbellEndSign = new TargetPose(
+        targetSquatEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 40.0),
-                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 40.0 ),
-                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 40.0 )
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                )
+        );
+
+        targetSquatHipOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 25.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 25.0)
+                )
+        );
+
+        targetSquatKneeOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 50.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 50.0)
                 )
         );
     }
@@ -237,16 +281,43 @@ public class PostureSquat extends AppCompatActivity {
         return matcher.match(pose, targetPose);
     }
 
-    private void handlePoseDetection(Pose pose) {
-        boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
-        boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+    private void handlePoseDetection(Pose pose) throws InterruptedException {
+        Handler h = new Handler();
 
-        if (dumbbellStartDetected && isSquatEnd) {
-            dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
-            dumbbellEndDetected = false;
+        boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
+        boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+        boolean isSquatHipOver = isPoseMatching(pose, targetSquatHipOverSign);
+        boolean isSquatKneeOver = isPoseMatching(pose, targetSquatKneeOverSign);
+
+        if (isSquatEnd) {
+            if (check) {
+                squatPosture.setText("잘했어요 다시 해볼까요?");
+                speakSquatEnd();
+                checkSquat = false;
+            }
+            check = false;
         } else if (isSquatStart) {
-            dumbbellStartDetected = true;
+            check = true;
+            squatPosture.setText("Good Motion ! 이제 올라가세요");
+            if(!checkSquat){
+                speakSquatStart();
+                checkSquat = true;
+            }
+        } else if (!check && isSquatHipOver && !isSquatEnd) {
+            squatPosture.setText("허리를 더 올리세요");
+        } else if (!check && !isSquatKneeOver && !isSquatEnd) {
+            squatPosture.setText("엉덩이를 더 올리세요");
+        } else if (!check && !isSquatStart && !isSquatEnd) {
+            squatPosture.setText("더 앉으세요");
         }
+    }
+    private void speakSquatEnd() {
+        String textToSpeak ="잘했어요 다시 해볼까요?";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakSquatStart() {
+        String textToSpeak ="좋아요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startAnalysis(){
@@ -376,5 +447,13 @@ public class PostureSquat extends AppCompatActivity {
         super.onPause();
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
+    }
+    @Override
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 }

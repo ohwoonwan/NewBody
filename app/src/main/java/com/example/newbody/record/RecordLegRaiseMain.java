@@ -72,6 +72,7 @@ public class RecordLegRaiseMain extends AppCompatActivity {
 
     private boolean legRaiseStartDetected = false;
     private boolean legRaiseEndDetected = false;
+    private boolean checkLeg = false;
     private long time;
     private int score = 0;
     private TargetPose targetLegRaiseStartSign;
@@ -435,13 +436,34 @@ public class RecordLegRaiseMain extends AppCompatActivity {
             speakLegCount(score);
             legRaiseStartDetected = false; // 다음 연속 감지를 위해 초기화
             legRaiseEndDetected = false;
+            checkLeg = false;
         } else if (isSquatStart) {
             legRaiseStartDetected = true;
+            if(!checkLeg){
+                speakLeg();
+                checkLeg = true;
+            }
         }
     }
 
     private void speakLegCount(int count) {
         String textToSpeak = count + "개";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void speakLeg() {
+        double randomValue = Math.random();
+        int value = (int)(randomValue*4)+1;
+        String textToSpeak = null;
+        if(value == 1){
+            textToSpeak = "완벽해요";
+        }else if(value == 2){
+            textToSpeak = "좋아요";
+        }else if(value == 3){
+            textToSpeak = "훌륭해요";
+        }else if(value == 4){
+            textToSpeak = "잘했어요";
+        }
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
