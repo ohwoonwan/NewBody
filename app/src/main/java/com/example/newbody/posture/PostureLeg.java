@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,7 @@ import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class PostureLeg extends AppCompatActivity {
 
@@ -60,6 +62,7 @@ public class PostureLeg extends AppCompatActivity {
     private TargetPose targetLegRaiseStartSign;
     private TargetPose targetLegRaiseEndSign;
     private TargetPose targetLegRaiseOverSign;
+    private TextToSpeech tts;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -83,6 +86,26 @@ public class PostureLeg extends AppCompatActivity {
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int langResult = tts.setLanguage(Locale.KOREAN);
+                    if (langResult == TextToSpeech.LANG_MISSING_DATA |
+                            langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported or missing data");
+                    }else {
+                        // 피치와 속도를 조절합니다.
+                        tts.setPitch(0.8f); // 높은 톤
+                        tts.setSpeechRate(0.9f); // 약간 빠른 속도
+                        tts.speak("레그레이즈를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
 
         initTargetPoses();
         initViews();
@@ -254,6 +277,7 @@ public class PostureLeg extends AppCompatActivity {
         if (isLegEnd) {
             if (check) {
                 legPosture.setText("잘했어요");
+                speakLegEnd();
             }
             check = false;
         } else if (isLegOver) {
@@ -262,8 +286,18 @@ public class PostureLeg extends AppCompatActivity {
             legPosture.setText("다리을 더 올리세요");
         } else if (isLegStart) {
             legPosture.setText("다리를 내리세요");
+            speakLegStart();
             check = true;
         }
+    }
+
+    private void speakLegEnd() {
+        String textToSpeak ="잘했어요 다시 해볼까요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakLegStart() {
+        String textToSpeak ="종아요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startAnalysis(){

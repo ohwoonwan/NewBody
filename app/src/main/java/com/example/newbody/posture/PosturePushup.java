@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,7 @@ import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class PosturePushup extends AppCompatActivity {
 
@@ -59,6 +61,7 @@ public class PosturePushup extends AppCompatActivity {
     private TargetPose targetPushupEndSign;
     private TargetPose targetPushupHipOverSign;
     private TargetPose targetPushupUpSign;
+    private TextToSpeech tts;
 
 
     PreviewView previewView;
@@ -83,6 +86,26 @@ public class PosturePushup extends AppCompatActivity {
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int langResult = tts.setLanguage(Locale.KOREAN);
+                    if (langResult == TextToSpeech.LANG_MISSING_DATA |
+                            langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language is not supported or missing data");
+                    }else {
+                        // 피치와 속도를 조절합니다.
+                        tts.setPitch(0.8f); // 높은 톤
+                        tts.setSpeechRate(0.9f); // 약간 빠른 속도
+                        tts.speak("푸쉬업을 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                } else {
+                    Log.e("TTS", "Initialization failed");
+                }
+            }
+        });
 
         initTargetPoses();
         initViews();
@@ -251,16 +274,27 @@ public class PosturePushup extends AppCompatActivity {
         if (isPushupEnd) {
             if (check) {
                 pushupPosture.setText("잘했어요");
+                speakPushupEnd();
             }
             check = false;
         } else if (isPushupStart) {
             check = true;
             pushupPosture.setText("올라가세요");
+            speakPushupStart();
         } else if (isPushupHipOver) {
             pushupPosture.setText("허리를 내리세요");
         } else if (!check && !isPushupStart) {
             pushupPosture.setText("더 내려가세요");
         }
+    }
+
+    private void speakPushupEnd() {
+        String textToSpeak ="잘했어요 다시 해볼까요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakPushupStart() {
+        String textToSpeak ="종아요";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startAnalysis(){
