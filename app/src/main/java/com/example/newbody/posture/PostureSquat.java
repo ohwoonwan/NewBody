@@ -61,6 +61,7 @@ public class PostureSquat extends AppCompatActivity {
     private TargetPose targetSquatEndSign;
     private TargetPose targetSquatHipOverSign;
     private TargetPose targetSquatKneeOverSign;
+    private boolean check = false;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -194,7 +195,11 @@ public class PostureSquat extends AppCompatActivity {
             public void onComplete(@NonNull Task<Pose> task) {
                 if(task.isSuccessful()){
                     Pose pose = task.getResult();
-                    handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
+                    try {
+                        handlePoseDetection(pose); // 포즈 감지 후 적절한 동작 처리
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     List<PoseLandmark> landmarks = pose.getAllPoseLandmarks();
                     Log.d("debugg", "Landmarks found : " + landmarks.size());
                     if(landmarks.size() == 0){
@@ -252,7 +257,7 @@ public class PostureSquat extends AppCompatActivity {
         return matcher.match(pose, targetPose);
     }
 
-    private void handlePoseDetection(Pose pose) {
+    private void handlePoseDetection(Pose pose) throws InterruptedException {
         Handler h = new Handler();
 
         boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
@@ -260,16 +265,32 @@ public class PostureSquat extends AppCompatActivity {
         boolean isSquatHipOver = isPoseMatching(pose, targetSquatHipOverSign);
         boolean isSquatKneeOver = isPoseMatching(pose, targetSquatKneeOverSign);
 
-        if (isSquatStart && !isSquatHipOver && !isSquatKneeOver) {
-            squatPosture.setText("Good Motion");
-        } else if (isSquatHipOver) {
+//        if (isSquatStart && !isSquatHipOver && !isSquatKneeOver) {
+//            squatPosture.setText("Good Motion");
+//        } else if (isSquatHipOver) {
+//            squatPosture.setText("허리를 더 올리세요");
+//        } else if (isSquatKneeOver) {
+//            squatPosture.setText("엉덩이를 더 올리세요");
+//        } else if (!isSquatStart) {
+//            squatPosture.setText("더 앉으세요");
+//        } else if (isSquatEnd) {
+//            squatPosture.setText("스쿼트 시작");
+//        }
+
+        if (isSquatEnd) {
+            if (check) {
+                squatPosture.setText("잘했어요 다시 해볼까요?");
+            }
+            check = false;
+        } else if (isSquatStart) {
+            check = true;
+            squatPosture.setText("Good Motion ! 이제 올라가세요");
+        } else if (!check && isSquatHipOver && !isSquatEnd) {
             squatPosture.setText("허리를 더 올리세요");
-        } else if (isSquatKneeOver) {
+        } else if (!check && !isSquatKneeOver && !isSquatEnd) {
             squatPosture.setText("엉덩이를 더 올리세요");
-        } else if (!isSquatStart) {
+        } else if (!check && !isSquatStart && !isSquatEnd) {
             squatPosture.setText("더 앉으세요");
-        } else if (isSquatEnd) {
-            squatPosture.setText("스쿼트 시작");
         }
     }
 
