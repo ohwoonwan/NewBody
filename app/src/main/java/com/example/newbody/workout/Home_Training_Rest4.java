@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.newbody.R;
+import com.example.newbody.Video;
 import com.example.newbody.VoiceRecognitionService;
 
 import java.util.ArrayList;
@@ -276,6 +277,10 @@ public class Home_Training_Rest4 extends AppCompatActivity {
                 onBackPressed();
             }else if(str.equals("다음")){
                 moveToHome_Training_Squaut1();
+            }else if(str.equals("나가기") || str.equals("종료")){
+                Intent intent = new Intent(this, Video.class);
+                startService(intent);
+                finish();
             }
         }
     }
