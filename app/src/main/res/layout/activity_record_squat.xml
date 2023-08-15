@@ -56,8 +56,8 @@
         android:gravity="center">
         <VideoView
             android:id="@+id/squatEx"
-            android:layout_width="260dp"
-            android:layout_height="300dp"/>
+            android:layout_width="330dp"
+            android:layout_height="400dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
