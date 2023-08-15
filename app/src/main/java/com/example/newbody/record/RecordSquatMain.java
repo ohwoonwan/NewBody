@@ -72,6 +72,7 @@ public class RecordSquatMain extends AppCompatActivity {
     private boolean squatStartDetected = false;
     private boolean squatEndDetected = false;
     private boolean checkSquat = false;
+
     private long time;
     private int score = 0;
     private TargetPose targetSquatStartSign;
@@ -139,11 +140,13 @@ public class RecordSquatMain extends AppCompatActivity {
         new CountDownTimer(duration, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                count.setText(String.valueOf(millisUntilFinished / 1000));
+                speakCount((int) (millisUntilFinished/1000)+1);
+                count.setText(String.valueOf((millisUntilFinished / 1000)+1));
             }
 
             public void onFinish() {
                 count.setText("시작!");
+                speakStart();
                 count.setVisibility(View.INVISIBLE);
                 startTimer();
                 countEx.setText("개수 : " + score);
@@ -151,6 +154,15 @@ public class RecordSquatMain extends AppCompatActivity {
             }
 
         }.start();
+    }
+
+    private void speakCount(int count) {
+        String textToSpeak = String.valueOf(count);
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakStart() {
+        String textToSpeak = "시작";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startTimer() {
