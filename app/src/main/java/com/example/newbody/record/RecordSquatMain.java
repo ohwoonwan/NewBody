@@ -55,7 +55,10 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
@@ -191,9 +194,9 @@ public class RecordSquatMain extends AppCompatActivity {
                                 if (document.exists()) {
                                     // 사용자의 이름을 가져옵니다.
                                     String userName = document.getString("name");
-
                                     // 스쿼트 점수와 사용자의 이름을 저장하는 로직
                                     saveSquatScoreWithName(userName, user);
+                                    saveSquatRecordWithDate(userName, user);
                                 }
                             }
                         }
@@ -210,6 +213,54 @@ public class RecordSquatMain extends AppCompatActivity {
     private void speakSquatResult(int count) {
         String textToSpeak ="총 기록은 " + count + "개 입니다. ";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void saveSquatRecordWithDate(String userName, FirebaseUser user){
+        Map<String, Object> userData = new HashMap<>();
+        final String collectionName = "dailySquatRecords";
+
+        // 날짜 정보 생성
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = dateFormat.format(new Date());
+
+        // userName을 추가합니다.
+        userData.put("name", userName);
+        userData.put("squatCount", score);
+        userData.put("date", currentDate);
+
+        DocumentReference userRecordRef = db.collection(collectionName).document(currentDate);
+        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // 기존의 스쿼트 수를 가져옵니다.
+                        Long existingSquatCount = document.getLong("squatCount");
+                        if (existingSquatCount != null) {
+                            int newSquatCount = existingSquatCount.intValue() + score;
+                            userData.put("squatCount", newSquatCount);
+                        }
+                    }
+                    // 새로운 스쿼트 수를 저장합니다.
+                    userRecordRef.set(userData)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "Data successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                    Log.w("Firestore", "Error writing document", e);
+                                }
+                            });
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
     }
 
     private void saveSquatScoreWithName(String userName, FirebaseUser user){

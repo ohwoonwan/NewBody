@@ -125,7 +125,7 @@ public class Home extends Fragment {
         ranking_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Ranking.class);
+                Intent intent = new Intent(getActivity(), Target.class);
                 startActivity(intent);
             }
         });
