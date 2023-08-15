@@ -2,6 +2,7 @@ package com.example.newbody;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,6 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Target extends AppCompatActivity {
     FirebaseFirestore db;
@@ -59,6 +62,7 @@ public class Target extends AppCompatActivity {
         user = mAuth.getCurrentUser();
 
         initViews();
+        targetRecyclerView.setLayoutManager(new LinearLayoutManager(Target.this));
 
         startTarget(user);
 
@@ -107,6 +111,7 @@ public class Target extends AppCompatActivity {
         switches[2] = findViewById(R.id.switch3);
         switches[3] = findViewById(R.id.switch4);
         switches[4] = findViewById(R.id.switch5);
+        targetRecyclerView = findViewById(R.id.targetRecyclerView);
 
         switches[0].setVisibility(View.GONE);
         switches[1].setVisibility(View.GONE);
@@ -251,6 +256,15 @@ public class Target extends AppCompatActivity {
             this.exerciseName = exerciseName;
             this.targetScore = targetScore;
             this.myScore = myScore;
+        }
+    }
+
+    private void fetchData() {
+        targetList.clear();
+        for (int i = 0; i < switches.length; i++) {
+            if (switches[i].isChecked()) {
+
+            }
         }
     }
 }

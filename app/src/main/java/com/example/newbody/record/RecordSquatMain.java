@@ -48,6 +48,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
@@ -241,7 +242,7 @@ public class RecordSquatMain extends AppCompatActivity {
                         }
                     }
                     // 새로운 스쿼트 수를 저장합니다.
-                    userRecordRef.update(userData)
+                    userRecordRef.set(userData, SetOptions.merge())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

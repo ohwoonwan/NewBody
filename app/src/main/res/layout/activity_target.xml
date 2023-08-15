@@ -407,7 +407,7 @@
                 android:textStyle="bold"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rankingRecyclerView"
+            android:id="@+id/targetRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
