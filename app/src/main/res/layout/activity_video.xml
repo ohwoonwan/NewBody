@@ -112,6 +112,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/ex0_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="준비운동"
@@ -123,7 +124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="05 : 00"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -208,7 +209,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="15개"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -293,7 +294,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="7개"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -379,7 +380,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="10개"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -463,7 +464,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="7개"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -548,7 +549,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="7개"
+                            android:text=""
                             android:textColor="#333333"
                             android:textSize="15sp" />
 
