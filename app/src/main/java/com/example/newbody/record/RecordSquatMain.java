@@ -75,11 +75,13 @@ public class RecordSquatMain extends AppCompatActivity {
     private boolean squatStartDetected = false;
     private boolean squatEndDetected = false;
     private boolean checkSquat = false;
+    private boolean checkSquatOver = false;
 
     private long time;
     private int score = 0;
     private TargetPose targetSquatStartSign;
     private TargetPose targetSquatEndSign;
+    private TargetPose targetSquatOverSign;
     private CountDownTimer timer;
 
     private CustomDialog customDialog;
@@ -470,15 +472,22 @@ public class RecordSquatMain extends AppCompatActivity {
                 Arrays.asList(
                         new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 60.0),
                         new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 60.0),
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 70.0),
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 70.0)
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 80.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 80.0)
                 )
         );
 
         targetSquatEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_ANKLE, 180.0),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_ANKLE, 180.0)
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 180.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 180.0)
+                )
+        );
+
+        targetSquatOverSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 55.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 55.0)
                 )
         );
     }
@@ -489,21 +498,35 @@ public class RecordSquatMain extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        Handler h = new Handler();
+
         boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
         boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
+        boolean isSquatOver = isPoseMatching(pose, targetSquatOverSign);
 
         if (squatStartDetected && isSquatEnd) {
-            score++;
-            countEx.setText("개수 : " + score);
-            speakSquatCount(score);
-            squatStartDetected = false; // 다음 연속 감지를 위해 초기화
-            squatEndDetected = false;
+            if(checkSquat && !checkSquatOver) {
+                score++;
+                countEx.setText("개수 : " + score);
+                speakSquatCount(score);
+                squatStartDetected = false; // 다음 연속 감지를 위해 초기화
+                squatEndDetected = false;
+                checkSquat = false;
+            } else if (!checkSquat && checkSquatOver) {
+                squatEndDetected = false;
+                squatStartDetected = false;
+                checkSquatOver = false;
+            }
+        } else if(isSquatOver) {
+            speakSquatOver();
             checkSquat = false;
-        } else if (isSquatStart) {
+            checkSquatOver = true;
+        } else if (isSquatStart && !checkSquatOver) {
             squatStartDetected = true;
             if(!checkSquat){
                 speakSquat();
                 checkSquat = true;
+                checkSquatOver = false;
             }
         }
     }
@@ -525,6 +548,10 @@ public class RecordSquatMain extends AppCompatActivity {
         }else if(value == 4){
             textToSpeak = "잘했어요";
         }
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakSquatOver() {
+        String textToSpeak = "너무 내려갔습니다 다시하세요";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
