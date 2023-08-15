@@ -31,7 +31,7 @@ import java.util.Date;
 
 public class Person extends Fragment {
     private View view;
-
+    private View fre;
     FirebaseAuth auth;
     Button button;
     FirebaseUser user;
@@ -42,10 +42,16 @@ public class Person extends Fragment {
     SimpleDateFormat yy, md;
     Date date;
     View fixButton;
+
+    View friendButton;
+
+    View friendPlusButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_person, container, false);
+        fre = inflater.inflate(R.layout.activity_person, container, false);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -60,11 +66,29 @@ public class Person extends Fragment {
         md = new SimpleDateFormat("MMdd");
 
         fixButton = view.findViewById(R.id.fix);
+        friendButton = view.findViewById(R.id.Friend);
+        friendPlusButton = view.findViewById(R.id.Friend11);
 
         fixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MemberChangeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        friendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getActivity(), FriendList.class);
+                startActivity(intent);
+            }
+        });
+
+        friendPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FriendListPlus.class);
                 startActivity(intent);
             }
         });
@@ -131,6 +155,7 @@ public class Person extends Fragment {
                         }
                     });
         }
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

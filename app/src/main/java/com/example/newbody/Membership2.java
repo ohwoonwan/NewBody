@@ -66,6 +66,7 @@ public class Membership2 extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
                 Map<String, Object> userData = new HashMap<>();
                 if (user != null) {
+                    userData.put("uid", user.getUid());
                     userData.put("name", name);
                     userData.put("gender", gender);
                     userData.put("birth", birth);
