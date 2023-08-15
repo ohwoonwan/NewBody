@@ -3,6 +3,7 @@ package com.example.newbody;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,7 +14,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -63,33 +67,42 @@ public class Membership2 extends AppCompatActivity {
                     return;
                 }
 
-                FirebaseUser user = mAuth.getCurrentUser();
-                Map<String, Object> userData = new HashMap<>();
-                if (user != null) {
-                    userData.put("name", name);
-                    userData.put("gender", gender);
-                    userData.put("birth", birth);
-                    userData.put("weight", weight);
-                    userData.put("height", height);
-                }
+                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
+                    }
+                    String token = task.getResult();
 
-                db.collection("users").document(user.getUid())
-                        .set(userData)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(Membership2.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), Membership3.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Membership2.this, "Failed to save data.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    Map<String, Object> userData = new HashMap<>();
+                    if (user != null) {
+                        userData.put("name", name);
+                        userData.put("gender", gender);
+                        userData.put("birth", birth);
+                        userData.put("weight", weight);
+                        userData.put("height", height);
+                        userData.put("fcmToken", token); // 토큰 값을 저장합니다.
+
+                        db.collection("users").document(user.getUid())
+                                .set(userData)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Membership2.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), Membership3.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Membership2.this, "Failed to save data.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+
             }
         });
 
