@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Target extends AppCompatActivity {
     FirebaseFirestore db;
@@ -46,6 +48,7 @@ public class Target extends AppCompatActivity {
     private Button prev, change;
     private boolean checkChange = true;
     private RecyclerView targetRecyclerView;
+    private TargetAdapter adapter;
     private TextView []exName = new TextView[5];
     private EditText []ex = new EditText[5];
     private TextView []exNum = new TextView[5];
@@ -155,6 +158,10 @@ public class Target extends AppCompatActivity {
         change.setText("수정");
 
         saveTarget(user);
+
+        fetchData();
+        adapter = new TargetAdapter(targetList);
+        targetRecyclerView.setAdapter(adapter);
     }
     public void changeOn(){
         ex[0].setText(exNum[0].getText().toString());
@@ -260,11 +267,75 @@ public class Target extends AppCompatActivity {
     }
 
     private void fetchData() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = dateFormat.format(new Date());
+        String collection = null;
+        String key = null;
+        String exercise = null;
+        int ex_num = 0;
         targetList.clear();
         for (int i = 0; i < switches.length; i++) {
             if (switches[i].isChecked()) {
-
+                if(i == 0){
+                    collection = "dailySquatRecords";
+                    key = currentDate+"squatCount";
+                    exercise = "스쿼트";
+                }else if(i == 1){
+                    collection = "dailyPushupRecords";
+                    key = currentDate+"pushupCount";
+                    exercise = "푸쉬업";
+                }else if(i == 2){
+                    collection = "dailyDumbbellRecords";
+                    key = currentDate+"dumbbellCount";
+                    exercise = "덤벨 숄더 프레스";
+                }else if(i == 3){
+                    collection = "dailySideRecords";
+                    key = currentDate+"sideCount";
+                    exercise = "사이드 래터럴 레이즈";
+                }else if(i == 4){
+                    collection = "dailyLegRecords";
+                    key = currentDate+"legCount";
+                    exercise = "레그 레이즈";
+                }
+                ex_num = extractNumber(exNum[i].getText().toString());
+                loadSquatRecordWithDate(collection, key, exercise, ex_num);
             }
         }
     }
+    private void loadSquatRecordWithDate(String collection, String date, String ex, int en){
+        final String collectionName = collection;
+        String userId = user.getUid();
+        String key = date;
+
+        DocumentReference userRecordRef = db.collection(collectionName).document(userId);
+        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        int score = document.getLong(key).intValue();
+                        targetList.add(new TargetItem(ex, en, score));
+                    } else {
+                        Log.d("Firestore", "No such document");
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
+    }
+
+    public static int extractNumber(String input) {
+        Pattern pattern = Pattern.compile("\\d+"); // 숫자에 해당하는 정규식
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group());
+        } else {
+            return 0; // 숫자가 없을 경우 0을 반환
+        }
+    }
+
 }
