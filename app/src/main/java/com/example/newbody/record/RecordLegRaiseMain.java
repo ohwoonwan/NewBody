@@ -228,7 +228,7 @@ public class RecordLegRaiseMain extends AppCompatActivity {
         userData.put("legCount", score);
         userData.put("date", currentDate);
 
-        DocumentReference userRecordRef = db.collection(collectionName).document(currentDate);
+        DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

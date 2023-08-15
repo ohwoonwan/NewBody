@@ -1,14 +1,30 @@
 package com.example.newbody;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Target extends AppCompatActivity {
 
@@ -112,6 +128,8 @@ public class Target extends AppCompatActivity {
         exNum[3].setVisibility(View.VISIBLE);
         exNum[4].setVisibility(View.VISIBLE);
         change.setText("수정");
+
+
     }
     public void changeOn(){
         ex[0].setText(exNum[0].getText().toString());
@@ -135,6 +153,56 @@ public class Target extends AppCompatActivity {
         exNum[3].setVisibility(View.INVISIBLE);
         exNum[4].setVisibility(View.INVISIBLE);
         change.setText("완료");
+
+
     }
+
+//    private void saveTargetExercise(String userName, FirebaseUser user){
+//        Map<String, Object> userData = new HashMap<>();
+//        final String collectionName = "dailyTarget";
+//
+//        // 날짜 정보 생성
+//        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+//        String currentDate = dateFormat.format(new Date());
+//
+//        // userName을 추가합니다.
+//        userData.put("name", userName);
+//        userData.put("squatCount", score);
+//        userData.put("date", currentDate);
+//
+//        DocumentReference userRecordRef = db.collection(collectionName).document(currentDate);
+//        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        // 기존의 스쿼트 수를 가져옵니다.
+//                        Long existingSquatCount = document.getLong("squatCount");
+//                        if (existingSquatCount != null) {
+//                            int newSquatCount = existingSquatCount.intValue() + score;
+//                            userData.put("squatCount", newSquatCount);
+//                        }
+//                    }
+//                    // 새로운 스쿼트 수를 저장합니다.
+//                    userRecordRef.set(userData)
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Log.d("Firestore", "Data successfully written!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+//                                    Log.w("Firestore", "Error writing document", e);
+//                                }
+//                            });
+//                } else {
+//                    Log.d("Firestore", "Failed to get document", task.getException());
+//                }
+//            }
+//        });
+//    }
 
 }
