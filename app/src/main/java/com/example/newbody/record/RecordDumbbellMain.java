@@ -227,10 +227,7 @@ public class RecordDumbbellMain extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
 
-        // userName을 추가합니다.
-        userData.put("name", userName);
-        userData.put("dumbbellCount", score);
-        userData.put("date", currentDate);
+        userData.put(currentDate+"dumbbellCount", score);
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -240,14 +237,14 @@ public class RecordDumbbellMain extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // 기존의 스쿼트 수를 가져옵니다.
-                        Long existingDumbbellCount = document.getLong("DumbbellCount");
+                        Long existingDumbbellCount = document.getLong(currentDate+"DumbbellCount");
                         if (existingDumbbellCount != null) {
                             int newDumbbellCount = existingDumbbellCount.intValue() + score;
-                            userData.put("dumbbellCount", newDumbbellCount);
+                            userData.put(currentDate+"dumbbellCount", newDumbbellCount);
                         }
                     }
                     // 새로운 스쿼트 수를 저장합니다.
-                    userRecordRef.set(userData)
+                    userRecordRef.update(userData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

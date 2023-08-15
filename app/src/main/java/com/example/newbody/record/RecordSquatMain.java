@@ -224,11 +224,7 @@ public class RecordSquatMain extends AppCompatActivity {
         // 날짜 정보 생성
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
-
-        // userName을 추가합니다.
-        userData.put("name", userName);
-        userData.put("squatCount", score);
-        userData.put("date", currentDate);
+        userData.put(currentDate+"squatCount", score);
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -238,14 +234,14 @@ public class RecordSquatMain extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // 기존의 스쿼트 수를 가져옵니다.
-                        Long existingSquatCount = document.getLong("squatCount");
+                        Long existingSquatCount = document.getLong(currentDate+"squatCount");
                         if (existingSquatCount != null) {
                             int newSquatCount = existingSquatCount.intValue() + score;
-                            userData.put("squatCount", newSquatCount);
+                            userData.put(currentDate+"squatCount", newSquatCount);
                         }
                     }
                     // 새로운 스쿼트 수를 저장합니다.
-                    userRecordRef.set(userData)
+                    userRecordRef.update(userData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

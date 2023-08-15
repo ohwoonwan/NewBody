@@ -223,10 +223,7 @@ public class RecordLegRaiseMain extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
 
-        // userName을 추가합니다.
-        userData.put("name", userName);
-        userData.put("legCount", score);
-        userData.put("date", currentDate);
+        userData.put(currentDate+"legCount", score);
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -236,14 +233,14 @@ public class RecordLegRaiseMain extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // 기존의 스쿼트 수를 가져옵니다.
-                        Long existingLegCount = document.getLong("legCount");
+                        Long existingLegCount = document.getLong(currentDate+"legCount");
                         if (existingLegCount != null) {
                             int newLegCount = existingLegCount.intValue() + score;
-                            userData.put("legCount", newLegCount);
+                            userData.put(currentDate+"legCount", newLegCount);
                         }
                     }
                     // 새로운 스쿼트 수를 저장합니다.
-                    userRecordRef.set(userData)
+                    userRecordRef.update(userData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

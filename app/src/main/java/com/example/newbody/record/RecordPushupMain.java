@@ -221,10 +221,7 @@ public class RecordPushupMain extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
 
-        // userName을 추가합니다.
-        userData.put("name", userName);
-        userData.put("pushupCount", score);
-        userData.put("date", currentDate);
+        userData.put(currentDate+"pushupCount", score);
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -233,14 +230,14 @@ public class RecordPushupMain extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Long existingPushupCount = document.getLong("pushupCount");
+                        Long existingPushupCount = document.getLong(currentDate+"pushupCount");
                         if (existingPushupCount != null) {
                             int newPushupCount = existingPushupCount.intValue() + score;
-                            userData.put("pushupCount", newPushupCount);
+                            userData.put(currentDate+"pushupCount", newPushupCount);
                         }
                     }
                     // 새로운 스쿼트 수를 저장합니다.
-                    userRecordRef.set(userData)
+                    userRecordRef.update(userData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

@@ -221,10 +221,7 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = dateFormat.format(new Date());
 
-        // userName을 추가합니다.
-        userData.put("name", userName);
-        userData.put("sideCount", score);
-        userData.put("date", currentDate);
+        userData.put(currentDate+"sideCount", score);
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -233,13 +230,13 @@ public class RecordSidelateralraiseMain extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Long existingSideCount = document.getLong("sideCount");
+                        Long existingSideCount = document.getLong(currentDate+"sideCount");
                         if (existingSideCount != null) {
                             int newSideCount = existingSideCount.intValue() + score;
-                            userData.put("sideCount", newSideCount);
+                            userData.put(currentDate+"sideCount", newSideCount);
                         }
                     }
-                    userRecordRef.set(userData)
+                    userRecordRef.update(userData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
