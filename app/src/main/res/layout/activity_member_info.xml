@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/prevButtonfix"
+                android:id="@+id/prevButtonInfo"
                 android:layout_marginLeft="15dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -37,20 +37,13 @@
                     android:layout_marginRight="75dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="회원 정보 수정"
+                    android:text="개인 정보"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수정된 정보가 있나요?"
-            android:textColor="#9933ff"
-            android:textSize="15sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -60,37 +53,17 @@
         android:gravity="center">
 
         <ImageView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center"
-            android:id="@+id/profile_pic"
+            android:id="@+id/profile_pic_info"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:padding="2dp"
             android:src="@drawable/baseline_person_24"/>
-        <RelativeLayout
-            android:id="@+id/pic_button"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/button"
-            android:elevation="22dp"
-            android:gravity="center"
-            android:layout_gravity="center">
-
-            <TextView
-                android:id="@+id/select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사진 선택"
-                android:textColor="#ffffff"
-                android:textSize="24sp" />
-
-        </RelativeLayout>
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -112,22 +85,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <EditText
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:id="@+id/name_fix"
+                android:id="@+id/name_info"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
-                android:hint="이 름"
-                android:textColorHint="#333333"
                 android:padding="8dp"
+                android:textSize="20sp"
                 android:textColor="@color/black"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -149,15 +122,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <EditText
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:id="@+id/gender_fix"
+                android:id="@+id/gender_info"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_supervisor_account_24"
                 android:drawablePadding="8dp"
-                android:hint="성 별(M / W)"
-                android:textColorHint="#333333"
+                android:textSize="20sp"
                 android:padding="8dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -165,6 +137,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -186,15 +159,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <EditText
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:id="@+id/birth_fix"
+                android:id="@+id/birth_info"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_calendar_month_24"
                 android:drawablePadding="8dp"
-                android:hint="생년월일(YYYYMMDD)"
-                android:textColorHint="#333333"
+                android:textSize="20sp"
                 android:padding="8dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -202,6 +174,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -223,20 +196,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <EditText
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:id="@+id/weight_fix"
+                android:id="@+id/weight_info"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_monitor_weight_24"
                 android:drawablePadding="8dp"
-                android:hint="몸 무 게 ( k g )"
-                android:textColorHint="#333333"
+                android:textSize="20sp"
                 android:padding="8dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -258,41 +231,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <EditText
+            <TextView
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:id="@+id/height_fix"
+                android:id="@+id/height_info"
                 android:background="@drawable/custom_edittext"
                 android:drawableLeft="@drawable/baseline_height_24"
                 android:drawablePadding="8dp"
-                android:hint="키 ( c m )"
-                android:textColorHint="#333333"
+                android:textSize="20sp"
                 android:padding="8dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/fix_button"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button"
-        android:elevation="22dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/fix"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수 정 완 료"
-            android:textColor="#ffffff"
-            android:textSize="24sp" />
-
-    </RelativeLayout>
 
 </LinearLayout>

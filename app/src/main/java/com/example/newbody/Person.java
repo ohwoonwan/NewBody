@@ -33,7 +33,7 @@ public class Person extends Fragment {
     private View view;
 
     FirebaseAuth auth;
-    Button button;
+    Button button, infoButton, goalButton, progressButton, alarmButton, friendButton;
     FirebaseUser user;
 
     FirebaseFirestore db;
@@ -54,6 +54,12 @@ public class Person extends Fragment {
         height = view.findViewById(R.id.height_data);
         weight = view.findViewById(R.id.weight_data);
         age = view.findViewById(R.id.age_data);
+        infoButton = view.findViewById(R.id.info_button);
+        goalButton = view.findViewById(R.id.goal_button);
+        progressButton = view.findViewById(R.id.progress_button);
+        alarmButton = view.findViewById(R.id.alarm_button);
+        friendButton = view.findViewById(R.id.friend_button);
+
         user = auth.getCurrentUser();
         date = new Date();
         yy = new SimpleDateFormat("yyyy");
@@ -131,6 +137,22 @@ public class Person extends Fragment {
                         }
                     });
         }
+
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MemberInfo.class);
+                startActivity(intent);
+            }
+        });
+
+        goalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Target.class);
+                startActivity(intent);
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

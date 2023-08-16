@@ -48,6 +48,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
@@ -55,7 +56,10 @@ import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
@@ -138,11 +142,13 @@ public class RecordLegRaiseMain extends AppCompatActivity {
         new CountDownTimer(duration, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                count.setText(String.valueOf(millisUntilFinished / 1000));
+                speakCount((int)(millisUntilFinished / 1000)+1);
+                count.setText(String.valueOf((millisUntilFinished / 1000)+1));
             }
 
             public void onFinish() {
                 count.setText("시작!");
+                speakStart();
                 count.setVisibility(View.INVISIBLE);
                 startTimer();
                 countEx.setText("개수 : " + score);
@@ -150,6 +156,15 @@ public class RecordLegRaiseMain extends AppCompatActivity {
             }
 
         }.start();
+    }
+
+    private void speakCount(int count) {
+        String textToSpeak = String.valueOf(count);
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakStart() {
+        String textToSpeak = "시작";
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void startTimer() {
@@ -182,6 +197,7 @@ public class RecordLegRaiseMain extends AppCompatActivity {
 
                                     // 스쿼트 점수와 사용자의 이름을 저장하는 로직
                                     saveLegScoreWithName(userName, user);
+                                    saveLegRecordWithDate(userName, user);
                                 }
                             }
                         }
@@ -198,6 +214,51 @@ public class RecordLegRaiseMain extends AppCompatActivity {
     private void speakLegResult(int count) {
         String textToSpeak ="총 기록은 " + count + "개 입니다. ";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void saveLegRecordWithDate(String userName, FirebaseUser user){
+        Map<String, Object> userData = new HashMap<>();
+        final String collectionName = "dailyLegRecords";
+
+        // 날짜 정보 생성
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = dateFormat.format(new Date());
+
+        userData.put(currentDate+"legCount", score);
+
+        DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
+        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // 기존의 스쿼트 수를 가져옵니다.
+                        Long existingLegCount = document.getLong(currentDate+"legCount");
+                        if (existingLegCount != null) {
+                            int newLegCount = existingLegCount.intValue() + score;
+                            userData.put(currentDate+"legCount", newLegCount);
+                        }
+                    }
+                    // 새로운 스쿼트 수를 저장합니다.
+                    userRecordRef.set(userData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "Data successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                    Log.w("Firestore", "Error writing document", e);
+                                }
+                            });
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
     }
 
     private void saveLegScoreWithName(String userName, FirebaseUser user){
