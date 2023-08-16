@@ -290,8 +290,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/baseline_access_alarm_24"
-                android:text="   알림"
+                android:drawableLeft="@drawable/baseline_supervisor_account_24_2"
+                android:text="   친구 목록"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
             <LinearLayout
@@ -300,7 +300,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="right">
                 <Button
-                    android:id="@+id/alarm_button"
+                    android:id="@+id/friend_list_button"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
                     android:layout_width="16dp"

@@ -57,7 +57,7 @@ public class Person extends Fragment {
         infoButton = view.findViewById(R.id.info_button);
         goalButton = view.findViewById(R.id.goal_button);
         progressButton = view.findViewById(R.id.progress_button);
-        alarmButton = view.findViewById(R.id.alarm_button);
+        alarmButton = view.findViewById(R.id.friend_list_button);
         friendButton = view.findViewById(R.id.friend_button);
 
         user = auth.getCurrentUser();
