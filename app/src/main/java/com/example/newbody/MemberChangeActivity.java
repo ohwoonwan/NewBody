@@ -144,7 +144,6 @@ public class MemberChangeActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(MemberChangeActivity.this, "Data updated successfully.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), Menu.class);
                                 startActivity(intent);
                                 finish();
@@ -153,7 +152,6 @@ public class MemberChangeActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(MemberChangeActivity.this, "Failed to update data.", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -241,13 +239,11 @@ public class MemberChangeActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(MemberChangeActivity.this, "Image updated successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MemberChangeActivity.this, "Failed to update image", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -86,12 +86,11 @@ public class Membership extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Membership.this, "Account created.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Membership2.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(Membership.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Membership.this, "회원가입 실패.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -129,7 +128,7 @@ public class Membership extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In 실패
-                Toast.makeText(Membership.this, "Authentication1 failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Membership.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -142,15 +141,13 @@ public class Membership extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // 인증 성공: 로그인이나 회원가입이 완료되었음
-                            Toast.makeText(Membership.this, "Success.", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(getApplicationContext(), Membership2.class);
                             startActivity(intent);
                             finish();
                         } else {
                             // 인증 실패
-                            Toast.makeText(Membership.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Membership.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

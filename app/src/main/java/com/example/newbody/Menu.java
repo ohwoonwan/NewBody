@@ -157,10 +157,7 @@ public class Menu extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_RECORD_AUDIO:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 권한이 허용됨
                 } else {
-                    // 권한이 거부됨
-                    Toast.makeText(this, "Microphone permission is required for this feature.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

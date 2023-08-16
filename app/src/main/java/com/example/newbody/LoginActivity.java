@@ -78,13 +78,11 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "Login Successful.",
-                                            Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.makeText(LoginActivity.this, "로그인 실패",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(googleAccount.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In 실패
-                Toast.makeText(LoginActivity.this, "Authentication1 failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -144,25 +142,23 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    // 인증 성공
-                                                    Toast.makeText(LoginActivity.this, "Success.", Toast.LENGTH_SHORT).show();
                                                     FirebaseUser user = mAuth.getCurrentUser();
                                                     Intent intent = new Intent(getApplicationContext(), Menu.class);
                                                     startActivity(intent);
                                                     finish();
                                                 } else {
                                                     // 인증 실패
-                                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             } else {
                                 // 사용자가 존재하지 않음: 에러 메시지 출력
-                                Toast.makeText(LoginActivity.this, "No account exists with this email.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             // 이메일 확인 실패: 에러 메시지 출력
-                            Toast.makeText(LoginActivity.this, "Failed to verify email.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
