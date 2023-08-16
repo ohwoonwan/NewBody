@@ -134,26 +134,63 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         String currentUid = currentUser.getUid(); // 현재 사용자의 UID
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        DocumentReference friendRef = db.collection("users")
-                                .document(currentUid) // 현재 사용자의 UID로 도큐먼트 접근
-                                .collection("friends")
-                                .document(user.getUid()); // 사용자 정의 문서 ID
-                        Map<String, Object> friendData = new HashMap<>();
-                        friendData.put("uid", user.getUid());
-                        friendData.put("name", user.getName());
-                        friendData.put("birth", user.getBirth());
-                        friendData.put("gender", user.getGender());
-                        friendData.put("weight", user.getWeight());
-                        friendData.put("height", user.getHeight());
 
-                        friendRef
-                                .set(friendData) // 데이터 설정
-                                .addOnSuccessListener(documentReference -> {
-                                    // 성공 처리
-                                })
-                                .addOnFailureListener(e -> {
-                                    // 실패 처리
-                                });
+                        // 상대방의 UID로 친구 문서를 추가
+                        DocumentReference friendRef = db.collection("users")
+                                .document(user.getUid()) // 상대방의 UID로 도큐먼트 접근
+                                .collection("friends")
+                                .document(currentUid); // 사용자 정의 문서 ID
+                        Map<String, Object> friendData = new HashMap<>();
+
+                        DocumentReference currentUserDocRef = db.collection("users").document(currentUid);
+                        currentUserDocRef.get().addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                String currentUserName = documentSnapshot.getString("name");
+                                String currentUserGender = documentSnapshot.getString("gender");
+                                String currentUserHeight = documentSnapshot.getString("height");
+                                String currentUserWeight = documentSnapshot.getString("weight");
+
+                                friendData.put("name", currentUserName); // 현재 사용자의 이름
+                                friendData.put("uid", currentUid);
+                                friendData.put("gender", currentUserGender);
+                                friendData.put("height", currentUserHeight);
+                                friendData.put("weight", currentUserWeight);
+
+                                // 나머지 정보도 필요한 속성에 맞게 추가
+
+                                friendRef.set(friendData)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // 상대방 친구 목록에 추가 성공 처리
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // 상대방 친구 목록에 추가 실패 처리
+                                        });
+
+                                // 나의 친구 목록에 상대방을 추가
+                                DocumentReference myFriendRef = db.collection("users")
+                                        .document(currentUid) // 내 UID로 도큐먼트 접근
+                                        .collection("friends")
+                                        .document(user.getUid()); // 사용자 정의 문서 ID
+                                Map<String, Object> myFriendData = new HashMap<>();
+                                myFriendData.put("name", user.getName()); // 상대방의 이름
+                                myFriendData.put("uid", user.getUid());
+                                myFriendData.put("birth", user.getBirth());
+                                myFriendData.put("gender", user.getGender());
+                                myFriendData.put("height", user.getHeight());
+                                myFriendData.put("weight", user.getWeight());
+                                // 나머지 정보도 필요한 속성에 맞게 추가
+
+                                myFriendRef.set(myFriendData)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // 나의 친구 목록에 추가 성공 처리
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // 나의 친구 목록에 추가 실패 처리
+                                        });
+                            }
+                        }).addOnFailureListener(e -> {
+                            // 데이터 가져오기 실패 처리
+                        });
                     }
                 }
             });

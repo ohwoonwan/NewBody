@@ -37,7 +37,6 @@ public class FriendListPlus extends AppCompatActivity {
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FriendRequestBt = findViewById(R.id.request);
 
 
         db = FirebaseFirestore.getInstance();
@@ -56,12 +55,6 @@ public class FriendListPlus extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // 실패 처리
                 });
-        FriendRequestBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent  = new Intent(FriendListPlus.this, FriendRequest.class);
-                startActivity(intent);
-            }
-        });
+
     }
 }
