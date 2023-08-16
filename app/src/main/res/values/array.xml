@@ -2,6 +2,5 @@
 <resources>
     <string-array name="option">
         <item>이름</item>
-        <item>생일</item>
     </string-array>
 </resources>

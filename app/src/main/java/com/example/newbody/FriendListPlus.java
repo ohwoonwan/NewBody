@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.newbody.FriendData;
 import com.example.newbody.R;
@@ -21,6 +24,8 @@ public class FriendListPlus extends AppCompatActivity {
     private RecyclerViewAdapterPlus mRecyclerAdapter;
     private FirebaseFirestore db;
 
+    private Button FriendRequestBt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,9 @@ public class FriendListPlus extends AppCompatActivity {
 
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        FriendRequestBt = findViewById(R.id.request);
+
 
         db = FirebaseFirestore.getInstance();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -48,5 +56,12 @@ public class FriendListPlus extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // 실패 처리
                 });
+        FriendRequestBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(FriendListPlus.this, FriendRequest.class);
+                startActivity(intent);
+            }
+        });
     }
 }

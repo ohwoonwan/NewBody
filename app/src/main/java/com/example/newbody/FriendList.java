@@ -2,27 +2,22 @@ package com.example.newbody;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newbody.FriendData;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class FriendList extends AppCompatActivity {
 
-    Spinner spinner;
+    TextView textView;
     private FirebaseFirestore firestore;
     String searchOption = "name";
 
@@ -38,7 +33,8 @@ public class FriendList extends AppCompatActivity {
 
         searchBtn = findViewById(R.id.searchBtn);
         searchEditText = findViewById(R.id.searchWord);
-        spinner = findViewById(R.id.spinner);
+        textView = findViewById(R.id.textView);
+
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance();
 
@@ -47,19 +43,10 @@ public class FriendList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (spinner.getItemAtPosition(position).toString()) {
-                    case "이름":
-                        searchOption = "name";
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing here
+            public void onClick(View view) {
+                searchOption = "name";
             }
         });
 

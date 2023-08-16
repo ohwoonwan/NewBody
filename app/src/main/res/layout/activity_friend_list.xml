@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -13,25 +14,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinner"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:entries="@array/option" />
+            android:background="@drawable/custom_edittext2"
+            android:textColor="#00ccff"
+            android:paddingStart="8dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="8dp"
+            android:text="이름"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/searchWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="검색어를 입력해주세요."
-            android:inputType="text" />
+            android:hint="이름을 입력해주세요."
+            android:textColorHint="@color/black"
+            android:inputType="text"
+            android:background="@drawable/edittext_border"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/searchBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="검색" />
+            android:text="검색"
+            android:textColor="#00ccff"
+            android:background="@drawable/custom_edittext2" />
 
     </LinearLayout>
 

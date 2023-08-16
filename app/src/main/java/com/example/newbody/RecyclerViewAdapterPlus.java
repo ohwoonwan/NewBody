@@ -46,7 +46,6 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAd
         }
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         FirebaseUser user;
