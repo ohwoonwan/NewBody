@@ -95,7 +95,8 @@
         <activity android:name=".PushMessage.AndroidNewFCM" />
         <activity android:name=".Notice" />
         <activity android:name=".Target" />
-        <activity android:name=".MemberInfo"/>
+        <activity android:name=".MemberInfo" />
+        <activity android:name=".Graph" />
         <activity android:name=".LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
