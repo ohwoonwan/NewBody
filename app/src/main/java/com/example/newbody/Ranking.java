@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,14 +20,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.newbody.record.RecordDumbbell;
-import com.example.newbody.record.RecordLegRaise;
-import com.example.newbody.record.RecordPushup;
-import com.example.newbody.record.RecordSidelateralraise;
-import com.example.newbody.record.RecordSquat;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +39,12 @@ public class Ranking extends AppCompatActivity {
 
     private Button prev, range, exercise, time, ranking_button;
     private String select_time, select_ex, select_range;
+    private ArrayList<String> uidList;
 
     private RecyclerView rankingRecyclerView;
     private RankingAdapter adapter;
     private FirebaseFirestore db;
+    private FirebaseUser user;
     private List<RankingItem> rankingList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class Ranking extends AppCompatActivity {
         startService(intent);
 
         initViews();
+
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +109,7 @@ public class Ranking extends AppCompatActivity {
         time = findViewById(R.id.timeRanking);
         ranking_button = findViewById(R.id.ranking_info_button);
         rankingRecyclerView = findViewById(R.id.rankingRecyclerView);
+        uidList = new ArrayList<>();
     }
 
     private void showTimeDialog() {
@@ -195,24 +202,119 @@ public class Ranking extends AppCompatActivity {
                     collectionName = "countLeg3Minute";
                 }
             }
+            String finalCollectionName = collectionName;
+            db.collection(collectionName).orderBy(collectionName, Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.getString("name");
+                                int score = document.getLong(finalCollectionName).intValue();
+
+                                rankingList.add(new RankingItem(rank_in.get(), name, score));
+                                rank_in.getAndIncrement();
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
         }else if(range.getText().equals("친구")){
+            if(exercise.getText().equals("스쿼트")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countSquat1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countSquat2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countSquat3Minute";
+                }
+            }else if(exercise.getText().equals("푸쉬업")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countPushup1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countPushup2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countPushup3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 숄더 프레스")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countDumbbell1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countDumbbell2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countDumbbell3Minute";
+                }
+            }else if(exercise.getText().equals("사이드 레터럴 레이즈")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countSide1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countSide2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countSide3Minute";
+                }
+            }else if(exercise.getText().equals("레그 레이즈")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countLeg1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countLeg2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countLeg3Minute";
+                }
+            }
+            friendListInput();
+            String finalCollectionName = collectionName;
+            db.collection(collectionName)
+                    .orderBy(collectionName, Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String docId = document.getId(); // 문서의 ID (여기서는 친구의 UID)
+
+                                if (uidList.contains(docId)) { // 문서의 ID가 친구 UID 리스트에 있는 경우만 추가
+                                    String name = document.getString("name");
+                                    int score = document.getLong(finalCollectionName).intValue();
+
+                                    rankingList.add(new RankingItem(rank_in.get(), name, score));
+                                    rank_in.getAndIncrement();
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
 
         }
-        String finalCollectionName = collectionName;
-        db.collection(collectionName).orderBy(collectionName, Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String name = document.getString("name");
-                            int score = document.getLong(finalCollectionName).intValue();
+    }
 
-                            rankingList.add(new RankingItem(rank_in.get(), name, score));
-                            rank_in.getAndIncrement();
+    public void friendListInput(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUid = currentUser != null ? currentUser.getUid() : null;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        uidList.clear();
+
+        if (currentUid != null) {
+            db.collection("users")
+                    .document(currentUid)
+                    .collection("friends")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String friendUid = document.getString("uid");
+                                    uidList.add(friendUid);
+                                }
+                                uidList.add(currentUid);
+                                for (String uid : uidList) {
+                                    Log.d("Friend UID", uid);
+                                }
+
+                            } else {
+                                Log.d("Firestore", "Error getting documents: ", task.getException());
+                            }
                         }
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+                    });
+        }
+
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
