@@ -1,5 +1,6 @@
 package com.example.newbody;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,8 @@ public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetView
     public void onBindViewHolder(@NonNull TargetViewHolder holder, int position) {
         Target.TargetItem currentItem = targetList.get(position);
         holder.targetName.setText(String.valueOf(currentItem.exerciseName));
-        holder.progressBar.setProgress((int)((double)currentItem.myScore/(double)currentItem.targetScore)*100);
+        holder.progressBar.setProgress(currentItem.myScore);
+        Log.d("num", String.valueOf(currentItem.myScore));
     }
 
     @Override

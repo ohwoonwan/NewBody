@@ -256,12 +256,10 @@ public class Target extends AppCompatActivity {
 
     static class TargetItem {
         String exerciseName;
-        int targetScore;
         int myScore;
 
-        public TargetItem(String exerciseName, int targetScore, int myScore) {
+        public TargetItem(String exerciseName, int myScore) {
             this.exerciseName = exerciseName;
-            this.targetScore = targetScore;
             this.myScore = myScore;
         }
     }
@@ -315,7 +313,9 @@ public class Target extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         int score = document.getLong(key).intValue();
-                        targetList.add(new TargetItem(ex, en, score));
+                        int scoreSet = (int) ((double)score/(double)en*100);
+                        String ex_name = ex + " ( " + score + " / " + en + " ) ";
+                        targetList.add(new TargetItem(ex_name, scoreSet));
                     } else {
                         Log.d("Firestore", "No such document");
                     }
