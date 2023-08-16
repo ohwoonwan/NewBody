@@ -153,6 +153,13 @@ public class Person extends Fragment {
                 startActivity(intent);
             }
         });
+        progressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Graph.class);
+                startActivity(intent);
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
