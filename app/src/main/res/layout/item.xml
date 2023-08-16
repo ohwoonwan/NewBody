@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        android:background="@drawable/custom_edittext2"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                android:textColor="#000"
+                android:textSize="16sp"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uid"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:textSize="12sp"
+                android:textColor="#444"
+                android:maxLines="1" />
+
+            <Button
+                android:id="@+id/btnadd"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:background="@drawable/custom_edittext2"
+                android:text="추 가"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
