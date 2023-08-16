@@ -73,6 +73,7 @@ public class Target extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
+                intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
                 startActivity(intent);
                 finish();
             }
