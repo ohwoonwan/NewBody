@@ -11,6 +11,8 @@ public class Membership3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership3);
+        Intent intent = new Intent(this, LoadingActivity.class);
+        startActivity(intent);
 
         View register = findViewById(R.id.button);
 

@@ -96,6 +96,8 @@
         <activity android:name=".Notice" />
         <activity android:name=".Target" />
         <activity android:name=".MemberInfo"/>
+        <activity android:name=".LoadingActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <service android:name=".VoiceRecognitionService" />
         <service android:name=".PushMessage.MyFirebaseService"
