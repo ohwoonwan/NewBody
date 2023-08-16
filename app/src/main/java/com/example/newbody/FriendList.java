@@ -1,5 +1,6 @@
 package com.example.newbody;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class FriendList extends AppCompatActivity {
     private EditText searchEditText;
 
     private RecyclerViewAdapter recyclerViewAdapter;
+    private Button prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class FriendList extends AppCompatActivity {
         searchBtn = findViewById(R.id.searchBtn);
         searchEditText = findViewById(R.id.searchWord);
         textView = findViewById(R.id.textView);
+        prev = findViewById(R.id.prevButtonFriendAdd);
 
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance();
@@ -55,6 +58,16 @@ public class FriendList extends AppCompatActivity {
             public void onClick(View v) {
                 String searchWord = searchEditText.getText().toString();
                 recyclerViewAdapter.performSearch(searchWord, searchOption);
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
+                startActivity(intent);
+                finish();
             }
         });
     }

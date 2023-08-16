@@ -25,6 +25,7 @@ public class FriendListPlus extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private Button FriendRequestBt;
+    private Button prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class FriendListPlus extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerAdapter = new RecyclerViewAdapterPlus();
 
+        prev = findViewById(R.id.prevButtonFriendList);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -55,6 +57,16 @@ public class FriendListPlus extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // 실패 처리
                 });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 }
