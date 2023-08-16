@@ -88,7 +88,6 @@ public class Membership2 extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(Membership2.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), Membership3.class);
                                         startActivity(intent);
                                         finish();
@@ -97,7 +96,6 @@ public class Membership2 extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(Membership2.this, "Failed to save data.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
