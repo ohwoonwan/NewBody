@@ -169,20 +169,26 @@ public class Video extends AppCompatActivity {
 
                 // 선택한 난이도에 따라 시간 배열을 업데이트
                 if (selectedDifficulty.equals("쉬움")) {
-                    LevelCountView[1].setText("15"); // 스쿼트
-                    LevelCountView[2].setText("7"); // 푸시업
-                    LevelCountView[4].setText("15"); // 사레레
-                    LevelCountView[5].setText("7"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("15개"); // 스쿼트
+                    LevelCountView[2].setText("7개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("15개"); // 사레레
+                    LevelCountView[5].setText("7개"); // 레그라이즈
                 } else if (selectedDifficulty.equals("보통")) {
-                    LevelCountView[1].setText("20"); // 스쿼트
-                    LevelCountView[2].setText("20"); // 푸시업
-                    LevelCountView[4].setText("25"); // 사레레
-                    LevelCountView[5].setText("15"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("20개"); // 스쿼트
+                    LevelCountView[2].setText("20개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("25개"); // 사레레
+                    LevelCountView[5].setText("15개"); // 레그라이즈
                 } else if (selectedDifficulty.equals("어려움")) {
-                    LevelCountView[1].setText("25"); // 스쿼트
-                    LevelCountView[2].setText("35"); // 푸시업
-                    LevelCountView[4].setText("35"); // 사레레
-                    LevelCountView[5].setText("20"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("25개"); // 스쿼트
+                    LevelCountView[2].setText("35개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("35개"); // 사레레
+                    LevelCountView[5].setText("20개"); // 레그라이즈
                 }
             }
         });
@@ -234,20 +240,26 @@ public class Video extends AppCompatActivity {
 
                 // 선택한 난이도에 따라 시간 배열을 업데이트
                 if (selectedDifficulty.equals("쉬움")) {
-                    LevelCountView[1].setText("15"); // 스쿼트
-                    LevelCountView[2].setText("7"); // 푸시업
-                    LevelCountView[4].setText("15"); // 사레레
-                    LevelCountView[5].setText("7"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("15개"); // 스쿼트
+                    LevelCountView[2].setText("7개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("15개"); // 사레레
+                    LevelCountView[5].setText("7개"); // 레그라이즈
                 } else if (selectedDifficulty.equals("보통")) {
-                    LevelCountView[1].setText("20"); // 스쿼트
-                    LevelCountView[2].setText("20"); // 푸시업
-                    LevelCountView[4].setText("25"); // 사레레
-                    LevelCountView[5].setText("15"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("20개"); // 스쿼트
+                    LevelCountView[2].setText("20개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("25개"); // 사레레
+                    LevelCountView[5].setText("15개"); // 레그라이즈
                 } else if (selectedDifficulty.equals("어려움")) {
-                    LevelCountView[1].setText("25"); // 스쿼트
-                    LevelCountView[2].setText("35"); // 푸시업
-                    LevelCountView[4].setText("35"); // 사레레
-                    LevelCountView[5].setText("20"); // 레그라이즈
+                    LevelCountView[0].setText("05:00"); // 준비운동
+                    LevelCountView[1].setText("25개"); // 스쿼트
+                    LevelCountView[2].setText("35개"); // 푸시업
+                    LevelCountView[3].setText("10개"); // 덤프
+                    LevelCountView[4].setText("35개"); // 사레레
+                    LevelCountView[5].setText("20개"); // 레그라이즈
                 }
             }else if(str.equals("이전")){
                 Intent intent = new Intent(getApplicationContext(), Menu.class);
