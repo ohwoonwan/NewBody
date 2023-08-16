@@ -98,6 +98,8 @@
         <activity android:name=".MemberInfo"/>
         <activity android:name=".LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".FriendList"/>
+        <activity android:name=".FriendListPlus"/>
 
         <service android:name=".VoiceRecognitionService" />
         <service android:name=".PushMessage.MyFirebaseService"
