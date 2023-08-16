@@ -138,6 +138,14 @@ public class Person extends Fragment {
                     });
         }
 
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MemberInfo.class);
+                startActivity(intent);
+            }
+        });
+
         goalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
