@@ -81,6 +81,8 @@ public class Menu extends AppCompatActivity {
         person = new Person();
 
         setFrag(0); // 첫 프래그먼트 화면
+        int selectedFragmentIndex = getIntent().getIntExtra("SELECTED_FRAGMENT_INDEX", 0);
+        setFrag(selectedFragmentIndex);
     }
 
     // 프래그먼트 교체가 일어나는 실행문
