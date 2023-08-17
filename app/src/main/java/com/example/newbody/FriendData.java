@@ -5,6 +5,7 @@ public class FriendData {
     private String birth;
     private String gender;
     private String weight;
+
     private String height;
 
     public String getUid() {

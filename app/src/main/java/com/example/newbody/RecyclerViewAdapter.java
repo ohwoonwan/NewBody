@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private FirebaseAuth auth;
     private String uid;
     private ListenerRegistration listenerRegistration;
+    private boolean nameFound = true;
 
     public RecyclerViewAdapter() {
         firestore = FirebaseFirestore.getInstance();
@@ -52,9 +54,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // 검색 기능을 수행하는 메서드
-    // 검색 기능을 수행하는 메서드
     public void performSearch(String searchWord, String option) {
         filteredUsers.clear();
+        nameFound = false;
 
         if (searchWord == null || option == null || searchWord.isEmpty() || option.isEmpty()) {
             // 검색어가 없을 때 전체 데이터를 불러옵니다.
@@ -71,19 +73,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         FriendData friend = new FriendData(name, birth, uid); // 생성자에 데이터 추가
                         friend.setUid(uid);
                         filteredUsers.add(friend);
-                        Log.d("DebugTag", "Added to filteredUsers: " + userData.getName()); // 로그 출력
+                        nameFound = true;
                     } else if (option.equals("birth") && birth.contains(searchWord)) {
                         FriendData friend = new FriendData(name, birth, uid); // 생성자에 데이터 추가
                         friend.setUid(uid);
                         filteredUsers.add(friend);
-                        Log.d("DebugTag", "Added to filteredUsers: " + userData.getName()); // 로그 출력
+                        nameFound = true;
                     }
                 }
             }
         }
         notifyDataSetChanged(); // 데이터 변경을 어댑터에 알려 화면을 갱신합니다.
     }
-
 
     @NonNull
     @Override
@@ -96,10 +97,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FriendData user = filteredUsers.get(position);
-        Log.d("DebugTag", "FriendUid: " + user.getUid()); // 로그 출력
         holder.bind(user);
     }
-
 
     @Override
     public int getItemCount() {
@@ -109,7 +108,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        FirebaseUser user;
         TextView uid;
         Button btnadd;
 
@@ -121,23 +119,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             btnadd = view.findViewById(R.id.btnadd);
         }
 
-        public void bind(FriendData user) {
+        public void bind(FriendData friend) {
             // 뷰 홀더에 데이터를 바인딩하여 화면에 표시합니다.
-            name.setText(user.getName());
-            uid.setText(user.getUid());
+            name.setText(friend.getName());
+            uid.setText(friend.getUid());
 
-            btnadd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    if (currentUser != null) {
-                        String currentUid = currentUser.getUid(); // 현재 사용자의 UID
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                String currentUid = currentUser.getUid(); // 현재 사용자의 UID
 
+                btnadd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isUserAlreadyAdded = checkIfUserAlreadyAddedByUid(currentUid, friend.getUid());
+
+                        if (isUserAlreadyAdded) {
+
+                            return;
+                        }
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                         // 상대방의 UID로 친구 문서를 추가
                         DocumentReference friendRef = db.collection("users")
-                                .document(user.getUid()) // 상대방의 UID로 도큐먼트 접근
+                                .document(friend.getUid()) // 상대방의 UID로 도큐먼트 접근
                                 .collection("friends")
                                 .document(currentUid); // 사용자 정의 문서 ID
                         Map<String, Object> friendData = new HashMap<>();
@@ -170,14 +174,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 DocumentReference myFriendRef = db.collection("users")
                                         .document(currentUid) // 내 UID로 도큐먼트 접근
                                         .collection("friends")
-                                        .document(user.getUid()); // 사용자 정의 문서 ID
+                                        .document(friend.getUid()); // 사용자 정의 문서 ID
                                 Map<String, Object> myFriendData = new HashMap<>();
-                                myFriendData.put("name", user.getName()); // 상대방의 이름
-                                myFriendData.put("uid", user.getUid());
-                                myFriendData.put("birth", user.getBirth());
-                                myFriendData.put("gender", user.getGender());
-                                myFriendData.put("height", user.getHeight());
-                                myFriendData.put("weight", user.getWeight());
+                                myFriendData.put("name", friend.getName()); // 상대방의 이름
+                                myFriendData.put("uid", friend.getUid());
+                                myFriendData.put("birth", friend.getBirth());
+                                myFriendData.put("gender", friend.getGender());
+                                myFriendData.put("height", friend.getHeight());
+                                myFriendData.put("weight", friend.getWeight());
                                 // 나머지 정보도 필요한 속성에 맞게 추가
 
                                 myFriendRef.set(myFriendData)
@@ -192,8 +196,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             // 데이터 가져오기 실패 처리
                         });
                     }
-                }
-            });
+                });
+            }
         }
+
+        private boolean checkIfUserAlreadyAddedByUid(String currentUid, String friendUid) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            DocumentReference myFriendRef = db.collection("users")
+                    .document(currentUid) // 내 UID로 도큐먼트 접근
+                    .collection("friends")
+                    .document(friendUid); // 사용자의 UID를 문서 ID로 사용
+
+            Log.d("RecyclerViewAdapter", "Checking if user is already added...");
+
+            myFriendRef.get().addOnSuccessListener(documentSnapshot -> {
+                boolean isSuccessful = documentSnapshot.exists();
+                if (isSuccessful) {
+                    Toast.makeText(itemView.getContext(), "이미 추가된 사용자입니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(itemView.getContext(), "정상적으로 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(e -> {
+            });
+
+            return false; // 임시 반환값
+        }
+
+
     }
 }
