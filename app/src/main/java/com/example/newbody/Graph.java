@@ -99,7 +99,7 @@ public class Graph extends AppCompatActivity {
 
     private void loadLast7DaysSquatData() {
         final List<String> last7Days = new ArrayList<>();
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        DateFormat dateFormat = new SimpleDateFormat("MMdd");
         Calendar cal = Calendar.getInstance();
         for (int i = 0; i < 7; i++) {
             last7Days.add(dateFormat.format(cal.getTime()));
@@ -141,7 +141,7 @@ public class Graph extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        Long exerciseCount = document.getLong(date + finalExercise);
+                        Long exerciseCount = document.getLong("2023"+date + finalExercise);
                         if (exerciseCount == null) {
                             exerciseCount = 0L;
                         }
@@ -172,7 +172,7 @@ public class Graph extends AppCompatActivity {
         });
 
 
-        chart.getAxisLeft().setDrawGridLines(false);
+//        chart.getAxisLeft().setDrawGridLines(false);
 //        chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisRight().setEnabled(false);
 
