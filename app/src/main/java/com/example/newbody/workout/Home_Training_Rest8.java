@@ -236,16 +236,12 @@ public class Home_Training_Rest8 extends AppCompatActivity {
         }
     }
 
-
-
-
-
     private void moveToHome_Training_Squaut1() {
         // 액티비티 넘어가면 종료되면 타이머도 함께 종료
         if (timer != null) {
             timer.cancel();
         }
-        Intent intentSub2 = new Intent(Home_Training_Rest8.this, Home_Training_side_lateral_raise1.class);
+        Intent intentSub2 = new Intent(Home_Training_Rest8.this, Home_Training_Leg_Raise1.class);
         intentSub2.putExtra("difficulty", selectedDifficulty); // 선택된 난이도를 Home_Training_Squaut1로 전달
         startActivity(intentSub2);
         finish();

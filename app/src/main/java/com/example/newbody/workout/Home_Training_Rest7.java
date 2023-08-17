@@ -243,7 +243,7 @@ public class Home_Training_Rest7 extends AppCompatActivity {
         if (timer != null) {
             timer.cancel();
         }
-        Intent intentSub2 = new Intent(Home_Training_Rest7.this, Home_Training_Leg_Raise2.class);
+        Intent intentSub2 = new Intent(Home_Training_Rest7.this, Home_Training_side_lateral_raise2.class);
         intentSub2.putExtra("difficulty", selectedDifficulty); // 선택된 난이도를 Home_Training_Squaut1로 전달
         startActivity(intentSub2);
         finish();
