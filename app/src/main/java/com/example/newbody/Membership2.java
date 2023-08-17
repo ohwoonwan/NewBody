@@ -82,7 +82,7 @@ public class Membership2 extends AppCompatActivity {
                         userData.put("weight", weight);
                         userData.put("height", height);
                         userData.put("fcmToken", token); // 토큰 값을 저장합니다.
-
+                        userData.put("uid", user.getUid());
                         db.collection("users").document(user.getUid())
                                 .set(userData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

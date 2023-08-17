@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,11 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAd
         FirebaseUser user;
         TextView uid;
 
-
         public ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
             uid = view.findViewById(R.id.uid);
+
         }
 
         void onBind(FriendData user){

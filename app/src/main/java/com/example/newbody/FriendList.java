@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,7 +68,11 @@ public class FriendList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String searchWord = searchEditText.getText().toString();
+                String searchOption = "name";
                 recyclerViewAdapter.performSearch(searchWord, searchOption);
+                if (recyclerViewAdapter.getItemCount() == 0) {
+                    Toast.makeText(FriendList.this, "존재하지 않는 이름입니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
