@@ -8,6 +8,7 @@ public class FriendData {
 
     private String height;
 
+    private String imageUrl;
     public String getUid() {
         return uid;
     }
@@ -20,6 +21,14 @@ public class FriendData {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void setStatus(String status) {
