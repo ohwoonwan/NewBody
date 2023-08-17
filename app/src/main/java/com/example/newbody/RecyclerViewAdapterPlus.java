@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAdapterPlus.ViewHolder> {
@@ -36,6 +37,7 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAd
     }
 
     public void setFriendList(ArrayList<FriendData> list){
+        Collections.sort(list, (user1, user2) -> user1.getName().compareTo(user2.getName()));
         this.mFriendList = list;
         notifyDataSetChanged();
     }
@@ -80,9 +82,11 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAd
                     }
                 }
             });
+
             name.setText(user.getName());
             uid.setText(user.getUid());
         }
+
 
     }
 }
