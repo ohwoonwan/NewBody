@@ -40,6 +40,7 @@ public class Ranking extends AppCompatActivity {
     private Button prev, range, exercise, time, ranking_button;
     private String select_time, select_ex, select_range;
     private ArrayList<String> uidList;
+    private View rankingView;
 
     private RecyclerView rankingRecyclerView;
     private RankingAdapter adapter;
@@ -93,6 +94,8 @@ public class Ranking extends AppCompatActivity {
                     Toast.makeText(Ranking.this, "시간을 선택해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                rankingView.setVisibility(View.VISIBLE);
                 db = FirebaseFirestore.getInstance();
                 rankingRecyclerView.setLayoutManager(new LinearLayoutManager(Ranking.this));
 
@@ -109,6 +112,7 @@ public class Ranking extends AppCompatActivity {
         time = findViewById(R.id.timeRanking);
         ranking_button = findViewById(R.id.ranking_info_button);
         rankingRecyclerView = findViewById(R.id.rankingRecyclerView);
+        rankingView = findViewById(R.id.layout_ranking);
         uidList = new ArrayList<>();
     }
 

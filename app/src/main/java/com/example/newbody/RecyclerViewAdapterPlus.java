@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,28 +42,47 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<RecyclerViewAd
 
     @Override
     public int getItemCount() {
-        if (mFriendList != null) {
-            return mFriendList.size();
-        } else {
-            return 0;
-        }
+        return mFriendList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         FirebaseUser user;
         TextView uid;
+        ImageView imageUrl;
 
         public ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
             uid = view.findViewById(R.id.uid);
+            imageUrl = view.findViewById(R.id.profile);
 
         }
 
         void onBind(FriendData user){
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference userRef = db.collection("users").document(user.getUid());
+
+            // 기본 이미지를 미리 설정
+            imageUrl.setImageResource(R.drawable.baseline_person_24);
+
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String imageUrl = documentSnapshot.getString("imageUrl");
+                    user.setImageUrl(imageUrl);
+                    // 이미지 로딩
+                    if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
+                        Picasso.get()
+                                .load(user.getImageUrl())
+                                .placeholder(R.drawable.baseline_person_24)
+                                .error(R.drawable.baseline_person_24)
+                                .into(this.imageUrl);
+                    }
+                }
+            });
             name.setText(user.getName());
             uid.setText(user.getUid());
         }
+
     }
 }
