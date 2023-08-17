@@ -322,4 +322,11 @@ public class Video extends AppCompatActivity {
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }
