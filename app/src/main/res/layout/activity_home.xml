@@ -72,16 +72,30 @@
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/bmi_num"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text=""
-            android:textColor="#009900"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:gravity="right">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginBottom="10dp">
+            </com.github.mikephil.charting.charts.PieChart>
+        </RelativeLayout>
+
+        <!--        <TextView-->
+<!--            android:id="@+id/bmi_num"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text=""-->
+<!--            android:textColor="#009900"-->
+<!--            android:textSize="28sp"-->
+<!--            android:textStyle="bold" />-->
     </LinearLayout>
 
     <LinearLayout
