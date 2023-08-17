@@ -30,7 +30,7 @@
                 android:layout_marginRight="70dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="목표 운동량"
+                android:text="일일 목표 운동량"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
