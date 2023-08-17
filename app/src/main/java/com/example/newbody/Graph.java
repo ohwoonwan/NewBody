@@ -2,6 +2,7 @@ package com.example.newbody;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -158,7 +159,13 @@ public class Graph extends AppCompatActivity {
     }
 
     private void drawGraph(List<Entry> entries, final List<String> last7Days) {
-        LineDataSet dataSet = new LineDataSet(entries, exerciseGraph.getText() + "그래프");
+        LineDataSet dataSet = new LineDataSet(entries, exerciseGraph.getText() + " 그래프");
+
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setLineWidth(2f);
+        dataSet.setColor(Color.parseColor("#9DCEFF"));
+        dataSet.setCircleColor(Color.parseColor("#9DCEFF"));
+
         LineData lineData = new LineData(dataSet);
 
         chart.getXAxis().setValueFormatter(new ValueFormatter() {
