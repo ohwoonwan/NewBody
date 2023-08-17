@@ -6,32 +6,41 @@
     android:padding="8dp"
     android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/rankTextView"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="rank"
-        android:textColor="#000000"/>
+        android:orientation="horizontal"
+        android:background="@drawable/custom_edittext">
+        <TextView
+            android:id="@+id/rankTextView"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:text="rank"
+            android:textColor="#000000"/>
 
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Name"
-        android:layout_marginStart="8dp"
-        android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Name"
+            android:layout_marginStart="8dp"
+            android:textColor="#000000"/>
 
-    <TextView
-        android:id="@+id/scoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Score"
-        android:textColor="#000000"
-        android:layout_marginStart="8dp" />
+        <TextView
+            android:id="@+id/scoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Score"
+            android:layout_marginRight="10dp"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
 
 </LinearLayout>
+
