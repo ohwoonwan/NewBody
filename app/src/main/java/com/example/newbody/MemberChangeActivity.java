@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class MemberChangeActivity extends AppCompatActivity {
     private EditText nameEditText, genderEditText, birthEditText, weightEditText, heightEditText;
 
     private FirebaseUser user;
+    private Button prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MemberChangeActivity extends AppCompatActivity {
 
         View updateButton = findViewById(R.id.fix_button);
         View imageButton = findViewById(R.id.pic_button);
+        prev = findViewById(R.id.prevButtonfix);
 
         storageRef = FirebaseStorage.getInstance().getReference("profile_pics");
 
@@ -88,6 +91,16 @@ public class MemberChangeActivity extends AppCompatActivity {
                         }
                     });
         }
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
