@@ -1,30 +1,22 @@
 package com.example.newbody;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.newbody.PushMessage.AndroidNewFCM;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,21 +24,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.IntentFilter;
-
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
 public class Home extends Fragment {
     private View view;
     private View posture_button, video_button, record_button, ranking_button;
+    private PieChart pieChart;
 
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseFirestore db;
-    TextView name, bmi, bmiResult;
+    TextView name, bmiResult;
 
     @Nullable
     @Override
@@ -60,9 +49,9 @@ public class Home extends Fragment {
         video_button = view.findViewById(R.id.video_button);
         record_button = view.findViewById(R.id.record_button);
         ranking_button = view.findViewById(R.id.ranking_button);
+        pieChart = view.findViewById(R.id.pieChart);
 
         name = view.findViewById(R.id.name_info);
-        bmi = view.findViewById(R.id.bmi_num);
         bmiResult = view.findViewById(R.id.bmi_result);
 
         if(user == null){
@@ -75,7 +64,7 @@ public class Home extends Fragment {
             db.collection("users").document(user.getUid())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @SuppressLint("SetTextI18n")
+
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
@@ -85,7 +74,6 @@ public class Home extends Fragment {
                                     int height = Integer.parseInt(document.getString("height"));
 
                                     double bmiNum = (double)weight/(((double)height/100)*((double)height/100));
-                                    bmi.setText(String.format("%.2f", bmiNum));
                                     if(bmiNum < 18.5){
                                         bmiResult.setText("당신의 BMI수치는 저체중에 해당합니다. ");
                                     }else if(bmiNum >= 18.5 && bmiNum < 25){
@@ -96,6 +84,28 @@ public class Home extends Fragment {
                                         bmiResult.setText("당신의 BMI수치는 비만에 해당합니다. ");
                                     }
                                     name.setText(document.getString("name"));
+
+                                    String bmi = String.valueOf(bmiNum);
+
+                                    List<PieEntry> entries = new ArrayList<>();
+                                    entries.add(new PieEntry((float) bmiNum, ""));
+                                    entries.add(new PieEntry(100-(float)bmiNum, ""));
+
+//                                    Log.d("BmiChart", "BMI: " + bmi);
+
+                                    PieDataSet dataSet = new PieDataSet(entries, "");
+                                    dataSet.setColors(Color.parseColor("#C58BF2"), Color.WHITE);
+//                                    dataSet.setDrawValues(false);
+                                    dataSet.setValueTextColor(Color.WHITE);
+                                    dataSet.setValueTextSize(14f);
+
+                                    PieData pieData = new PieData(dataSet);
+                                    pieData.setValueFormatter(new PercentFormatter(pieChart));
+                                    pieChart.setData(pieData);
+                                    pieChart.getDescription().setEnabled(false);
+                                    pieChart.setDrawHoleEnabled(false);
+                                    pieChart.getLegend().setEnabled(false);
+                                    pieChart.invalidate();
                                 } else {
                                 }
                             } else {
