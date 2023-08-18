@@ -34,6 +34,15 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:background="@drawable/custom_edittext"
+                android:text="삭제"
+                android:layout_marginLeft="40dp"
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
