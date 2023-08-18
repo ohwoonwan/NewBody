@@ -58,9 +58,6 @@ public class Home extends Fragment {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }else{
-            Intent intent = new Intent(getActivity(), LoadingActivity.class);
-            startActivity(intent);
-
             db.collection("users").document(user.getUid())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
