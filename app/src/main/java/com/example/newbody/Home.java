@@ -106,6 +106,7 @@ public class Home extends Fragment {
                                     pieChart.setDrawHoleEnabled(false);
                                     pieChart.getLegend().setEnabled(false);
                                     pieChart.invalidate();
+                                    pieChart.highlightValue(0, 0);
                                 } else {
                                 }
                             } else {
