@@ -7,6 +7,15 @@ public class FriendData {
     private String weight;
 
     private String height;
+    private String fcmToken;
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
 
     private String imageUrl;
     public String getUid() {

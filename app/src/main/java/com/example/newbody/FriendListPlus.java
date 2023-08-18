@@ -36,6 +36,8 @@ public class FriendListPlus extends AppCompatActivity {
     private Button FriendRequestBt;
     private Button prev;
 
+    private Button DeleteBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class FriendListPlus extends AppCompatActivity {
         mRecyclerAdapter = new RecyclerViewAdapterPlus();
 
         prev = findViewById(R.id.prevButtonFriendList);
+        DeleteBtn = findViewById(R.id.deleteBtn);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -76,6 +79,14 @@ public class FriendListPlus extends AppCompatActivity {
                 intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
                 startActivity(intent);
                 finish();
+            }
+        });
+        DeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 삭제 버튼이 눌렸을 때의 동작
+                String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                mRecyclerAdapter.deleteSelectedItems(currentUserUid);
             }
         });
 

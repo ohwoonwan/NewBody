@@ -154,13 +154,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 String currentUserGender = documentSnapshot.getString("gender");
                                 String currentUserHeight = documentSnapshot.getString("height");
                                 String currentUserWeight = documentSnapshot.getString("weight");
+                                String currentUserBirth = documentSnapshot.getString("birth");
+                                String currentUserFcmToken = documentSnapshot.getString("fcmToken");
 
                                 friendData.put("name", currentUserName); // 현재 사용자의 이름
                                 friendData.put("uid", currentUid);
                                 friendData.put("gender", currentUserGender);
                                 friendData.put("height", currentUserHeight);
                                 friendData.put("weight", currentUserWeight);
-
+                                friendData.put("birth", currentUserBirth);
+                                friendData.put("fcmToken", currentUserFcmToken);
                                 // 나머지 정보도 필요한 속성에 맞게 추가
 
                                 friendRef.set(friendData)
@@ -183,6 +186,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 myFriendData.put("gender", friend.getGender());
                                 myFriendData.put("height", friend.getHeight());
                                 myFriendData.put("weight", friend.getWeight());
+                                myFriendData.put("fcmToken", friend.getFcmToken());
                                 // 나머지 정보도 필요한 속성에 맞게 추가
 
                                 myFriendRef.set(myFriendData)
