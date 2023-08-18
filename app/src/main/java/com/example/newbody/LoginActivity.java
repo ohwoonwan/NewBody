@@ -25,9 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.SignInMethodQueryResult;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     EditText editEmail, editPassword;
@@ -60,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
+                startActivity(intent);
+
                 String emailS, passwordS;
                 emailS = String.valueOf(editEmail.getText());
                 passwordS = String.valueOf(editPassword.getText());
