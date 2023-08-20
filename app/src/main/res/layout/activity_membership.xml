@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="160dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -37,7 +37,8 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp">
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="30dp">
 
         <EditText
             android:id="@+id/password"
@@ -54,6 +55,34 @@
             android:textColorHint="#333333"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp">
+
+        <EditText
+            android:id="@+id/passwordCheck"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:hint="비 밀 번 호  확 인"
+            android:padding="14dp"
+            android:textColor="@color/black"
+            android:inputType="textPassword"
+            android:textColorHint="#333333"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/check_text"
+        android:layout_marginLeft="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <RelativeLayout
         android:id="@+id/register"
         android:layout_width="wrap_content"
@@ -64,7 +93,7 @@
         android:elevation="22dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:onClick="startButtonClicked">
 
         <TextView

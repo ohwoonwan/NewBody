@@ -1,13 +1,17 @@
 package com.example.newbody;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,7 +39,9 @@ import java.util.Map;
 
 public class Membership extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
-    EditText email, password;
+    EditText email, password, passwordCheck;
+    TextView check_text;
+    private boolean passwordCheckCheck = false;
     View google;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -56,6 +62,8 @@ public class Membership extends AppCompatActivity {
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        passwordCheck = findViewById(R.id.passwordCheck);
+        check_text = findViewById(R.id.check_text);
 
         // GoogleSignInClient 객체 초기화
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -64,12 +72,38 @@ public class Membership extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        passwordCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(password.getText().toString().equals(passwordCheck.getText().toString())) {
+                    passwordCheckCheck = true;
+                    check_text.setText("비밀번호와 일치합니다. ");
+                    check_text.setTextColor(Color.parseColor("#00cc00"));
+                } else {
+                    passwordCheckCheck = false;
+                    check_text.setText("비밀번호를 확인해주세요. ");
+                    check_text.setTextColor(Color.parseColor("#ff3300"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailS, passwordS;
+                String emailS, passwordS, passwordCheckS;
                 emailS = String.valueOf(email.getText());
                 passwordS = String.valueOf(password.getText());
+                passwordCheckS = String.valueOf(passwordCheck.getText());
 
                 if(TextUtils.isEmpty(emailS)){
                     Toast.makeText(Membership.this, "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -79,21 +113,31 @@ public class Membership extends AppCompatActivity {
                     Toast.makeText(Membership.this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(TextUtils.isEmpty(passwordCheckS)){
+                    Toast.makeText(Membership.this, "비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                // Firebase Authentication을 이용하여 사용자를 생성합니다.
-                mAuth.createUserWithEmailAndPassword(emailS, passwordS)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Intent intent = new Intent(getApplicationContext(), Membership2.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(Membership.this, "회원가입 실패.", Toast.LENGTH_SHORT).show();
+                if(passwordCheckCheck == true){
+                    // Firebase Authentication을 이용하여 사용자를 생성합니다.
+                    mAuth.createUserWithEmailAndPassword(emailS, passwordS)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new Intent(getApplicationContext(), Membership2.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(Membership.this, "회원가입 실패.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }else{
+                    Toast.makeText(Membership.this, "비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
             }
         });
 
