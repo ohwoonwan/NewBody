@@ -2,6 +2,7 @@ package com.example.newbody;
 
 import android.app.Activity;
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -21,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class Picture extends Fragment {
@@ -28,12 +31,16 @@ public class Picture extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private View view;
     private View camera_button;
+    private Bitmap currentImageBitmap;
+    private Button save;
+    private Uri imageUri;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_picture, container, false);
 
         camera_button = view.findViewById(R.id.camera_button);
+        save = view.findViewById(R.id.saveButton);
 
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +49,15 @@ public class Picture extends Fragment {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentImageBitmap != null) {
+                    saveToGallery(currentImageBitmap);
                 }
             }
         });
@@ -80,11 +96,29 @@ public class Picture extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            save.setVisibility(View.VISIBLE);
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            currentImageBitmap = (Bitmap) extras.get("data");
 
             ImageView imageView = (ImageView) getView().findViewById(R.id.pic_image);
-            imageView.setImageBitmap(imageBitmap);
+            imageView.setImageBitmap(currentImageBitmap);
+        }
+    }
+
+    private void saveToGallery(Bitmap bitmap) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+        Uri uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        try {
+            OutputStream outputStream = getActivity().getContentResolver().openOutputStream(uri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
