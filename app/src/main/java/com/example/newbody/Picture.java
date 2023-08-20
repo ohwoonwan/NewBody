@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,6 +60,7 @@ public class Picture extends Fragment {
                 if (currentImageBitmap != null) {
                     saveToGallery(currentImageBitmap);
                 }
+                Toast.makeText(getActivity(), "사진이 저장되었습니다", Toast.LENGTH_SHORT).show();
             }
         });
 
