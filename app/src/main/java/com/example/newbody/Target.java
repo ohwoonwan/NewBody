@@ -330,7 +330,10 @@ public class Target extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        int score = document.getLong(key).intValue();
+                        int score = 0;
+                        if(document.getLong(key) != null){
+                            score = document.getLong(key).intValue();
+                        }
                         int scoreSet = (int) ((double)score/(double)en*100);
                         String ex_name = ex + " ( " + score + " / " + en + " ) ";
                         targetList.add(new TargetItem(ex_name, scoreSet));
