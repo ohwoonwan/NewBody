@@ -77,8 +77,14 @@ public class MemberInfo extends AppCompatActivity {
                                     int mm = Integer.parseInt(date.substring(4, 6));
                                     int dd = Integer.parseInt(date.substring(6, 8));
 
+                                    if(document.getString("gender").equals("M") || document.getString("gender").equals("m")){
+                                        gender.setText("남자");
+                                    }else if(document.getString("gender").equals("W") || document.getString("gender").equals("w")){
+                                        gender.setText("여자");
+                                    }else{
+                                        gender.setText(document.getString("gender"));
+                                    }
                                     birth.setText(year + "년 " + mm + "월 " + dd + "일");
-                                    gender.setText(document.getString("gender"));
                                     name.setText(document.getString("name") + "님");
                                     weight.setText(document.getString("weight")+"kg");
                                     height.setText(document.getString("height")+"cm");

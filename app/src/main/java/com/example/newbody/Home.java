@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.newbody.record.RecordSquatMain;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -31,6 +33,8 @@ public class Home extends Fragment {
     private View view;
     private View posture_button, video_button, record_button, ranking_button;
     private PieChart pieChart;
+    private Button notice;
+    private CustomDialogNotice customDialog;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -50,6 +54,7 @@ public class Home extends Fragment {
         record_button = view.findViewById(R.id.record_button);
         ranking_button = view.findViewById(R.id.ranking_button);
         pieChart = view.findViewById(R.id.pieChart);
+        notice = view.findViewById(R.id.noticeDialog);
 
         name = view.findViewById(R.id.name_info);
         bmiResult = view.findViewById(R.id.bmi_result);
@@ -112,6 +117,16 @@ public class Home extends Fragment {
                         }
                     });
         }
+
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog = new CustomDialogNotice(getContext(),
+                        "본 앱은 음성 인식을 지원합니다. \n\n앱 내에서 '바디'를 불러보세요 ! \n\n'바디야' 또는 '뉴바디'라고 말하면 \n\n바디가 대답해주고 \n\n" +
+                                "명령을 실행해줍니다. " + "\n\n\n" + "예시) 자세 교정, 기록 측정 등");
+                customDialog.show();
+            }
+        });
 
         posture_button.setOnClickListener(new View.OnClickListener() {
             @Override
