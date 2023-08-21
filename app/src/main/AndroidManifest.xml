@@ -69,9 +69,11 @@
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
-        <activity android:name=".posture.PosturePushup" />
+        <activity android:name=".posture.PosturePushup"
+            android:screenOrientation="landscape"/>
         <activity android:name=".posture.PostureSquat" />
-        <activity android:name=".posture.PostureLeg" />
+        <activity android:name=".posture.PostureLeg"
+            android:screenOrientation="landscape"/>
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />
