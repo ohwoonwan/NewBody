@@ -61,8 +61,7 @@ public class PostureSquat extends AppCompatActivity {
     private boolean goodMotionDetected = false;
     private TargetPose targetSquatStartSign;
     private TargetPose targetSquatEndSign;
-    private TargetPose targetSquatHipOverSign;
-    private TargetPose targetSquatKneeOverSign;
+    private TargetPose targetSquatOverSign;
     private boolean check = false;
     private boolean checkSquat = false;
     private TextToSpeech tts;
@@ -261,14 +260,7 @@ public class PostureSquat extends AppCompatActivity {
                 )
         );
 
-        targetSquatHipOverSign = new TargetPose(
-                Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 25.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 25.0)
-                )
-        );
-
-        targetSquatKneeOverSign = new TargetPose(
+        targetSquatOverSign = new TargetPose(
                 Arrays.asList(
                         new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 50.0),
                         new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 50.0)
@@ -286,8 +278,7 @@ public class PostureSquat extends AppCompatActivity {
 
         boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
         boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
-        boolean isSquatHipOver = isPoseMatching(pose, targetSquatHipOverSign);
-        boolean isSquatKneeOver = isPoseMatching(pose, targetSquatKneeOverSign);
+        boolean isSquatOver = isPoseMatching(pose, targetSquatOverSign);
 
         if (isSquatEnd) {
             if (check) {
@@ -303,12 +294,10 @@ public class PostureSquat extends AppCompatActivity {
                 speakSquatStart();
                 checkSquat = true;
             }
-        } else if (!check && isSquatHipOver && !isSquatEnd) {
-            squatPosture.setText("허리를 더 올리세요");
-        } else if (!check && !isSquatKneeOver && !isSquatEnd) {
-            squatPosture.setText("엉덩이를 더 올리세요");
-        } else if (!check && !isSquatStart && !isSquatEnd) {
+        } else if (!check && !isSquatOver) {
             squatPosture.setText("더 앉으세요");
+        } else if (isSquatOver) {
+            squatPosture.setText("너무 앉으셨습니다. 다시 하세요.");
         }
     }
     private void speakSquatEnd() {
