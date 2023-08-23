@@ -88,7 +88,7 @@ public class Membership2 extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Intent intent = new Intent(getApplicationContext(), Membership3.class);
+                                        Intent intent = new Intent(getApplicationContext(), Membership4.class);
                                         startActivity(intent);
                                         finish();
                                     }

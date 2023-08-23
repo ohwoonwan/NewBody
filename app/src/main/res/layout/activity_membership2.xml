@@ -4,123 +4,170 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:background="@drawable/membership2"
+    android:background="@drawable/layout_default"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="390dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="10dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/username"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="이 름"
-            android:textSize="16dp"
-            android:textColorHint="#333333"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="10dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/sex"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_supervisor_account_24"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="성 별 (M / W)"
-            android:textSize="16dp"
-            android:textColorHint="#333333"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="10dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/birth"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_calendar_month_24"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="생 년 월 일 (YYYYMMDD)"
-            android:textSize="16dp"
-            android:textColorHint="#333333"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="10dp">
-
-        <EditText
-            android:id="@+id/height"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_height_24"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="키 ( c m )"
-            android:padding="8dp"
-            android:textSize="16dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
             android:textColor="@color/black"
-            android:textColorHint="#333333" />
-
-        <EditText
-            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <ProgressBar
+            android:layout_marginTop="20dp"
+            android:id="@+id/progressBar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progressbar_1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:id="@+id/weight"
-            android:background="@drawable/custom_edittext"
-            android:drawableLeft="@drawable/baseline_monitor_weight_24"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="몸 무 게 ( k g )"
-            android:textColorHint="#333333"
-            android:textSize="16dp"
-            android:padding="8dp"
-            android:textColor="@color/black"/>
+            android:layout_height="20dp"
+            android:progressTint="#9966ff"
+            android:max="5"
+            android:progress="2"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이정보는 당신의 운동에 도움을 줍니다. "
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/username"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="이 름"
+                android:textSize="16dp"
+                android:textColorHint="#333333"
+                android:padding="8dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/sex"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_supervisor_account_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="성 별 (M / W)"
+                android:textSize="16dp"
+                android:textColorHint="#333333"
+                android:padding="8dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/birth"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_calendar_month_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="생 년 월 일 (YYYYMMDD)"
+                android:textSize="16dp"
+                android:textColorHint="#333333"
+                android:padding="8dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:id="@+id/height"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_height_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="키 ( c m )"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textColorHint="#333333" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/weight"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_monitor_weight_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="몸 무 게 ( k g )"
+                android:textColorHint="#333333"
+                android:textSize="16dp"
+                android:padding="8dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/button"
@@ -128,18 +175,19 @@
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button"
         android:elevation="22dp"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:onClick="startButtonClicked">
 
         <TextView
             android:id="@+id/buttonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="가 입 완 료"
+            android:text="다음"
             android:textColor="#ffffff"
             android:textSize="23sp" />
 

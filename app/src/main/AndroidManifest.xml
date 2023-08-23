@@ -11,7 +11,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -33,8 +35,12 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".Membership" />
+        <activity android:name=".Membership1" />
         <activity android:name=".Membership2" />
         <activity android:name=".Membership3" />
+        <activity android:name=".Membership4" />
+        <activity android:name=".Membership5" />
+        <activity android:name=".Membership6" />
         <activity android:name=".Menu" />
         <activity android:name=".Posture" />
         <activity android:name=".Record" />
@@ -69,11 +75,13 @@
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
-        <activity android:name=".posture.PosturePushup"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".posture.PosturePushup"
+            android:screenOrientation="landscape" />
         <activity android:name=".posture.PostureSquat" />
-        <activity android:name=".posture.PostureLeg"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".posture.PostureLeg"
+            android:screenOrientation="landscape" />
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />
