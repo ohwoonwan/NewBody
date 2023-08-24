@@ -1,4 +1,4 @@
-package com.example.newbody.Yoga;
+package com.example.newbody.yoga;
 
 import android.Manifest;
 import android.app.Activity;
@@ -38,6 +38,7 @@ import com.example.newbody.R;
 import com.example.newbody.TargetPose;
 import com.example.newbody.TargetShape;
 import com.example.newbody.VoiceRecognitionService;
+import com.example.newbody.Yoga;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -53,15 +54,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class DownDog extends AppCompatActivity {
+public class Cat extends AppCompatActivity {
 
     private boolean CatStartDetected = false;
     private boolean CatEndDetected = false;
     private boolean checkUp = false;
 
-    private boolean checkDog = false;
-    private TargetPose targetDownDogStartSign;
-    private TargetPose targetDownDogEndSign;
+    private boolean checkCat = false;
+    private TargetPose targetCatStartSign;
+    private TargetPose targetCatEndSign;
     private TextToSpeech tts;
 
 
@@ -69,7 +70,7 @@ public class DownDog extends AppCompatActivity {
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
-    TextView dumbbellPosture;
+    TextView catYoga;
 
     Button exit;
 
@@ -100,7 +101,7 @@ public class DownDog extends AppCompatActivity {
                         // 피치와 속도를 조절합니다.
                         tts.setPitch(0.8f); // 높은 톤
                         tts.setSpeechRate(0.9f); // 약간 빠른 속도
-                        tts.speak("덤벨숄더프레스를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("고양이 자세를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 } else {
                     Log.e("TTS", "Initialization failed");
@@ -113,7 +114,7 @@ public class DownDog extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Posture.class);
+                Intent intent = new Intent(getApplicationContext(), Yoga.class);
                 startActivity(intent);
                 finish();
             }
@@ -197,7 +198,7 @@ public class DownDog extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
+        catYoga = findViewById(R.id.postureDumbbellEx);
     }
 
     private void runTest(){
@@ -240,25 +241,21 @@ public class DownDog extends AppCompatActivity {
     }
 
     private void initTargetPoses() {
-        targetDownDogStartSign = new TargetPose(
+        targetCatStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,170.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,170.0),
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 170.0 ),
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 170.0 ),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 170),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 170)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,90.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,90.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 90.0 ),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 90.0 )
                 )
         );
 
-        targetDownDogEndSign = new TargetPose(
+        targetCatEndSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,70.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,70.0),
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 170.0 ),
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 170.0 ),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 170),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 170)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,50.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,50.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 60.0 ),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 60.0 )
                 )
         );
     }
@@ -269,21 +266,21 @@ public class DownDog extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isCatStart = isPoseMatching(pose, targetDownDogStartSign);
-        boolean isCatEnd = isPoseMatching(pose, targetDownDogEndSign);
+        boolean isCatStart = isPoseMatching(pose, targetCatStartSign);
+        boolean isCatEnd = isPoseMatching(pose, targetCatEndSign);
 
         if (isCatEnd) {
-            dumbbellPosture.setText("올리세요");
-            if(!checkDog){
+            catYoga.setText("올리세요");
+            if(!checkCat){
                 speakDumbbellStart();
-                checkDog = true;
+                checkCat = true;
             }
-        } else if (isCatStart && checkDog) {
-            dumbbellPosture.setText("잘했습니다");
-            speakDumbbellEnd();
-            checkDog = false;
-        } else if (!checkDog) {
-            dumbbellPosture.setText("더 내리세요");
+        } else if (isCatStart && checkCat) {
+                catYoga.setText("잘했습니다");
+                speakDumbbellEnd();
+                checkCat = false;
+        } else if (!checkCat) {
+            catYoga.setText("더 내리세요");
         }
     }
 
@@ -323,14 +320,14 @@ public class DownDog extends AppCompatActivity {
                     imageCapture = new ImageCapture.Builder().build();
 
                     provider.unbindAll();
-                    provider.bindToLifecycle(DownDog.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
+                    provider.bindToLifecycle(Cat.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
 
                     startAnalysis();
                 } catch (Exception e) {
                     Log.e("debugg", "Error Getting camera Provider", e);
                 }
             }
-        }, ActivityCompat.getMainExecutor(DownDog.this));
+        }, ActivityCompat.getMainExecutor(Cat.this));
     }
 
     private void checkPermissions(){
@@ -371,7 +368,7 @@ public class DownDog extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
             if(str.equals("나가기") || str.equals("종료")){
-                Intent intent = new Intent(DownDog.this, Posture.class);
+                Intent intent = new Intent(Cat.this, Posture.class);
                 startActivity(intent);
             }
         }
