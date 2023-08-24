@@ -31,9 +31,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.newbody.Membership2;
 import com.example.newbody.PoseMatcher;
 import com.example.newbody.Posture;
 import com.example.newbody.R;
