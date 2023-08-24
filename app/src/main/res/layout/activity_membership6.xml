@@ -74,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/ex1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="팔 운동"
@@ -114,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/ex2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="하체 운동"
@@ -155,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/ex3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="복근 운동"

@@ -112,6 +112,7 @@ public class Membership4 extends AppCompatActivity {
                     savePhoneNumber(user);
 
                     Intent intent = new Intent(getApplicationContext(), Membership5.class);
+                    intent.putExtra("uid", user.getUid());
                     startActivity(intent);
                     finish();
                 }else{
@@ -179,7 +180,6 @@ public class Membership4 extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    // 새로운 스쿼트 수를 저장합니다.
                     userRecordRef.set(userData, SetOptions.merge())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
