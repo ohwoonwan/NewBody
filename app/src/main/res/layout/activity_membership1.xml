@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="@drawable/layout_default"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:max="5"
+            android:progress="1"
+            android:progressDrawable="@drawable/progressbar_1"
+            android:progressTint="#9966ff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="안녕하세요 환영합니다! \n본 앱을 본격적으로 사용하시기 전에 \n원활한 앱 사용을 위해 \n몇 가지 질문을 드리겠습니다. "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="23sp"/>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="380dp"
+            android:background="@drawable/membership2"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
+        android:elevation="22dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="startButtonClicked">
+
+        <TextView
+            android:id="@+id/buttonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다음"
+            android:textColor="#ffffff"
+            android:textSize="23sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
