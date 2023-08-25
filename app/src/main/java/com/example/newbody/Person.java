@@ -2,6 +2,7 @@ package com.example.newbody;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,9 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -31,9 +35,10 @@ import java.util.Date;
 
 public class Person extends Fragment {
     private View view;
+    private static final int REQUEST_READ_CONTACTS = 1;
 
     FirebaseAuth auth;
-    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton;
+    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton, friendInviteButton;
     FirebaseUser user;
 
     FirebaseFirestore db;
@@ -59,6 +64,7 @@ public class Person extends Fragment {
         progressButton = view.findViewById(R.id.progress_button);
         friendListButton = view.findViewById(R.id.friend_list_button);
         friendButton = view.findViewById(R.id.friend_button);
+        friendInviteButton = view.findViewById(R.id.friendInvite_button);
 
         user = auth.getCurrentUser();
         date = new Date();
@@ -186,7 +192,43 @@ public class Person extends Fragment {
             }
         });
 
+        friendInviteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 친구 초대 버튼을 클릭했을 때 권한 요청
+                requestContactsPermission();
+            }
+        });
+
         return view;
+    }
+
+    private void requestContactsPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 허용되지 않은 경우 권한 요청
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_READ_CONTACTS);
+        } else {
+            // 권한이 이미 허용된 경우 FriendInvite 페이지로 이동
+            goToFriendInvitePage();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_READ_CONTACTS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한이 허용된 경우 FriendInvite 페이지로 이동
+                goToFriendInvitePage();
+            } else {
+                // 권한이 거부된 경우 사용자에게 알림을 표시 (예: Toast 메시지)
+                Toast.makeText(getActivity(), "연락처 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void goToFriendInvitePage() {
+        Intent intent = new Intent(getActivity(), FriendInvite.class);
+        startActivity(intent);
     }
 
     private void loadImageIntoImageView(String imageUrl) {
