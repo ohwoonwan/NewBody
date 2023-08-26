@@ -11,6 +11,9 @@ dependencyResolutionManagement {
         google()
         maven { url 'https://jitpack.io' }
         mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+        // 하단 url 추가
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 rootProject.name = "NewBody"

@@ -5,9 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newbody.FriendData;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class FriendList extends AppCompatActivity {

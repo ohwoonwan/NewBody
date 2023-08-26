@@ -2,9 +2,11 @@ package com.example.newbody;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kakao.sdk.common.util.Utility;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 import java.util.List;
 
 public class RecyclerViewAdapterInvite extends RecyclerView.Adapter<RecyclerViewAdapterInvite.ViewHolder> {
@@ -41,7 +48,7 @@ public class RecyclerViewAdapterInvite extends RecyclerView.Adapter<RecyclerView
         FriendInviteContact contact = contactList.get(position);
         holder.nameTextView.setText(contact.getName());
         holder.phoneNumberTextView.setText(contact.getPhoneNumber());
-
+        String nativeAppKey = context.getString(R.string.kakao_share_app_key);
         // 초대 버튼 클릭 리스너 설정
         holder.ivtBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +56,10 @@ public class RecyclerViewAdapterInvite extends RecyclerView.Adapter<RecyclerView
                 Log.d("RecyclerViewAdapter", "친구 초대 버튼 클릭");
                 // 카카오톡 앱 링크 생성
                 String packageName = "com.kakao.talk";
-                String dynamicLinkUrl = "https://newbody.page.link/XktS"; // 동적 링크 URL을 Firebase Dynamic Links에서 생성한 URL로 변경
+                String dynamicLinkUrl = "https://newbody.page.link/XktS";
+                String appName = "NewBody"; // 앱 이름
                 String kakaoLink = "kakaotalk://send?text=안녕하세요! 친구 초대 메시지입니다.&url=" + dynamicLinkUrl;
+                Log.d("RecyclerViewAdapter", "카카오톡 링크 URI: " + kakaoLink); // 추가한 라인
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(kakaoLink));
                 intent.setPackage(packageName);
 
@@ -70,6 +79,7 @@ public class RecyclerViewAdapterInvite extends RecyclerView.Adapter<RecyclerView
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
