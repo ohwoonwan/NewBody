@@ -2,6 +2,7 @@ package com.example.newbody;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -63,8 +65,9 @@ public class Target extends AppCompatActivity {
     private boolean checkChange = true;
     private RecyclerView targetRecyclerView;
     private TargetAdapter adapter;
+    private String selectCnt;
     private TextView []exName = new TextView[5];
-    private EditText []ex = new EditText[5];
+    private Button []ex = new Button[5];
     private TextView []exNum = new TextView[5];
     private Switch []switches = new Switch[5];
     private List<TargetItem> targetList = new ArrayList<>();
@@ -202,9 +205,35 @@ public class Target extends AppCompatActivity {
         exNum[2].setVisibility(View.INVISIBLE);
         exNum[3].setVisibility(View.INVISIBLE);
         exNum[4].setVisibility(View.INVISIBLE);
+
+        for(int i = 0; i < 5; i++){
+            int finalI = i;
+            ex[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCntDialog(ex[finalI]);
+                }
+            });
+        }
+
         change.setText("완료");
 
 
+    }
+
+    private void showCntDialog(Button ex) {
+        final String[] difficultyOptions = {"5개", "10개", "15개", "20개", "25개", "30개"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("개수 선택");
+        builder.setItems(difficultyOptions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectCnt = difficultyOptions[which];
+                ex.setText(selectCnt);
+            }
+        });
+        builder.show();
     }
 
     private void startTarget(FirebaseUser user){
