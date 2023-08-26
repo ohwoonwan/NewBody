@@ -35,6 +35,9 @@
         </activity>
         <activity android:name=".ManagerMenu" />
         <activity android:name=".ManagerLogin" />
+        <activity android:name=".ManagerSatisfaction" />
+        <activity android:name=".ManagerMoney" />
+        <activity android:name=".ManagerMember" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Membership" />
         <activity android:name=".Membership1" />

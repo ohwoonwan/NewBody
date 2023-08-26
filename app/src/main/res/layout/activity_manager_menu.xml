@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ManagerMenu"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@drawable/layout_default">
 
     <LinearLayout
@@ -124,5 +125,12 @@
                     android:background="@drawable/next"/>
             </LinearLayout>
         </LinearLayout>
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/logout"
+            android:background="@drawable/logout"
+            android:layout_width="350dp"
+            android:layout_height="100dp"/>
     </LinearLayout>
 </LinearLayout>
