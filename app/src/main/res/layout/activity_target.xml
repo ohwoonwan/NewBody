@@ -103,15 +103,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <EditText
+                        <Button
+                            android:id="@+id/ex1_cnt"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
-                            android:id="@+id/ex1_cnt"
-                            android:background="@drawable/custom_edittext"
                             android:fontFamily="sans-serif-light"
                             android:textSize="15dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:background="@drawable/custom_edittext"/>
                         <TextView
                             android:id="@+id/targetNum1"
                             android:layout_width="wrap_content"
@@ -166,15 +167,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <EditText
+                        <Button
+                            android:id="@+id/ex2_cnt"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
-                            android:id="@+id/ex2_cnt"
-                            android:background="@drawable/custom_edittext"
                             android:fontFamily="sans-serif-light"
                             android:textSize="15dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:background="@drawable/custom_edittext"/>
                         <TextView
                             android:id="@+id/targetNum2"
                             android:layout_width="wrap_content"
@@ -229,15 +231,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <EditText
+                        <Button
+                            android:id="@+id/ex3_cnt"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
-                            android:id="@+id/ex3_cnt"
-                            android:background="@drawable/custom_edittext"
                             android:fontFamily="sans-serif-light"
                             android:textSize="15dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:background="@drawable/custom_edittext"/>
                         <TextView
                             android:id="@+id/targetNum3"
                             android:layout_width="wrap_content"
@@ -291,15 +294,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <EditText
+                        <Button
+                            android:id="@+id/ex4_cnt"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
-                            android:id="@+id/ex4_cnt"
-                            android:background="@drawable/custom_edittext"
                             android:fontFamily="sans-serif-light"
                             android:textSize="15dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:background="@drawable/custom_edittext"/>
                         <TextView
                             android:id="@+id/targetNum4"
                             android:layout_width="wrap_content"
@@ -354,15 +358,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <EditText
+                        <Button
+                            android:id="@+id/ex5_cnt"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
-                            android:id="@+id/ex5_cnt"
-                            android:background="@drawable/custom_edittext"
                             android:fontFamily="sans-serif-light"
                             android:textSize="15dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:background="@drawable/custom_edittext"/>
                         <TextView
                             android:id="@+id/targetNum5"
                             android:layout_width="wrap_content"
