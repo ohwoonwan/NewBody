@@ -30,6 +30,7 @@ public class ManagerMember extends AppCompatActivity {
 
     private CheckBox entire, free, money;
     private Button prev, search;
+    private View memberLayout;
 
     private RecyclerView memberRecyclerView;
     private MemberAdaptor adapter;
@@ -43,6 +44,7 @@ public class ManagerMember extends AppCompatActivity {
         setContentView(R.layout.activity_manager_member);
 
         prev = findViewById(R.id.prevButtonMemberManage);
+        memberLayout = findViewById(R.id.layout_member);
         entire = findViewById(R.id.entire);
         free = findViewById(R.id.freeMember);
         money = findViewById(R.id.moneyMember);
@@ -96,6 +98,7 @@ public class ManagerMember extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                memberLayout.setVisibility(View.VISIBLE);
                 db = FirebaseFirestore.getInstance();
                 memberRecyclerView.setLayoutManager(new LinearLayoutManager(ManagerMember.this));
 
