@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class Posture extends AppCompatActivity {
     private View ex_start;
-    private View []ex = new View[8];
-    private TextView[]exName = new TextView[8];
+    private View []ex = new View[9];
+    private TextView[]exName = new TextView[9];
     private TextView selectE;
     private Button prev;
     @Override
@@ -99,6 +99,13 @@ public class Posture extends AppCompatActivity {
             }
         });
 
+        ex[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[8].getText());
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +131,7 @@ public class Posture extends AppCompatActivity {
         ex[5] = findViewById(R.id.ex_button6);
         ex[6] = findViewById(R.id.ex_button7);
         ex[7] = findViewById(R.id.ex_button8);
+        ex[8] = findViewById(R.id.ex_button9);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
@@ -132,6 +140,7 @@ public class Posture extends AppCompatActivity {
         exName[5] = findViewById(R.id.ex6_name);
         exName[6] = findViewById(R.id.ex7_name);
         exName[7] = findViewById(R.id.ex8_name);
+        exName[8] = findViewById(R.id.ex9_name);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
 

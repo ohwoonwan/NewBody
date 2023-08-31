@@ -70,7 +70,7 @@ public class PostureCurl extends AppCompatActivity {
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
-    TextView dumbbellPosture;
+    TextView curlPosture;
 
     Button exit;
 
@@ -198,7 +198,7 @@ public class PostureCurl extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
+        curlPosture = findViewById(R.id.postureCurlEx);
     }
 
     private void runTest(){
@@ -274,7 +274,7 @@ public class PostureCurl extends AppCompatActivity {
         boolean isCurlLow = isPoseMatching(pose, targetCurlLowSign);
 
         if (isCurlEnd) {
-            dumbbellPosture.setText("올리세요");
+            curlPosture.setText("올리세요");
             if(!checkCurl){
                 speakDumbbellStart();
                 checkCurl = true;
@@ -282,13 +282,13 @@ public class PostureCurl extends AppCompatActivity {
             checkDown = true;
         } else if (isCurlStart) {
             if (checkDown) {
-                dumbbellPosture.setText("잘했습니다");
+                curlPosture.setText("잘했습니다");
                 speakDumbbellEnd();
                 checkCurl = false;
             }
             checkDown = false;
         } else if (!checkDown && !isCurlLow) {
-            dumbbellPosture.setText("더 올리세요");
+            curlPosture.setText("더 올리세요");
         }
     }
 

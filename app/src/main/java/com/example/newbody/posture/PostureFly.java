@@ -70,7 +70,7 @@ public class PostureFly extends AppCompatActivity {
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
-    TextView dumbbellPosture;
+    TextView flyPosture;
 
     Button exit;
 
@@ -198,7 +198,7 @@ public class PostureFly extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
+        flyPosture = findViewById(R.id.postureFlyEx);
     }
 
     private void runTest(){
@@ -278,7 +278,7 @@ public class PostureFly extends AppCompatActivity {
         boolean isFlyLow = isPoseMatching(pose, targetFlyLowSign);
 
         if (isFlyEnd) {
-            dumbbellPosture.setText("올리세요");
+            flyPosture.setText("올리세요");
             if(!checkFly){
                 speakDumbbellStart();
                 checkFly = true;
@@ -286,13 +286,13 @@ public class PostureFly extends AppCompatActivity {
             checkDown = true;
         } else if (isFlyStart) {
             if (checkDown) {
-                dumbbellPosture.setText("잘했습니다");
+                flyPosture.setText("잘했습니다");
                 speakDumbbellEnd();
                 checkFly = false;
             }
             checkDown = false;
         } else if (!checkDown && !isFlyLow) {
-            dumbbellPosture.setText("더 올리세요");
+            flyPosture.setText("더 내리세요");
         }
     }
 

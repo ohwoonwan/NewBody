@@ -103,6 +103,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureCurl.class);
                 }else if(exName.equals("다운 독")){
                     intentN = new Intent(getApplicationContext(), DownDog.class);
+                }else if(exName.equals("덤벨 플라이")){
+                    intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -147,6 +149,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureCurl.class);
                 }else if(exName.equals("다운 독")){
                     intentN = new Intent(getApplicationContext(), DownDog.class);
+                }else if(exName.equals("덤벨 플라이")){
+                    intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }
                 startActivity(intentN);
                 finish();

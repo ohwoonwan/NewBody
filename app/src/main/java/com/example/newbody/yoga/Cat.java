@@ -83,7 +83,7 @@ public class Cat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posture_dumbbell);
+        setContentView(R.layout.activity_yoga_cat);
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);

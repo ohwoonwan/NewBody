@@ -69,7 +69,7 @@ public class DownDog extends AppCompatActivity {
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
-    TextView dumbbellPosture;
+    TextView downdogYoga;
 
     Button exit;
 
@@ -83,7 +83,7 @@ public class DownDog extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posture_dumbbell);
+        setContentView(R.layout.activity_yoga_downdog);
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -197,7 +197,7 @@ public class DownDog extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        dumbbellPosture = findViewById(R.id.postureDumbbellEx);
+        downdogYoga = findViewById(R.id.postureDumbbellEx);
     }
 
     private void runTest(){
@@ -257,8 +257,8 @@ public class DownDog extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,70.0),
                         new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 170.0 ),
                         new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 170.0 ),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 170),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 170)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 170.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 170.0)
                 )
         );
     }
@@ -269,21 +269,21 @@ public class DownDog extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        boolean isCatStart = isPoseMatching(pose, targetDownDogStartSign);
-        boolean isCatEnd = isPoseMatching(pose, targetDownDogEndSign);
+        boolean isDownDogStart = isPoseMatching(pose, targetDownDogStartSign);
+        boolean isDownDogEnd = isPoseMatching(pose, targetDownDogEndSign);
 
-        if (isCatEnd) {
-            dumbbellPosture.setText("올리세요");
+        if (isDownDogEnd) {
+            downdogYoga.setText("올리세요");
             if(!checkDog){
                 speakDumbbellStart();
                 checkDog = true;
             }
-        } else if (isCatStart && checkDog) {
-            dumbbellPosture.setText("잘했습니다");
+        } else if (isDownDogStart && checkDog) {
+            downdogYoga.setText("잘했습니다");
             speakDumbbellEnd();
             checkDog = false;
         } else if (!checkDog) {
-            dumbbellPosture.setText("더 내리세요");
+            downdogYoga.setText("더 내리세요");
         }
     }
 
