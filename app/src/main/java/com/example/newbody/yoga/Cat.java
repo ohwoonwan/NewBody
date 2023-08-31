@@ -38,7 +38,6 @@ import com.example.newbody.R;
 import com.example.newbody.TargetPose;
 import com.example.newbody.TargetShape;
 import com.example.newbody.VoiceRecognitionService;
-import com.example.newbody.Yoga;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -114,7 +113,7 @@ public class Cat extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Yoga.class);
+                Intent intent = new Intent(getApplicationContext(), Posture.class);
                 startActivity(intent);
                 finish();
             }

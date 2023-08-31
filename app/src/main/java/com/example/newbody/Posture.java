@@ -1,8 +1,5 @@
 package com.example.newbody;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,20 +13,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.newbody.posture.PostureInfo;
-import com.example.newbody.record.RecordDumbbell;
-import com.example.newbody.record.RecordLegRaise;
-import com.example.newbody.record.RecordPushup;
-import com.example.newbody.record.RecordSidelateralraise;
-import com.example.newbody.record.RecordSquat;
 
 import java.util.ArrayList;
 
 
 public class Posture extends AppCompatActivity {
     private View ex_start;
-    private View []ex = new View[5];
-    private TextView[]exName = new TextView[5];
+    private View []ex = new View[6];
+    private TextView[]exName = new TextView[6];
     private TextView selectE;
     private Button prev;
     @Override
@@ -83,6 +78,13 @@ public class Posture extends AppCompatActivity {
             }
         });
 
+        ex[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[5].getText());
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,11 +107,13 @@ public class Posture extends AppCompatActivity {
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
         ex[4] = findViewById(R.id.ex_button5);
+        ex[5] = findViewById(R.id.ex_button6);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
         exName[4] = findViewById(R.id.ex5_name);
+        exName[5] = findViewById(R.id.ex6_name);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
 

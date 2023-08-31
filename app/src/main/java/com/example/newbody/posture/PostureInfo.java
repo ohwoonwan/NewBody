@@ -1,8 +1,5 @@
 package com.example.newbody.posture;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,12 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.newbody.Posture;
 import com.example.newbody.R;
-import com.example.newbody.Record;
 import com.example.newbody.VoiceRecognitionService;
-import com.example.newbody.record.RecordSquat;
-import com.example.newbody.record.RecordSquatMain;
+import com.example.newbody.yoga.Cat;
 
 import java.util.ArrayList;
 
@@ -98,6 +96,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureSide.class);
                 }else if(exName.equals("레그 레이즈")){
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
+                }else if(exName.equals("고양이 자세")){
+                    intentN = new Intent(getApplicationContext(), Cat.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -136,6 +136,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureSide.class);
                 }else if(exName.equals("레그 레이즈")){
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
+                }else if(exName.equals("고양이 자세")){
+                    intentN = new Intent(getApplicationContext(), Cat.class);
                 }
                 startActivity(intentN);
                 finish();
