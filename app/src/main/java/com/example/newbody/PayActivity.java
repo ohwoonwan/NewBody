@@ -14,6 +14,9 @@ public class PayActivity extends AppCompatActivity {
     private Button prev;
     private ImageView pay_button;
 
+    private String productName = "프리미엄";  // 상품 이름
+    private String productPrice = "4900";  // 상품 가격
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,9 @@ public class PayActivity extends AppCompatActivity {
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PayActivity.this, "결제창", Toast.LENGTH_SHORT).show();
+                PayWebActivity pay = new PayWebActivity(productName, productPrice);
+                Intent intent = new Intent(getApplicationContext(), pay.getClass());
+                startActivity(intent);
             }
         });
     }
