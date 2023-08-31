@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class Posture extends AppCompatActivity {
     private View ex_start;
-    private View []ex = new View[6];
-    private TextView[]exName = new TextView[6];
+    private View []ex = new View[8];
+    private TextView[]exName = new TextView[8];
     private TextView selectE;
     private Button prev;
     @Override
@@ -85,6 +85,20 @@ public class Posture extends AppCompatActivity {
             }
         });
 
+        ex[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[6].getText());
+            }
+        });
+
+        ex[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[7].getText());
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,12 +122,16 @@ public class Posture extends AppCompatActivity {
         ex[3] = findViewById(R.id.ex_button4);
         ex[4] = findViewById(R.id.ex_button5);
         ex[5] = findViewById(R.id.ex_button6);
+        ex[6] = findViewById(R.id.ex_button7);
+        ex[7] = findViewById(R.id.ex_button8);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
         exName[4] = findViewById(R.id.ex5_name);
         exName[5] = findViewById(R.id.ex6_name);
+        exName[6] = findViewById(R.id.ex7_name);
+        exName[7] = findViewById(R.id.ex8_name);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
 

@@ -101,7 +101,7 @@ public class PostureCurl extends AppCompatActivity {
                         // 피치와 속도를 조절합니다.
                         tts.setPitch(0.8f); // 높은 톤
                         tts.setSpeechRate(0.9f); // 약간 빠른 속도
-                        tts.speak("덤벨숄더프레스를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("덤벨 컬을 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 } else {
                     Log.e("TTS", "Initialization failed");

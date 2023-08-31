@@ -21,6 +21,7 @@ import com.example.newbody.Posture;
 import com.example.newbody.R;
 import com.example.newbody.VoiceRecognitionService;
 import com.example.newbody.yoga.Cat;
+import com.example.newbody.yoga.DownDog;
 
 import java.util.ArrayList;
 
@@ -98,6 +99,10 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
                 }else if(exName.equals("고양이 자세")){
                     intentN = new Intent(getApplicationContext(), Cat.class);
+                }else if(exName.equals("덤벨 컬")){
+                    intentN = new Intent(getApplicationContext(), PostureCurl.class);
+                }else if(exName.equals("다운 독")){
+                    intentN = new Intent(getApplicationContext(), DownDog.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -138,6 +143,10 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
                 }else if(exName.equals("고양이 자세")){
                     intentN = new Intent(getApplicationContext(), Cat.class);
+                }else if(exName.equals("덤벨 컬")){
+                    intentN = new Intent(getApplicationContext(), PostureCurl.class);
+                }else if(exName.equals("다운 독")){
+                    intentN = new Intent(getApplicationContext(), DownDog.class);
                 }
                 startActivity(intentN);
                 finish();

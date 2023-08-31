@@ -71,6 +71,7 @@
         <activity android:name=".posture.PosturePushup" />
         <activity android:name=".posture.PostureSquat" />
         <activity android:name=".posture.PostureLeg" />
+        <activity android:name=".posture.PostureCurl" />
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />
@@ -97,6 +98,7 @@
         <activity android:name=".Target" />
         <activity android:name=".MemberInfo" />
         <activity android:name=".yoga.Cat" />
+        <activity android:name=".yoga.DownDog" />
         <activity
             android:name=".LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
