@@ -9,8 +9,11 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,15 @@ import com.example.newbody.record.RecordLegRaise;
 import com.example.newbody.record.RecordPushup;
 import com.example.newbody.record.RecordSidelateralraise;
 import com.example.newbody.record.RecordSquat;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 
@@ -32,11 +44,17 @@ public class Record extends AppCompatActivity {
     private long[] totalTimesInMillis = {1 * 60 * 1000, 2 * 60 * 1000, 3 * 60 * 1000};
     private Button time;
     private View ex_start;
+    private View squatView, pushupView, dumbbellView, sideView, legView;
     private View []ex = new View[5];
     private TextView []exName = new TextView[5];
-    private TextView selectT, selectE;
+    private TextView selectT, selectE, pre1, pre2;
     private int select_num;
     private Button prev;
+    private Switch customized;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +64,67 @@ public class Record extends AppCompatActivity {
         startService(intent);
 
         initViews();
+        customized.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(customized.isChecked()){
+                    pre1.setText(" ");
+                    pre2.setText(" ");
+                    DocumentReference userRecordRef = db.collection("users").document(user.getUid());
+                    userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String preference1 = document.getString("preference1");
+                                    pre1.setText(preference1);
+                                    String preference2 = document.getString("preference2");
+                                    pre2.setText(preference2);
 
+                                    if(preference1.equals("도구 이용 운동")){
+                                        if(preference2.equals("팔 운동")){
+                                            squatView.setVisibility(View.GONE);
+                                            pushupView.setVisibility(View.GONE);
+                                            legView.setVisibility(View.GONE);
+                                        }else if(preference2.equals("하체 운동")){
+
+                                        }else if(preference2.equals("복근 운동")){
+
+                                        }
+                                    }else if(preference1.equals("맨몸 운동")){
+                                        if(preference2.equals("팔 운동")){
+                                            squatView.setVisibility(View.GONE);
+                                            dumbbellView.setVisibility(View.GONE);
+                                            sideView.setVisibility(View.GONE);
+                                            legView.setVisibility(View.GONE);
+                                        }else if(preference2.equals("하체 운동")){
+                                            pushupView.setVisibility(View.GONE);
+                                            dumbbellView.setVisibility(View.GONE);
+                                            sideView.setVisibility(View.GONE);
+                                        }else if(preference2.equals("복근 운동")){
+                                            squatView.setVisibility(View.GONE);
+                                            dumbbellView.setVisibility(View.GONE);
+                                            sideView.setVisibility(View.GONE);
+                                        }
+                                    }
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            } else {
+                                Log.d("Firestore", "Failed to get document", task.getException());
+                            }
+                        }
+                    });
+                }else if(!customized.isChecked()){
+                    squatView.setVisibility(View.VISIBLE);
+                    pushupView.setVisibility(View.VISIBLE);
+                    dumbbellView.setVisibility(View.VISIBLE);
+                    sideView.setVisibility(View.VISIBLE);
+                    legView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +262,17 @@ public class Record extends AppCompatActivity {
         selectT = findViewById(R.id.time_select);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButtonRecord);
+        squatView = findViewById(R.id.squatView);
+        pushupView = findViewById(R.id.pushupView);
+        dumbbellView = findViewById(R.id.dumbbellView);
+        sideView = findViewById(R.id.sideView);
+        legView = findViewById(R.id.legView);
+        customized = findViewById(R.id.customized1);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        user = mAuth.getCurrentUser();
+        pre1 = findViewById(R.id.pre1);
+        pre2 = findViewById(R.id.pre2);
     }
 
     private void showTimeDialog() {
