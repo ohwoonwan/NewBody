@@ -33,7 +33,7 @@ public class Person extends Fragment {
     private View view;
 
     FirebaseAuth auth;
-    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton;
+    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton, payButton;
     FirebaseUser user;
 
     FirebaseFirestore db;
@@ -59,6 +59,7 @@ public class Person extends Fragment {
         progressButton = view.findViewById(R.id.progress_button);
         friendListButton = view.findViewById(R.id.friend_list_button);
         friendButton = view.findViewById(R.id.friend_button);
+        payButton = view.findViewById(R.id.pay_button);
 
         user = auth.getCurrentUser();
         date = new Date();
@@ -182,6 +183,14 @@ public class Person extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FriendList.class);
+                startActivity(intent);
+            }
+        });
+
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PayActivity.class);
                 startActivity(intent);
             }
         });

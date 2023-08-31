@@ -1,0 +1,46 @@
+package com.example.newbody;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class PayActivity extends AppCompatActivity {
+
+    private Button prev;
+    private ImageView pay_button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pay);
+
+        initViews();
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                intent.putExtra("SELECTED_FRAGMENT_INDEX", 3);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        pay_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(PayActivity.this, "결제창", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void initViews(){
+        prev = findViewById(R.id.prevButtonPay);
+        pay_button = findViewById(R.id.payButton);
+    }
+}
