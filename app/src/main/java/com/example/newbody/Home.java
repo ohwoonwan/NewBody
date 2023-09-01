@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class Home extends Fragment {
     private PieChart pieChart;
     private Button notice;
     private CustomDialogNotice customDialog;
+    private ImageView premium;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -55,9 +57,12 @@ public class Home extends Fragment {
         ranking_button = view.findViewById(R.id.ranking_button);
         pieChart = view.findViewById(R.id.pieChart);
         notice = view.findViewById(R.id.noticeDialog);
+        premium = view.findViewById(R.id.premium_badge);
 
         name = view.findViewById(R.id.name_info);
         bmiResult = view.findViewById(R.id.bmi_result);
+
+        premiumCheck();
 
         if(user == null){
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -158,6 +163,33 @@ public class Home extends Fragment {
         });
 
         return view;
+    }
+
+    public void premiumCheck(){
+        if(user == null){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }else{
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String grade = document.getString("grade");
+                                    if (grade == null) grade = "일반";
+
+                                    if(grade.equals("프리미엄")){
+                                        premium.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            } else {
+                            }
+                        }
+                    });
+        }
     }
 
 }

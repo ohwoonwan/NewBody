@@ -3,6 +3,7 @@ package com.example.newbody;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -32,6 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -58,6 +61,7 @@ public class Posture extends AppCompatActivity {
         startService(intent);
 
         initViews();
+        premiumCheck();
 
         customized.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -291,5 +295,32 @@ public class Posture extends AppCompatActivity {
         super.onPause();
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
+    }
+
+    public void premiumCheck(){
+        if(user == null){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }else{
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String grade = document.getString("grade");
+                                    if (grade == null) grade = "일반";
+
+                                    if(grade.equals("프리미엄")){
+                                        customized.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            } else {
+                            }
+                        }
+                    });
+        }
     }
 }

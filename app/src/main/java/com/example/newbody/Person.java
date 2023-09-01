@@ -33,7 +33,7 @@ public class Person extends Fragment {
     private View view;
 
     FirebaseAuth auth;
-    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton;
+    Button button, infoButton, goalButton, progressButton, friendListButton, friendButton, payButton;
     FirebaseUser user;
 
     FirebaseFirestore db;
@@ -41,7 +41,7 @@ public class Person extends Fragment {
 
     SimpleDateFormat yy, md;
     Date date;
-    View fixButton;
+    View fixButton, premiumCheckLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +59,8 @@ public class Person extends Fragment {
         progressButton = view.findViewById(R.id.progress_button);
         friendListButton = view.findViewById(R.id.friend_list_button);
         friendButton = view.findViewById(R.id.friend_button);
+        payButton = view.findViewById(R.id.pay_button);
+        premiumCheckLayout = view.findViewById(R.id.premium_check_layout);
 
         user = auth.getCurrentUser();
         date = new Date();
@@ -66,6 +68,8 @@ public class Person extends Fragment {
         md = new SimpleDateFormat("MMdd");
 
         fixButton = view.findViewById(R.id.fix);
+
+        premiumCheck();
 
         fixButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +190,14 @@ public class Person extends Fragment {
             }
         });
 
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PayActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -196,5 +208,32 @@ public class Person extends Fragment {
                 .load(imageUrl)
                 .circleCrop()
                 .into(userImageView);
+    }
+
+    public void premiumCheck(){
+        if(user == null){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }else{
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String grade = document.getString("grade");
+                                    if (grade == null) grade = "일반";
+
+                                    if(grade.equals("프리미엄")){
+                                        premiumCheckLayout.setVisibility(View.GONE);
+                                    }
+                                }
+                            } else {
+                            }
+                        }
+                    });
+        }
     }
 }
