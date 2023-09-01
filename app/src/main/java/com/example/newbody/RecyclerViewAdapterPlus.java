@@ -1,10 +1,10 @@
     package com.example.newbody;
 
+    import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.recyclerview.widget.RecyclerView;
 
     import android.os.Bundle;
-    import android.support.annotation.NonNull;
     import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.View;

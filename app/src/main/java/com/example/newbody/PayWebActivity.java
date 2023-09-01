@@ -204,13 +204,11 @@ public class PayWebActivity extends AppCompatActivity {
                 String pg_Token = url.substring(url.indexOf("pg_token=") + 9);
                 pgToken = pg_Token;
 
-                // 결제 요청을 보내기 전에 데이터 업데이트
-                updateUserDataWithPayment(productPrice);
 
                 requestQueue.add(approvalRequest);
 
-                // 결제가 완료되면 WebView를 종료하고 PaymentActivity로 돌아감
-                finish();  // 현재 Activity를 종료하여 PaymentActivity로 돌아감
+                // 결제가 완료되면 WebView를 종료
+                finish();
                 return true;  // URL을 처리했음을 나타내기 위해 true 반환
             } else if (url != null && url.startsWith("intent://")) {
                 try {
@@ -223,6 +221,8 @@ public class PayWebActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                view.loadUrl(url);
+                return false;
             }else if (url != null && url.contains("cancel")) {
                 // 결제 취소 로직
                 Toast.makeText(PayWebActivity.this, "결제가 취소되었습니다.", Toast.LENGTH_SHORT).show();
@@ -237,40 +237,6 @@ public class PayWebActivity extends AppCompatActivity {
             view.loadUrl(url);
             return false;
         }
-    }
-
-    // 결제 성공 시 사용자 데이터를 결제 금액만큼 업데이트하는 메소드
-    private void updateUserDataWithPayment(String paymentAmount) {
-        // 유저의 고유 식별자 가져오기 (유저 ID나 다른 키일 수 있음)
-        String userIdentifier = user.getUid(); // 실제 유저의 고유 식별자로 변경
-        Map<String, Object> userData = new HashMap<>();
-        final String collectionName = "users";
-        userData.put("grade", "프리미엄");
-
-
-        DocumentReference userRecordRef = db.collection(collectionName).document(userIdentifier);
-        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    userRecordRef.set(userData, SetOptions.merge())
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("Firestore", "Data successfully written!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
-                                    Log.w("Firestore", "Error writing document", e);
-                                }
-                            });
-                } else {
-                    Log.d("Firestore", "Failed to get document", task.getException());
-                }
-            }
-        });
     }
 
 }

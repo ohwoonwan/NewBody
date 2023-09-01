@@ -346,6 +346,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/premium_check_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
