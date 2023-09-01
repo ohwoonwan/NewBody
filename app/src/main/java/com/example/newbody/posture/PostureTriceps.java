@@ -302,7 +302,9 @@ public class PostureTriceps extends AppCompatActivity {
                 checkTriceps = true;
             }
         } else if (!checkTriceps && !isTricepsLow) {
-
+            tricepsPosture.setText("팔을 좀 더 올리세요");
+        } else if (isNotTriceps) {
+            tricepsPosture.setText("팔을 위로 올리세요");
         }
     }
     private void speakSquatEnd() {
