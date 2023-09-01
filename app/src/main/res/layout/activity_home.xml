@@ -43,6 +43,16 @@
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/premium_badge"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/premium_badge" />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
