@@ -46,4 +46,90 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="범위"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/graphRange2"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/button"
+            android:text="범위" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/graph_money_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/button"
+            android:text="매출 조회"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/calendarSelect1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/calendarText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/selectDate1"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/button"
+            android:text="선택"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_height="300dp"
+            android:layout_width="350dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginLeft="15dp"
+            android:visibility="invisible"
+            android:id="@+id/chart11"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_height="300dp"
+            android:layout_width="350dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginLeft="15dp"
+            android:visibility="gone"
+            android:id="@+id/chart22"/>
+    </RelativeLayout>
 </LinearLayout>
