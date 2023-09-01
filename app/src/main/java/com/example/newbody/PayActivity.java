@@ -22,7 +22,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import kr.co.bootpay.android.Bootpay;
@@ -136,6 +139,7 @@ public class PayActivity extends AppCompatActivity {
                     public void onDone(String data) {
                         Log.d("done", data);
                         savePremium();
+                        saveOrUpdatePaymentData(productPrice);
                         Intent intent = new Intent(getApplicationContext(), Menu.class);
                         startActivity(intent);
                         finish();
@@ -167,6 +171,35 @@ public class PayActivity extends AppCompatActivity {
                                     Log.w("Firestore", "Error writing document", e);
                                 }
                             });
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
+    }
+
+    private void saveOrUpdatePaymentData(String paymentAmount) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        final String collectionName = "payments";
+
+        DocumentReference paymentRecordRef = db.collection(collectionName).document(currentDate);
+        paymentRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // 문서가 이미 존재하면, 금액을 업데이트
+                        long existingAmount = document.getLong("amount");
+                        long newAmount = existingAmount + Long.parseLong(paymentAmount);
+                        paymentRecordRef.update("amount", newAmount);
+                    } else {
+                        // 문서가 존재하지 않으면, 새로운 문서 생성
+                        Map<String, Object> paymentData = new HashMap<>();
+                        paymentData.put("amount", Long.parseLong(paymentAmount));
+                        paymentRecordRef.set(paymentData);
+                    }
                 } else {
                     Log.d("Firestore", "Failed to get document", task.getException());
                 }
