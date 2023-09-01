@@ -64,6 +64,7 @@ public class Record extends AppCompatActivity {
         startService(intent);
 
         initViews();
+        premiumCheck();
         customized.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -459,5 +460,32 @@ public class Record extends AppCompatActivity {
         super.onPause();
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
+    }
+
+    public void premiumCheck(){
+        if(user == null){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }else{
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String grade = document.getString("grade");
+                                    if (grade == null) grade = "일반";
+
+                                    if(grade.equals("프리미엄")){
+                                        customized.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            } else {
+                            }
+                        }
+                    });
+        }
     }
 }

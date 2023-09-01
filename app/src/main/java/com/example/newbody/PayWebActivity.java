@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,9 +18,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +53,11 @@ public class PayWebActivity extends AppCompatActivity {
 
     // 웹 뷰
     WebView webView;
+    FirebaseUser user;
+    DatabaseReference databaseReference;
+    FirebaseAuth auth;
+    private FirebaseFirestore db;
+
 
     // json 파싱
     Gson gson;
@@ -71,9 +94,13 @@ public class PayWebActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         gson = new Gson();
 
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
         // 웹 뷰 설정
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(myWebViewClient);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // 실행 시 바로 결제 Http 통신 실행
         requestQueue.add(myWebViewClient.readyRequest);
@@ -172,14 +199,19 @@ public class PayWebActivity extends AppCompatActivity {
         // URL 변경시 발생 이벤트
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
             Log.e("Debug", "url" + url);
             if (url != null && url.contains("pg_token=")) {
                 String pg_Token = url.substring(url.indexOf("pg_token=") + 9);
                 pgToken = pg_Token;
 
+                // 결제 요청을 보내기 전에 데이터 업데이트
+                updateUserDataWithPayment(productPrice);
+
                 requestQueue.add(approvalRequest);
 
+                // 결제가 완료되면 WebView를 종료하고 PaymentActivity로 돌아감
+                finish();  // 현재 Activity를 종료하여 PaymentActivity로 돌아감
+                return true;  // URL을 처리했음을 나타내기 위해 true 반환
             } else if (url != null && url.startsWith("intent://")) {
                 try {
                     Intent intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
@@ -191,9 +223,54 @@ public class PayWebActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else if (url != null && url.contains("cancel")) {
+                // 결제 취소 로직
+                Toast.makeText(PayWebActivity.this, "결제가 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+            } else if (url != null && url.contains("fail")) {
+                // 결제 실패 로직
+                Toast.makeText(PayWebActivity.this, "결제가 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
             }
             view.loadUrl(url);
             return false;
         }
     }
+
+    // 결제 성공 시 사용자 데이터를 결제 금액만큼 업데이트하는 메소드
+    private void updateUserDataWithPayment(String paymentAmount) {
+        // 유저의 고유 식별자 가져오기 (유저 ID나 다른 키일 수 있음)
+        String userIdentifier = user.getUid(); // 실제 유저의 고유 식별자로 변경
+        Map<String, Object> userData = new HashMap<>();
+        final String collectionName = "users";
+        userData.put("grade", "프리미엄");
+
+
+        DocumentReference userRecordRef = db.collection(collectionName).document(userIdentifier);
+        userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    userRecordRef.set(userData, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "Data successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                    Log.w("Firestore", "Error writing document", e);
+                                }
+                            });
+                } else {
+                    Log.d("Firestore", "Failed to get document", task.getException());
+                }
+            }
+        });
+    }
+
 }
