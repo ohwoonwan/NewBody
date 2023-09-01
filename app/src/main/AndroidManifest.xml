@@ -73,6 +73,7 @@
         <activity android:name=".posture.PostureLeg" />
         <activity android:name=".posture.PostureCurl" />
         <activity android:name=".posture.PostureFly" />
+        <activity android:name=".posture.PostureTriceps" />
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />
