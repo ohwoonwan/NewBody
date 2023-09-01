@@ -59,13 +59,13 @@ public class ManagerMoney extends AppCompatActivity {
 
         initView();
 
-//        exerciseRange.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showRangeDialog();
-//            }
-//        });
-//
+        exerciseRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showRangeDialog();
+            }
+        });
+
 //        graphView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -127,22 +127,22 @@ public class ManagerMoney extends AppCompatActivity {
 //    public void onDateSet(int year, int month) {
 //        dateSelect.setText(year + "년 " + (month + 1) + "월");
 //    }
-//
-//    private void showRangeDialog() {
-//        final String[] exOptions = {"월별 통계", "최근 7일"};
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("범위 선택");
-//        builder.setItems(exOptions, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                select_range = exOptions[which];
-//                exerciseRange.setText(select_range);
-//            }
-//        });
-//        builder.show();
-//    }
-//
+
+    private void showRangeDialog() {
+        final String[] exOptions = {"월별 통계", "최근 7일"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("범위 선택");
+        builder.setItems(exOptions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                select_range = exOptions[which];
+                exerciseRange.setText(select_range);
+            }
+        });
+        builder.show();
+    }
+
 //    private void loadLast7DaysSquatData() {
 //        final List<String> last7Days = new ArrayList<>();
 //        DateFormat dateFormat = new SimpleDateFormat("MMdd");
