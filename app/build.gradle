@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.1.1'
     implementation 'com.google.firebase:firebase-firestore:24.7.0'
     implementation 'com.google.android.gms:play-services-auth:20.6.0'
-    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.3'
     implementation 'com.google.guava:guava:27.0.1-android'
     implementation 'com.kakao.sdk:v2-user:2.5.0' // 카카오 SDK 버전에 따라 버전 번호를 조정하세요
-
+    implementation 'com.google.firebase:firebase-dynamic-links'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
