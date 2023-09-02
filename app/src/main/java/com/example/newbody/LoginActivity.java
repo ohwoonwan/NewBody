@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         View login = findViewById(R.id.login);
+        View manager = findViewById(R.id.button_manager);
         Button register = (Button) findViewById(R.id.register);
 
         editEmail = findViewById(R.id.email);
@@ -89,6 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                         });
 
 
+            }
+        });
+        manager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ManagerLogin.class);
+                startActivity(intent);
+                finish();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {

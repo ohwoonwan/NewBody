@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class ManagerMenu extends AppCompatActivity {
 
-    private View member, money, satisfaction;
+    private View member, money;
     private Button logout;
 
     @Override
@@ -20,7 +20,6 @@ public class ManagerMenu extends AppCompatActivity {
 
         member = findViewById(R.id.memberManage);
         money = findViewById(R.id.moneyManage);
-        satisfaction = findViewById(R.id.satisfactionManage);
         logout = findViewById(R.id.logout);
 
         member.setOnClickListener(new View.OnClickListener() {
@@ -36,15 +35,6 @@ public class ManagerMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ManagerMoney.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        satisfaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ManagerSatisfaction.class);
                 startActivity(intent);
                 finish();
             }

@@ -16,7 +16,7 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="100dp"
             android:background="@drawable/button"
             android:elevation="22dp"
             android:gravity="center"
@@ -27,31 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="시작하기"
-                android:textColor="#ffffff"
-                android:textSize="24sp" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right">
-        <RelativeLayout
-            android:id="@+id/button2"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button"
-            android:elevation="22dp"
-            android:gravity="center"
-            android:onClick="startButtonClicked">
-
-            <TextView
-                android:id="@+id/buttonText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="관리자 로그인"
                 android:textColor="#ffffff"
                 android:textSize="24sp" />
         </RelativeLayout>

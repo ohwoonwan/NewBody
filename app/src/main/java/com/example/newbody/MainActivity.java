@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         boolean isFirstRun = preferences.getBoolean(FIRST_RUN_KEY, true);
 
         View button = findViewById(R.id.button);
-        View button2 = findViewById(R.id.button2);
 
         // 처음 실행되는 경우에만 실행
         if (isFirstRun) {
@@ -46,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), ManagerLogin.class);
                     startActivity(intent);
                 }
             });

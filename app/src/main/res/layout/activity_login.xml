@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="180dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -78,7 +78,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -132,6 +132,28 @@
             android:text="회원가입"
             android:textColor="#9933ff"
             android:textSize="15sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/button_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/manager_login"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/buttonText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관리자 로그인"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
     </LinearLayout>
 
 
