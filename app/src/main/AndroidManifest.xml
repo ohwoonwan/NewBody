@@ -101,6 +101,7 @@
         <activity android:name=".MemberInfo" />
         <activity android:name=".yoga.Cat" />
         <activity android:name=".yoga.DownDog" />
+        <activity android:name=".yoga.Cobra" />
         <activity
             android:name=".LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />

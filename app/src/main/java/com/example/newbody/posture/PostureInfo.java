@@ -21,6 +21,7 @@ import com.example.newbody.Posture;
 import com.example.newbody.R;
 import com.example.newbody.VoiceRecognitionService;
 import com.example.newbody.yoga.Cat;
+import com.example.newbody.yoga.Cobra;
 import com.example.newbody.yoga.DownDog;
 
 import java.util.ArrayList;
@@ -107,6 +108,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
                     intentN = new Intent(getApplicationContext(), PostureTriceps.class);
+                }else if(exName.equals("코브라 자세")){
+                    intentN = new Intent(getApplicationContext(), Cobra.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -155,6 +158,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
                     intentN = new Intent(getApplicationContext(), PostureTriceps.class);
+                }else if(exName.equals("코브라 자세")){
+                    intentN = new Intent(getApplicationContext(), Cobra.class);
                 }
                 startActivity(intentN);
                 finish();
