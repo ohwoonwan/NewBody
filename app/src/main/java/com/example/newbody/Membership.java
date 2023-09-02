@@ -125,7 +125,7 @@ public class Membership extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getApplicationContext(), Membership2.class);
+                                        Intent intent = new Intent(getApplicationContext(), Membership1.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
@@ -186,7 +186,7 @@ public class Membership extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), Membership2.class);
+                            Intent intent = new Intent(getApplicationContext(), Membership1.class);
                             startActivity(intent);
                             finish();
                         } else {
