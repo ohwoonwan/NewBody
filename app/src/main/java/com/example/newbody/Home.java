@@ -20,6 +20,11 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +42,7 @@ public class Home extends Fragment {
     private Button notice;
     private CustomDialogNotice customDialog;
     private ImageView premium;
+    private AdView mAdView;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -61,6 +67,10 @@ public class Home extends Fragment {
 
         name = view.findViewById(R.id.name_info);
         bmiResult = view.findViewById(R.id.bmi_result);
+        mAdView = view.findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         premiumCheck();
 
