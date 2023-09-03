@@ -16,7 +16,7 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="3dp"
             android:checked="false"/>
 
         <androidx.cardview.widget.CardView
@@ -39,7 +39,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="2dp"
             android:text="이름"
             android:textSize="20sp"
             android:textColor="#000"/>
@@ -48,7 +48,7 @@
             android:id="@+id/uid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="50dp"
             android:text="Uid"
             android:textSize="12sp"
             android:textColor="#444"

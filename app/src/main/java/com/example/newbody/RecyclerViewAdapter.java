@@ -123,7 +123,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void bind(FriendData friend) {
             // 뷰 홀더에 데이터를 바인딩하여 화면에 표시합니다.
             name.setText(friend.getName());
-            uid.setText(friend.getUid());
+            String maskedUID = maskUID(friend.getUid());
+            uid.setText(maskedUID);
 
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null) {
@@ -133,9 +134,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     @Override
                     public void onClick(View v) {
                         boolean isUserAlreadyAdded = checkIfUserAlreadyAddedByUid(currentUid, friend.getUid());
-
                         if (isUserAlreadyAdded) {
-
                             return;
                         }
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -204,7 +203,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 });
             }
         }
+        private String maskUID(String uid) {
+            if (uid == null || uid.length() < 6) {
+                return uid; // UID가 null이거나 6자리 미만일 경우 가려지지 않은 UID를 반환
+            }
 
+            String masked = uid.substring(0, 6); // 앞 4자리를 유지
+            for (int i = 6; i < uid.length(); i++) {
+                masked += "*"; // 나머지 자리는 '*'로 대체
+            }
+
+            return masked;
+        }
         private boolean checkIfUserAlreadyAddedByUid(String currentUid, String friendUid) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
