@@ -43,10 +43,6 @@ public class FriendInvite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_invite);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            // 권한이 없으면 요청
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
-        }
         prev = findViewById(R.id.prevButtonFriendInvite2);
         recyclerView = findViewById(R.id.recyclerView2);
         searchBtn = findViewById(R.id.searchBtn2);
