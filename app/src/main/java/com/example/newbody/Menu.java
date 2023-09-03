@@ -48,6 +48,10 @@ public class Menu extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavi);
 
         requestMicrophonePermission();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 없으면 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        }
         Intent intent = new Intent(this, VoiceRecognitionService.class);
         startService(intent);
 

@@ -11,27 +11,25 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/newbody_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8336751716868214~4199761236"/>
-        <activity
-            android:name=".PayActivity"
-            android:exported="false" />
+            android:value="ca-app-pub-8336751716868214~4199761236" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -119,6 +117,8 @@
         <activity android:name=".Notice" />
         <activity android:name=".Target" />
         <activity android:name=".MemberInfo" />
+        <activity android:name=".FriendInvite" />
+        <activity android:name=".PayActivity" />
         <activity
             android:name=".LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
