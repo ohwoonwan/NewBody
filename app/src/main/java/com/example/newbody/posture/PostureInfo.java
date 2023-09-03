@@ -23,6 +23,9 @@ import com.example.newbody.Record;
 import com.example.newbody.VoiceRecognitionService;
 import com.example.newbody.record.RecordSquat;
 import com.example.newbody.record.RecordSquatMain;
+import com.example.newbody.yoga.Cat;
+import com.example.newbody.yoga.Cobra;
+import com.example.newbody.yoga.DownDog;
 
 import java.util.ArrayList;
 
@@ -57,6 +60,12 @@ public class PostureInfo extends AppCompatActivity {
         }else if(exName.equals("사이드 레터럴 레이즈")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/side");
         }else if(exName.equals("레그 레이즈")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+        }else if(exName.equals("고양이 자세")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+        }else if(exName.equals("다운 독")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+        }else if(exName.equals("코브라 자세")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         }
         postureVideo.setVideoURI(uri);
@@ -98,6 +107,12 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureSide.class);
                 }else if(exName.equals("레그 레이즈")){
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
+                }else if(exName.equals("고양이 자세")){
+                    intentN = new Intent(getApplicationContext(), Cat.class);
+                }else if(exName.equals("다운 독")){
+                    intentN = new Intent(getApplicationContext(), DownDog.class);
+                }else if(exName.equals("코브라 자세")){
+                    intentN = new Intent(getApplicationContext(), Cobra.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -136,6 +151,12 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureSide.class);
                 }else if(exName.equals("레그 레이즈")){
                     intentN = new Intent(getApplicationContext(), PostureLeg.class);
+                }else if(exName.equals("고양이 자세")){
+                    intentN = new Intent(getApplicationContext(), Cat.class);
+                }else if(exName.equals("다운 독")){
+                    intentN = new Intent(getApplicationContext(), DownDog.class);
+                }else if(exName.equals("코브라 자세")){
+                    intentN = new Intent(getApplicationContext(), Cobra.class);
                 }
                 startActivity(intentN);
                 finish();

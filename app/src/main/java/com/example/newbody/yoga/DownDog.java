@@ -38,6 +38,7 @@ import com.example.newbody.R;
 import com.example.newbody.TargetPose;
 import com.example.newbody.TargetShape;
 import com.example.newbody.VoiceRecognitionService;
+import com.example.newbody.YogaPosture;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -113,7 +114,7 @@ public class DownDog extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Posture.class);
+                Intent intent = new Intent(getApplicationContext(), YogaPosture.class);
                 startActivity(intent);
                 finish();
             }
@@ -197,7 +198,7 @@ public class DownDog extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        downdogYoga = findViewById(R.id.postureDumbbellEx);
+        downdogYoga = findViewById(R.id.postureDowndogEx);
     }
 
     private void runTest(){
@@ -371,7 +372,7 @@ public class DownDog extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
             if(str.equals("나가기") || str.equals("종료")){
-                Intent intent = new Intent(DownDog.this, Posture.class);
+                Intent intent = new Intent(DownDog.this, YogaPosture.class);
                 startActivity(intent);
             }
         }

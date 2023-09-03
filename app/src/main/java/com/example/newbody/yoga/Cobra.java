@@ -33,11 +33,11 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 
 import com.example.newbody.PoseMatcher;
-import com.example.newbody.Posture;
 import com.example.newbody.R;
 import com.example.newbody.TargetPose;
 import com.example.newbody.TargetShape;
 import com.example.newbody.VoiceRecognitionService;
+import com.example.newbody.YogaPosture;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -83,7 +83,7 @@ public class Cobra extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_yoga_downdog);
+        setContentView(R.layout.activity_yoga_cobra);
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -113,7 +113,7 @@ public class Cobra extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Posture.class);
+                Intent intent = new Intent(getApplicationContext(), YogaPosture.class);
                 startActivity(intent);
                 finish();
             }
@@ -196,8 +196,8 @@ public class Cobra extends AppCompatActivity {
     private void initViews(){
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
-        exit = findViewById(R.id.exitButton);
-        cobraYoga = findViewById(R.id.postureDumbbellEx);
+        exit = findViewById(R.id.yogaExitButton);
+        cobraYoga = findViewById(R.id.yogaCobraEx);
     }
 
     private void runTest(){
@@ -369,7 +369,7 @@ public class Cobra extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
             if(str.equals("나가기") || str.equals("종료")){
-                Intent intent = new Intent(Cobra.this, Posture.class);
+                Intent intent = new Intent(Cobra.this, YogaPosture.class);
                 startActivity(intent);
             }
         }
