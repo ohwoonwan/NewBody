@@ -21,6 +21,7 @@ import com.example.newbody.Posture;
 import com.example.newbody.R;
 import com.example.newbody.Record;
 import com.example.newbody.VoiceRecognitionService;
+import com.example.newbody.YogaPosture;
 import com.example.newbody.record.RecordSquat;
 import com.example.newbody.record.RecordSquatMain;
 import com.example.newbody.yoga.Cat;
@@ -62,11 +63,17 @@ public class PostureInfo extends AppCompatActivity {
         }else if(exName.equals("레그 레이즈")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
         }else if(exName.equals("고양이 자세")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/cat");
         }else if(exName.equals("다운 독")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/downdog");
         }else if(exName.equals("코브라 자세")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/legraise");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/cobra");
+        }else if(exName.equals("덤벨 컬")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbellcurl");
+        }else if(exName.equals("덤벨 플라이")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbellfly");
+        }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbelltriceps");
         }
         postureVideo.setVideoURI(uri);
 
@@ -87,7 +94,12 @@ public class PostureInfo extends AppCompatActivity {
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Posture.class);
+                Intent intent = null;
+                if(exName.equals("고양이 자세") || exName.equals("다운 독") || exName.equals("코브라 자세")){
+                    intent = new Intent(getApplicationContext(), YogaPosture.class);
+                }else{
+                    intent = new Intent(getApplicationContext(), Posture.class);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -113,6 +125,12 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), DownDog.class);
                 }else if(exName.equals("코브라 자세")){
                     intentN = new Intent(getApplicationContext(), Cobra.class);
+                }else if(exName.equals("덤벨 컬")){
+                    intentN = new Intent(getApplicationContext(), PostureCurl.class);
+                }else if(exName.equals("덤벨 플라이")){
+                    intentN = new Intent(getApplicationContext(), PostureFly.class);
+                }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
+                    intentN = new Intent(getApplicationContext(), PostureTriceps.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -157,12 +175,24 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), DownDog.class);
                 }else if(exName.equals("코브라 자세")){
                     intentN = new Intent(getApplicationContext(), Cobra.class);
+                }else if(exName.equals("덤벨 컬")){
+                    intentN = new Intent(getApplicationContext(), PostureCurl.class);
+                }else if(exName.equals("덤벨 플라이")){
+                    intentN = new Intent(getApplicationContext(), PostureFly.class);
+                }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
+                    intentN = new Intent(getApplicationContext(), PostureTriceps.class);
                 }
                 startActivity(intentN);
                 finish();
             }else if(str.equals("이전")){
-                Intent intent = new Intent(getApplicationContext(), Posture.class);
+                Intent intent = null;
+                if(exName.equals("고양이 자세") || exName.equals("다운 독") || exName.equals("코브라 자세")){
+                    intent = new Intent(getApplicationContext(), YogaPosture.class);
+                }else{
+                    intent = new Intent(getApplicationContext(), Posture.class);
+                }
                 startActivity(intent);
+                finish();
             }
         }
     }

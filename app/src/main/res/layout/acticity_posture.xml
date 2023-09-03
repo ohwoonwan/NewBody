@@ -357,6 +357,242 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dumbbellCurlView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/dumbbellcurl" />
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/ex6_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="덤벨 컬"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right">
+
+                    <TextView
+                        android:id="@+id/premiumMessage6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:text="프리미엄 전용"
+                        android:textColor="#ff3300"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/ex_lock_button6"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/button_black"
+                        android:gravity="center"
+                        android:onClick="nextButtonClicked">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/baseline_lock_24_2" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ex_button6"
+                        android:visibility="gone"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/button"
+                        android:onClick="nextButtonClicked">
+
+                        <TextView
+                            android:id="@+id/buttonText6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="선택"
+                            android:textColor="#ffffff"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dumbbellFlyView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/dumbbellfly" />
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/ex7_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="덤벨 플라이"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right">
+
+                    <TextView
+                        android:id="@+id/premiumMessage7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:text="프리미엄 전용"
+                        android:textColor="#ff3300"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/ex_lock_button7"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/button_black"
+                        android:gravity="center"
+                        android:onClick="nextButtonClicked">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/baseline_lock_24_2" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/ex_button7"
+                        android:visibility="gone"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:onClick="nextButtonClicked"
+                        android:background="@drawable/button">
+                        <TextView
+                            android:id="@+id/buttonText7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="선택"
+                            android:textColor="#ffffff"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dumbbellTricepsView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/triceps" />
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/ex8_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="덤벨 트라이셉스 익스텐션"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right">
+
+                    <TextView
+                        android:id="@+id/premiumMessage8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:text="프리미엄 전용"
+                        android:textColor="#ff3300"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/ex_lock_button8"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/button_black"
+                        android:gravity="center"
+                        android:onClick="nextButtonClicked">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/baseline_lock_24_2" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/ex_button8"
+                        android:visibility="gone"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:onClick="nextButtonClicked"
+                        android:background="@drawable/button">
+                        <TextView
+                            android:id="@+id/buttonText8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="선택"
+                            android:textColor="#ffffff"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
