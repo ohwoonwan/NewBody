@@ -1,5 +1,6 @@
 package com.example.newbody;
 
+//연락처 가져오기
 public class FriendInviteContact {
     private String name;
     private String phoneNumber;

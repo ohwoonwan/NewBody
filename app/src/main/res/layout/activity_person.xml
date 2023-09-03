@@ -351,7 +351,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/baseline_person_add_alt_1_24"
-                android:text="   친구 초대"
+                android:text="   SMS 초대"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
             <LinearLayout

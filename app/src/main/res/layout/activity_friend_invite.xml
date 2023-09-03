@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/prevButtonFriendInvite"
+            android:id="@+id/prevButtonFriendInvite2"
             android:layout_marginLeft="15dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -36,12 +36,55 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_marginLeft="-10dp"
+            android:gravity="center"
+            android:id="@+id/textView2"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:text="이름"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/searchWord2"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/edittext_border"
+            android:hint="이름을 입력해주세요."
+            android:inputType="text"
+            android:paddingLeft="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <Button
+            android:id="@+id/searchBtn2"
+            android:layout_width="65dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_edittext"
+            android:text="검색"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="619dp"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
