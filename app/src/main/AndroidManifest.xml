@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +30,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8336751716868214~4199761236" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -125,6 +126,7 @@
         <activity android:name=".FriendList" />
         <activity android:name=".FriendListPlus" />
         <activity android:name=".Graph" />
+        <activity android:name=".YogaPosture" />
 
         <service android:name=".VoiceRecognitionService" />
         <service
