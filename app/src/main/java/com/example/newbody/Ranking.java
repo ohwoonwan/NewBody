@@ -132,7 +132,7 @@ public class Ranking extends AppCompatActivity {
     }
 
     private void showExerciseDialog() {
-        final String[] exOptions = {"스쿼트", "푸쉬업", "덤벨 숄더 프레스", "사이드 레터럴 레이즈", "레그 레이즈"};
+        final String[] exOptions = {"스쿼트", "푸쉬업", "덤벨 숄더 프레스", "사이드 레터럴 레이즈", "레그 레이즈", "덤벨 컬", "덤벨 플라이", "덤벨 트라이셉스 익스텐션"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("운동 선택");
@@ -205,6 +205,30 @@ public class Ranking extends AppCompatActivity {
                 }else if(time.getText().equals("3분")){
                     collectionName = "countLeg3Minute";
                 }
+            }else if(exercise.getText().equals("덤벨 컬")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countCurl1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countCurl2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countCurl3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 플라이")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countFly1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countFly2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countFly3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 트라이셉스 익스텐션")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countTriceps1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countTriceps2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countTriceps3Minute";
+                }
             }
             String finalCollectionName = collectionName;
             db.collection(collectionName).orderBy(collectionName, Query.Direction.DESCENDING)
@@ -261,6 +285,30 @@ public class Ranking extends AppCompatActivity {
                     collectionName = "countLeg2Minute";
                 }else if(time.getText().equals("3분")){
                     collectionName = "countLeg3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 컬")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countCurl1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countCurl2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countCurl3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 플라이")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countFly1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countFly2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countFly3Minute";
+                }
+            }else if(exercise.getText().equals("덤벨 트라이셉스 익스텐션")){
+                if(time.getText().equals("1분")){
+                    collectionName = "countTriceps1Minute";
+                }else if(time.getText().equals("2분")){
+                    collectionName = "countTriceps2Minute";
+                }else if(time.getText().equals("3분")){
+                    collectionName = "countTriceps3Minute";
                 }
             }
             friendListInput();
@@ -342,18 +390,25 @@ public class Ranking extends AppCompatActivity {
                 time.setText(str);
             }else if(str.equals("전체") || str.equals("친구")){
                 range.setText(str);
-            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
-                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
+            }else if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스") ||
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈") ||
+                    str.equals("덤벨컬") || str.equals("덤벨 컬") || str.equals("덤벨 플라이") || str.equals("덤벨플라이") || str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
                 if(str.equals("스쿼트")){
                     exercise.setText("스쿼트");
                 }else if(str.equals("푸쉬업") || str.equals("푸시업")){
                     exercise.setText("푸쉬업");
-                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
+                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스")){
                     exercise.setText("덤벨 숄더 프레스");
                 }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
                     exercise.setText("사이드 레터럴 레이즈");
                 }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
                     exercise.setText("레그 레이즈");
+                }else if(str.equals("덤벨컬") || str.equals("덤벨 컬")){
+                    exercise.setText("덤벨 컬");
+                }else if(str.equals("덤벨 플라이") || str.equals("덤벨플라이")){
+                    exercise.setText("덤벨 플라이");
+                }else if(str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
+                    exercise.setText("덤벨 트라이셉스 익스텐션");
                 }
             }else if(str.equals("이전")){
                 Intent intent = new Intent(getApplicationContext(), Menu.class);

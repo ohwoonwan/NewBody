@@ -84,11 +84,14 @@
             android:name=".record.RecordLegRaiseMain"
             android:screenOrientation="landscape" />
         <activity android:name=".record.RecordTriceps" />
-        <activity android:name=".record.RecordTricepsMain" />
+        <activity android:name=".record.RecordTricepsMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".record.RecordFly" />
-        <activity android:name=".record.RecordFlyMain"/>
+        <activity android:name=".record.RecordFlyMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".record.RecordCurl" />
-        <activity android:name=".record.RecordCurlMain"/>
+        <activity android:name=".record.RecordCurlMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
@@ -99,9 +102,12 @@
         <activity
             android:name=".posture.PostureLeg"
             android:screenOrientation="landscape" />
-        <activity android:name=".posture.PostureCurl" />
-        <activity android:name=".posture.PostureFly" />
-        <activity android:name=".posture.PostureTriceps" />
+        <activity android:name=".posture.PostureCurl"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".posture.PostureFly"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".posture.PostureTriceps"
+            android:screenOrientation="landscape"/>
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />

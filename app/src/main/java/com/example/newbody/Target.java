@@ -66,10 +66,11 @@ public class Target extends AppCompatActivity {
     private RecyclerView targetRecyclerView;
     private TargetAdapter adapter;
     private String selectCnt;
-    private TextView []exName = new TextView[5];
-    private Button []ex = new Button[5];
-    private TextView []exNum = new TextView[5];
-    private Switch []switches = new Switch[5];
+    private TextView []exName = new TextView[8];
+    private Button []ex = new Button[8];
+    private TextView []exNum = new TextView[8];
+    private Switch []switches = new Switch[8];
+    private View []premiumView = new View[3];
     private List<TargetItem> targetList = new ArrayList<>();
 
     @Override
@@ -85,6 +86,7 @@ public class Target extends AppCompatActivity {
         user = mAuth.getCurrentUser();
 
         initViews();
+        premiumCheck();
         targetRecyclerView.setLayoutManager(new LinearLayoutManager(Target.this));
 
         startTarget(user);
@@ -120,38 +122,62 @@ public class Target extends AppCompatActivity {
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
         exName[4] = findViewById(R.id.ex5_name);
+        exName[5] = findViewById(R.id.ex6_name);
+        exName[6] = findViewById(R.id.ex7_name);
+        exName[7] = findViewById(R.id.ex8_name);
         ex[0] = findViewById(R.id.ex1_cnt);
         ex[1] = findViewById(R.id.ex2_cnt);
         ex[2] = findViewById(R.id.ex3_cnt);
         ex[3] = findViewById(R.id.ex4_cnt);
         ex[4] = findViewById(R.id.ex5_cnt);
+        ex[5] = findViewById(R.id.ex6_cnt);
+        ex[6] = findViewById(R.id.ex7_cnt);
+        ex[7] = findViewById(R.id.ex8_cnt);
         exNum[0] = findViewById(R.id.targetNum1);
         exNum[1] = findViewById(R.id.targetNum2);
         exNum[2] = findViewById(R.id.targetNum3);
         exNum[3] = findViewById(R.id.targetNum4);
         exNum[4] = findViewById(R.id.targetNum5);
+        exNum[5] = findViewById(R.id.targetNum6);
+        exNum[6] = findViewById(R.id.targetNum7);
+        exNum[7] = findViewById(R.id.targetNum8);
         switches[0] = findViewById(R.id.switch1);
         switches[1] = findViewById(R.id.switch2);
         switches[2] = findViewById(R.id.switch3);
         switches[3] = findViewById(R.id.switch4);
         switches[4] = findViewById(R.id.switch5);
+        switches[5] = findViewById(R.id.switch6);
+        switches[6] = findViewById(R.id.switch7);
+        switches[7] = findViewById(R.id.switch8);
         targetRecyclerView = findViewById(R.id.targetRecyclerView);
+        premiumView[0] = findViewById(R.id.premiumView1);
+        premiumView[1] = findViewById(R.id.premiumView2);
+        premiumView[2] = findViewById(R.id.premiumView3);
 
         switches[0].setVisibility(View.GONE);
         switches[1].setVisibility(View.GONE);
         switches[2].setVisibility(View.GONE);
         switches[3].setVisibility(View.GONE);
         switches[4].setVisibility(View.GONE);
+        switches[5].setVisibility(View.GONE);
+        switches[6].setVisibility(View.GONE);
+        switches[7].setVisibility(View.GONE);
         ex[0].setVisibility(View.GONE);
         ex[1].setVisibility(View.GONE);
         ex[2].setVisibility(View.GONE);
         ex[3].setVisibility(View.GONE);
         ex[4].setVisibility(View.GONE);
+        ex[5].setVisibility(View.GONE);
+        ex[6].setVisibility(View.GONE);
+        ex[7].setVisibility(View.GONE);
         exNum[0].setVisibility(View.VISIBLE);
         exNum[1].setVisibility(View.VISIBLE);
         exNum[2].setVisibility(View.VISIBLE);
         exNum[3].setVisibility(View.VISIBLE);
         exNum[4].setVisibility(View.VISIBLE);
+        exNum[5].setVisibility(View.VISIBLE);
+        exNum[6].setVisibility(View.VISIBLE);
+        exNum[7].setVisibility(View.VISIBLE);
         change.setText("수정");
     }
 
@@ -161,21 +187,33 @@ public class Target extends AppCompatActivity {
         exNum[2].setText(ex[2].getText().toString());
         exNum[3].setText(ex[3].getText().toString());
         exNum[4].setText(ex[4].getText().toString());
+        exNum[5].setText(ex[5].getText().toString());
+        exNum[6].setText(ex[6].getText().toString());
+        exNum[7].setText(ex[7].getText().toString());
         switches[0].setVisibility(View.GONE);
         switches[1].setVisibility(View.GONE);
         switches[2].setVisibility(View.GONE);
         switches[3].setVisibility(View.GONE);
         switches[4].setVisibility(View.GONE);
+        switches[5].setVisibility(View.GONE);
+        switches[6].setVisibility(View.GONE);
+        switches[7].setVisibility(View.GONE);
         ex[0].setVisibility(View.GONE);
         ex[1].setVisibility(View.GONE);
         ex[2].setVisibility(View.GONE);
         ex[3].setVisibility(View.GONE);
         ex[4].setVisibility(View.GONE);
+        ex[5].setVisibility(View.GONE);
+        ex[6].setVisibility(View.GONE);
+        ex[7].setVisibility(View.GONE);
         exNum[0].setVisibility(View.VISIBLE);
         exNum[1].setVisibility(View.VISIBLE);
         exNum[2].setVisibility(View.VISIBLE);
         exNum[3].setVisibility(View.VISIBLE);
         exNum[4].setVisibility(View.VISIBLE);
+        exNum[5].setVisibility(View.VISIBLE);
+        exNum[6].setVisibility(View.VISIBLE);
+        exNum[7].setVisibility(View.VISIBLE);
         change.setText("수정");
 
         saveTarget(user);
@@ -190,23 +228,35 @@ public class Target extends AppCompatActivity {
         ex[2].setText(exNum[2].getText().toString());
         ex[3].setText(exNum[3].getText().toString());
         ex[4].setText(exNum[4].getText().toString());
+        ex[5].setText(exNum[5].getText().toString());
+        ex[6].setText(exNum[6].getText().toString());
+        ex[7].setText(exNum[7].getText().toString());
         switches[0].setVisibility(View.VISIBLE);
         switches[1].setVisibility(View.VISIBLE);
         switches[2].setVisibility(View.VISIBLE);
         switches[3].setVisibility(View.VISIBLE);
         switches[4].setVisibility(View.VISIBLE);
+        switches[5].setVisibility(View.VISIBLE);
+        switches[6].setVisibility(View.VISIBLE);
+        switches[7].setVisibility(View.VISIBLE);
         ex[0].setVisibility(View.VISIBLE);
         ex[1].setVisibility(View.VISIBLE);
         ex[2].setVisibility(View.VISIBLE);
         ex[3].setVisibility(View.VISIBLE);
         ex[4].setVisibility(View.VISIBLE);
+        ex[5].setVisibility(View.VISIBLE);
+        ex[6].setVisibility(View.VISIBLE);
+        ex[7].setVisibility(View.VISIBLE);
         exNum[0].setVisibility(View.INVISIBLE);
         exNum[1].setVisibility(View.INVISIBLE);
         exNum[2].setVisibility(View.INVISIBLE);
         exNum[3].setVisibility(View.INVISIBLE);
         exNum[4].setVisibility(View.INVISIBLE);
+        exNum[5].setVisibility(View.INVISIBLE);
+        exNum[6].setVisibility(View.INVISIBLE);
+        exNum[7].setVisibility(View.INVISIBLE);
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 8; i++){
             int finalI = i;
             ex[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -259,6 +309,9 @@ public class Target extends AppCompatActivity {
                                 exNum[2].setText(document.getString(exName[2].getText().toString()));
                                 exNum[3].setText(document.getString(exName[3].getText().toString()));
                                 exNum[4].setText(document.getString(exName[4].getText().toString()));
+                                exNum[5].setText(document.getString(exName[5].getText().toString()));
+                                exNum[6].setText(document.getString(exName[6].getText().toString()));
+                                exNum[7].setText(document.getString(exName[7].getText().toString()));
                             }
                         } else {
                             // 쿼리가 실패한 경우 에러 처리
@@ -284,6 +337,9 @@ public class Target extends AppCompatActivity {
             userData.put(exName[2].getText().toString(), ex[2].getText().toString());
             userData.put(exName[3].getText().toString(), ex[3].getText().toString());
             userData.put(exName[4].getText().toString(), ex[4].getText().toString());
+            userData.put(exName[5].getText().toString(), ex[5].getText().toString());
+            userData.put(exName[6].getText().toString(), ex[6].getText().toString());
+            userData.put(exName[7].getText().toString(), ex[7].getText().toString());
         }
 
         db.collection(collectionName).document(user.getUid())
@@ -341,6 +397,18 @@ public class Target extends AppCompatActivity {
                     collection = "dailyLegRecords";
                     key = currentDate+"legCount";
                     exercise = "레그 레이즈";
+                }else if(i == 5){
+                    collection = "dailyCurlRecords";
+                    key = currentDate+"CurlCount";
+                    exercise = "덤벨 컬";
+                }else if(i == 6){
+                    collection = "dailyFlyRecords";
+                    key = currentDate+"flyCount";
+                    exercise = "덤벨 플라이";
+                }else if(i == 7){
+                    collection = "dailyTricepsRecords";
+                    key = currentDate+"tricepsCount";
+                    exercise = "덤벨 트라이셉스 익스텐션";
                 }
                 ex_num = extractNumber(exNum[i].getText().toString());
                 loadSquatRecordWithDate(collection, key, exercise, ex_num);
@@ -479,6 +547,35 @@ public class Target extends AppCompatActivity {
         super.onPause();
         // 브로드캐스트 리시버 등록 해제
         unregisterReceiver(receiver);
+    }
+
+    public void premiumCheck(){
+        if(user == null){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }else{
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@androidx.annotation.NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String grade = document.getString("grade");
+                                    if (grade == null) grade = "일반";
+
+                                    if(grade.equals("프리미엄")){
+                                        premiumView[0].setVisibility(View.VISIBLE);
+                                        premiumView[1].setVisibility(View.VISIBLE);
+                                        premiumView[2].setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            } else {
+                            }
+                        }
+                    });
+        }
     }
 
 }

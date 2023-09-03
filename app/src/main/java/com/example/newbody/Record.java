@@ -208,6 +208,27 @@ public class Record extends AppCompatActivity {
             }
         });
 
+        lockButton[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Record.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lockButton[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Record.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lockButton[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Record.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

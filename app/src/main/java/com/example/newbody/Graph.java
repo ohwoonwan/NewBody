@@ -165,7 +165,7 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
     }
 
     private void showExerciseDialog() {
-        final String[] exOptions = {"스쿼트", "푸쉬업", "덤벨 숄더 프레스", "사이드 레터럴 레이즈", "레그 레이즈"};
+        final String[] exOptions = {"스쿼트", "푸쉬업", "덤벨 숄더 프레스", "사이드 레터럴 레이즈", "레그 레이즈", "덤벨 컬", "덤벨 플라이", "덤벨 트라이셉스 익스텐션"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("운동 선택");
@@ -208,6 +208,15 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
         } else if (exerciseGraph.getText().equals("레그 레이즈")) {
             collectionName = "dailyLegRecords";
             exercise = "legCount";
+        }else if(exerciseGraph.getText().equals("덤벨 컬")){
+            collectionName = "dailyCurlRecords";
+            exercise = "CurlCount";
+        }else if(exerciseGraph.getText().equals("덤벨 플라이")){
+            collectionName = "dailyFlyRecords";
+            exercise = "flyCount";
+        }else if(exerciseGraph.getText().equals("덤벨 트라이셉스 익스텐션")){
+            collectionName = "dailyTricepsRecords";
+            exercise = "tricepsCount";
         }
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
@@ -258,6 +267,15 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
         } else if (exerciseGraph.getText().equals("레그 레이즈")) {
             collectionName = "dailyLegRecords";
             exercise = "legCount";
+        } else if(exerciseGraph.getText().equals("덤벨 컬")){
+            collectionName = "dailyCurlRecords";
+            exercise = "CurlCount";
+        } else if(exerciseGraph.getText().equals("덤벨 플라이")){
+            collectionName = "dailyFlyRecords";
+            exercise = "flyCount";
+        } else if(exerciseGraph.getText().equals("덤벨 트라이셉스 익스텐션")){
+            collectionName = "dailyTricepsRecords";
+            exercise = "tricepsCount";
         }
 
         DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
@@ -345,7 +363,7 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
         // 한 화면에 7개의 데이터 포인트만 보이도록 설정
         chart2.setVisibleXRangeMaximum(7);
         // 최초로 마지막 7개의 데이터 포인트를 보여줌
-        chart2.moveViewToX(entries.size() - 7);
+        chart2.moveViewToX(0);
     }
 
 
@@ -367,16 +385,16 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
-            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
-                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") ||
-                    str.equals("레그레이즈") || str.equals("준비 운동") || str.equals("준비운동")){
+            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스") ||
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈") ||
+                    str.equals("덤벨컬") || str.equals("덤벨 컬") || str.equals("덤벨 플라이") || str.equals("덤벨플라이") || str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
                 if(str.equals("스쿼트")){
                     select_ex = "스쿼트";
                     exerciseGraph.setText(select_ex);
                 }else if(str.equals("푸쉬업") || str.equals("푸시업")){
                     select_ex = "푸쉬업";
                     exerciseGraph.setText(select_ex);
-                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
+                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스")){
                     select_ex = "덤벨 숄더 프레스";
                     exerciseGraph.setText(select_ex);
                 }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
@@ -384,6 +402,15 @@ public class Graph extends AppCompatActivity implements OnDateSetListener {
                     exerciseGraph.setText(select_ex);
                 }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
                     select_ex = "레그 레이즈";
+                    exerciseGraph.setText(select_ex);
+                }else if(str.equals("덤벨컬") || str.equals("덤벨 컬")){
+                    select_ex = "덤벨 컬";
+                    exerciseGraph.setText(select_ex);
+                }else if(str.equals("덤벨 플라이") || str.equals("덤벨플라이")){
+                    select_ex = "덤벨 플라이";
+                    exerciseGraph.setText(select_ex);
+                }else if(str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
+                    select_ex = "덤벨 트라이셉스 익스텐션";
                     exerciseGraph.setText(select_ex);
                 }
             } else if(str.equals("이전")){
