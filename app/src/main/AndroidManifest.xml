@@ -57,6 +57,9 @@
         <activity
             android:name=".record.RecordPushupMain"
             android:screenOrientation="landscape" />
+        <activity android:name=".record.RecordCurlMain" />
+        <activity android:name=".record.RecordFlyMain" />
+        <activity android:name=".record.RecordTricepsMain" />
         <activity android:name=".record.RecordDumbbell" />
         <activity android:name=".record.RecordPushup" />
         <activity android:name=".record.RecordSidelateralraiseMain" />
