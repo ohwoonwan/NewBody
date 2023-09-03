@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +30,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8336751716868214~4199761236" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -82,6 +83,15 @@
         <activity
             android:name=".record.RecordLegRaiseMain"
             android:screenOrientation="landscape" />
+        <activity android:name=".record.RecordTriceps" />
+        <activity android:name=".record.RecordTricepsMain"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".record.RecordFly" />
+        <activity android:name=".record.RecordFlyMain"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".record.RecordCurl" />
+        <activity android:name=".record.RecordCurlMain"
+            android:screenOrientation="landscape"/>
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
@@ -92,6 +102,12 @@
         <activity
             android:name=".posture.PostureLeg"
             android:screenOrientation="landscape" />
+        <activity android:name=".posture.PostureCurl"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".posture.PostureFly"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".posture.PostureTriceps"
+            android:screenOrientation="landscape"/>
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />
@@ -125,6 +141,16 @@
         <activity android:name=".FriendList" />
         <activity android:name=".FriendListPlus" />
         <activity android:name=".Graph" />
+        <activity android:name=".YogaPosture" />
+        <activity
+            android:name=".yoga.Cat"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".yoga.DownDog"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".yoga.Cobra"
+            android:screenOrientation="landscape" />
 
         <service android:name=".VoiceRecognitionService" />
         <service

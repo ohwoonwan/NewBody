@@ -43,12 +43,14 @@ import java.util.ArrayList;
 
 public class Posture extends AppCompatActivity {
     private View ex_start;
-    private View []ex = new View[5];
-    private TextView[]exName = new TextView[5];
+    private View []ex = new View[8];
+    private TextView []exName = new TextView[8];
+    private TextView []premiumMessage = new TextView[3];
+    private View []lockButton = new View[3];
     private TextView selectE, pre1, pre2;
     private Button prev;
     private Switch customized;
-    private View squatView, pushupView, dumbbellView, sideView, legView;
+    private View squatView, pushupView, dumbbellView, sideView, legView, dumbbellCurlView, dumbbellFlyView, dumbbellTricepsView;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser user;
@@ -82,16 +84,13 @@ public class Posture extends AppCompatActivity {
                                     pre2.setText(preference2);
 
                                     if(preference1.equals("도구 이용 운동")){
-                                        if(preference2.equals("팔 운동")){
-                                            squatView.setVisibility(View.GONE);
-                                            pushupView.setVisibility(View.GONE);
-                                            legView.setVisibility(View.GONE);
-                                        }else if(preference2.equals("하체 운동")){
-
-                                        }else if(preference2.equals("복근 운동")){
-
-                                        }
+                                        squatView.setVisibility(View.GONE);
+                                        pushupView.setVisibility(View.GONE);
+                                        legView.setVisibility(View.GONE);
                                     }else if(preference1.equals("맨몸 운동")){
+                                        dumbbellCurlView.setVisibility(View.GONE);
+                                        dumbbellFlyView.setVisibility(View.GONE);
+                                        dumbbellTricepsView.setVisibility(View.GONE);
                                         if(preference2.equals("팔 운동")){
                                             squatView.setVisibility(View.GONE);
                                             dumbbellView.setVisibility(View.GONE);
@@ -121,6 +120,9 @@ public class Posture extends AppCompatActivity {
                     dumbbellView.setVisibility(View.VISIBLE);
                     sideView.setVisibility(View.VISIBLE);
                     legView.setVisibility(View.VISIBLE);
+                    dumbbellCurlView.setVisibility(View.VISIBLE);
+                    dumbbellFlyView.setVisibility(View.VISIBLE);
+                    dumbbellTricepsView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -166,6 +168,48 @@ public class Posture extends AppCompatActivity {
             }
         });
 
+        ex[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[5].getText());
+            }
+        });
+
+        ex[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[6].getText());
+            }
+        });
+
+        ex[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectE.setText(exName[7].getText());
+            }
+        });
+
+        lockButton[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Posture.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lockButton[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Posture.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lockButton[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Posture.this, "프리미엄 전용 운동입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         ex_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,11 +232,17 @@ public class Posture extends AppCompatActivity {
         ex[2] = findViewById(R.id.ex_button3);
         ex[3] = findViewById(R.id.ex_button4);
         ex[4] = findViewById(R.id.ex_button5);
+        ex[5] = findViewById(R.id.ex_button6);
+        ex[6] = findViewById(R.id.ex_button7);
+        ex[7] = findViewById(R.id.ex_button8);
         exName[0] = findViewById(R.id.ex1_name);
         exName[1] = findViewById(R.id.ex2_name);
         exName[2] = findViewById(R.id.ex3_name);
         exName[3] = findViewById(R.id.ex4_name);
         exName[4] = findViewById(R.id.ex5_name);
+        exName[5] = findViewById(R.id.ex6_name);
+        exName[6] = findViewById(R.id.ex7_name);
+        exName[7] = findViewById(R.id.ex8_name);
         selectE = findViewById(R.id.exercise_select);
         prev = findViewById(R.id.prevButton);
         squatView = findViewById(R.id.squatView1);
@@ -200,12 +250,21 @@ public class Posture extends AppCompatActivity {
         dumbbellView = findViewById(R.id.dumbbellView1);
         sideView = findViewById(R.id.sideView1);
         legView = findViewById(R.id.legView1);
+        dumbbellCurlView = findViewById(R.id.dumbbellCurlView);
+        dumbbellFlyView = findViewById(R.id.dumbbellFlyView);
+        dumbbellTricepsView = findViewById(R.id.dumbbellTricepsView);
         customized = findViewById(R.id.customized2);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
         pre1 = findViewById(R.id.pre11);
         pre2 = findViewById(R.id.pre22);
+        premiumMessage[0] = findViewById(R.id.premiumMessage6);
+        premiumMessage[1] = findViewById(R.id.premiumMessage7);
+        premiumMessage[2] = findViewById(R.id.premiumMessage8);
+        lockButton[0] = findViewById(R.id.ex_lock_button6);
+        lockButton[1] = findViewById(R.id.ex_lock_button7);
+        lockButton[2] = findViewById(R.id.ex_lock_button8);
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -225,18 +284,25 @@ public class Posture extends AppCompatActivity {
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
-            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
-                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
+            if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스") ||
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈") ||
+                    str.equals("덤벨컬") || str.equals("덤벨 컬") || str.equals("덤벨 플라이") || str.equals("덤벨플라이") || str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
                 if(str.equals("스쿼트")){
                     selectE.setText(exName[0].getText());
                 }else if(str.equals("푸쉬업") || str.equals("푸시업")){
                     selectE.setText(exName[1].getText());
-                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스")){
+                }else if(str.equals("덤벨 숄더 프레스") || str.equals("덤벨 숄더") || str.equals("덤벨숄더프레스")){
                     selectE.setText(exName[2].getText());
                 }else if(str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈")){
                     selectE.setText(exName[3].getText());
                 }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
                     selectE.setText(exName[4].getText());
+                }else if(str.equals("덤벨컬") || str.equals("덤벨 컬")){
+                    selectE.setText(exName[5].getText());
+                }else if(str.equals("덤벨 플라이") || str.equals("덤벨플라이")){
+                    selectE.setText(exName[6].getText());
+                }else if(str.equals("덤벨 트라이셉스 익스텐션") || str.equals("덤벨 트라이")){
+                    selectE.setText(exName[7].getText());
                 }
             }else if(str.equals("시작") || str.equals("운동 시작")){
                 if(selectE.getText().equals("운동")){
@@ -315,6 +381,15 @@ public class Posture extends AppCompatActivity {
 
                                     if(grade.equals("프리미엄")){
                                         customized.setVisibility(View.VISIBLE);
+                                        premiumMessage[0].setVisibility(View.GONE);
+                                        premiumMessage[1].setVisibility(View.GONE);
+                                        premiumMessage[2].setVisibility(View.GONE);
+                                        lockButton[0].setVisibility(View.GONE);
+                                        lockButton[1].setVisibility(View.GONE);
+                                        lockButton[2].setVisibility(View.GONE);
+                                        ex[5].setVisibility(View.VISIBLE);
+                                        ex[6].setVisibility(View.VISIBLE);
+                                        ex[7].setVisibility(View.VISIBLE);
                                     }
                                 }
                             } else {

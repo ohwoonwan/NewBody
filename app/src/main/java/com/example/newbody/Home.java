@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,8 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends Fragment {
-    private View view;
-    private View posture_button, video_button, record_button, ranking_button;
+    private View view, yoga, yoga_lock;
+    private View posture_button, video_button, record_button, ranking_button, yoga_button, yoga_lock_button;
     private PieChart pieChart;
     private Button notice;
     private CustomDialogNotice customDialog;
@@ -54,6 +55,9 @@ public class Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home, container, false);
 
+        yoga = view.findViewById(R.id.yoga_layout);
+        yoga_lock = view.findViewById(R.id.yoga_lock_layout);
+
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -61,6 +65,8 @@ public class Home extends Fragment {
         video_button = view.findViewById(R.id.video_button);
         record_button = view.findViewById(R.id.record_button);
         ranking_button = view.findViewById(R.id.ranking_button);
+        yoga_button = view.findViewById(R.id.yoga_button);
+        yoga_lock_button = view.findViewById(R.id.yoga_lock_button);
         pieChart = view.findViewById(R.id.pieChart);
         notice = view.findViewById(R.id.noticeDialog);
         premium = view.findViewById(R.id.premium_badge);
@@ -172,6 +178,21 @@ public class Home extends Fragment {
             }
         });
 
+        yoga_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), YogaPosture.class);
+                startActivity(intent);
+            }
+        });
+
+        yoga_lock_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "프리미엄 회원 전용 메뉴입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -193,6 +214,8 @@ public class Home extends Fragment {
 
                                     if(grade.equals("프리미엄")){
                                         premium.setVisibility(View.VISIBLE);
+                                        yoga.setVisibility(View.VISIBLE);
+                                        yoga_lock.setVisibility(View.GONE);
                                     }
                                 }
                             } else {
