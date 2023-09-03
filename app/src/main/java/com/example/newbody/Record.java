@@ -21,11 +21,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.newbody.record.RecordCurl;
 import com.example.newbody.record.RecordDumbbell;
+import com.example.newbody.record.RecordFly;
 import com.example.newbody.record.RecordLegRaise;
 import com.example.newbody.record.RecordPushup;
 import com.example.newbody.record.RecordSidelateralraise;
 import com.example.newbody.record.RecordSquat;
+import com.example.newbody.record.RecordTriceps;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -268,7 +271,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 6){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordCurl.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {
@@ -279,7 +282,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 7){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordFly.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {
@@ -290,7 +293,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 8){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordTriceps.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {
@@ -495,7 +498,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 6){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordCurl.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {
@@ -506,7 +509,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 7){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordFly.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {
@@ -517,7 +520,7 @@ public class Record extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(select_num == 8){
-                    Intent intent = new Intent(Record.this, RecordLegRaise.class);
+                    Intent intent = new Intent(Record.this, RecordTriceps.class);
                     if (select_time.equals("1분")) {
                         intent.putExtra("time", totalTimesInMillis[0]);
                     } else if (select_time.equals("2분")) {

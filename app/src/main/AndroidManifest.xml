@@ -83,6 +83,12 @@
         <activity
             android:name=".record.RecordLegRaiseMain"
             android:screenOrientation="landscape" />
+        <activity android:name=".record.RecordTriceps" />
+        <activity android:name=".record.RecordTricepsMain" />
+        <activity android:name=".record.RecordFly" />
+        <activity android:name=".record.RecordFlyMain"/>
+        <activity android:name=".record.RecordCurl" />
+        <activity android:name=".record.RecordCurlMain"/>
         <activity android:name=".posture.PostureInfo" />
         <activity android:name=".posture.PostureSide" />
         <activity android:name=".posture.PostureDumbbell" />
@@ -130,12 +136,15 @@
         <activity android:name=".FriendListPlus" />
         <activity android:name=".Graph" />
         <activity android:name=".YogaPosture" />
-        <activity android:name=".yoga.Cat"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".yoga.DownDog"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".yoga.Cobra"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".yoga.Cat"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".yoga.DownDog"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".yoga.Cobra"
+            android:screenOrientation="landscape" />
 
         <service android:name=".VoiceRecognitionService" />
         <service
