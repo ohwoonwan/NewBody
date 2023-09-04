@@ -105,9 +105,22 @@ public class RecyclerViewAdapterPlus extends RecyclerView.Adapter<com.example.ne
             });
 
             name.setText(user.getName());
-            uid.setText(user.getUid());
+            String maskedUID = maskUID(user.getUid());
+            uid.setText(maskedUID);
         }
 
+    }
+    private String maskUID(String uid) {
+        if (uid == null || uid.length() <= 6) {
+            return uid; // UID가 null이거나 6글자 이하일 경우 가려지지 않은 UID를 반환
+        }
+
+        String masked = uid.substring(0, 6); // 앞 6글자를 유지
+        for (int i = 6; i < uid.length(); i++) {
+            masked += "*"; // 나머지 자리는 '*'로 대체
+        }
+
+        return masked;
     }
 
     public void deleteSelectedItems(String currentUserUid) {
