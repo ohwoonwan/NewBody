@@ -183,7 +183,10 @@ public class Posture extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
             if(str.equals("스쿼트") || str.equals("푸쉬업") || str.equals("푸시업") || str.equals("덤벨 숄더 프레스") || str.equals("덤벨") || str.equals("덤벨숄더프레스") ||
-                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈")){
+                    str.equals("사이드 레터럴 레이즈") || str.equals("사레레") || str.equals("사이드레터럴레이즈") || str.equals("레그 레이즈") || str.equals("레그레이즈") ||
+                        str.equals("덤벨 컬") || str.equals("컬") || str.equals("덤벨 플라이") || str.equals("플라이") || str.equals("덤벨 트라이셉스 익스텐션") ||
+                            str.equals("덤벨 트라이셉스 익스텐션") || str.equals("트라이셉스") || str.equals("덤벨컬") || str.equals("덤벨플라이") ||
+                                str.equals("덤벨트라이셉스익스텐션")){
                 if(str.equals("스쿼트")){
                     selectE.setText(exName[0].getText());
                 }else if(str.equals("푸쉬업") || str.equals("푸시업")){
@@ -194,6 +197,12 @@ public class Posture extends AppCompatActivity {
                     selectE.setText(exName[3].getText());
                 }else if(str.equals("레그 레이즈") || str.equals("레그레이즈")){
                     selectE.setText(exName[4].getText());
+                }else if(str.equals("덤벨 컬") || str.equals("컬") || str.equals("덤벨컬")) {
+                    selectE.setText(exName[5].getText());
+                }else if(str.equals("덤벨 플라이") || str.equals("플라이") || str.equals("덤벨플라이")) {
+                    selectE.setText(exName[6].getText());
+                }else if(str.equals("덤벨 트라이셉스 익스텐션") || str.equals("트라이셉스") || str.equals("덤벨트라이셉스익스텐션")) {
+                    selectE.setText(exName[7].getText());
                 }
             }else if(str.equals("시작") || str.equals("운동 시작")){
                 if(selectE.getText().equals("운동")){
