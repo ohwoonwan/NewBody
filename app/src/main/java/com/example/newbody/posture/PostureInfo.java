@@ -75,7 +75,7 @@ public class PostureInfo extends AppCompatActivity {
         }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbelltriceps");
         }else if(exName.equals("플랭크")){
-            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbelltriceps");
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/flank");
         }
         postureVideo.setVideoURI(uri);
 

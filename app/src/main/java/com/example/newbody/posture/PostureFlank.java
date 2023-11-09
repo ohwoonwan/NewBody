@@ -249,10 +249,10 @@ public class PostureFlank extends AppCompatActivity {
     private void initTargetPoses() {
         targetCurlStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,60.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,60.0),
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,140.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,140.0)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,70.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,70.0)
+//                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,140.0),
+//                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,140.0)
                 )
         );
 
@@ -281,7 +281,7 @@ public class PostureFlank extends AppCompatActivity {
         boolean isCurlEnd = isPoseMatching(pose, targetCurlEndSign);
         boolean isCurlLow = isPoseMatching(pose, targetCurlLowSign);
 
-        flankPosture.setText("플랭크 자세를 취하세요.");
+//        flankPosture.setText("플랭크 자세를 취하세요.");
 
         if (isCurlStart) {
             if (checkDown) {
@@ -292,7 +292,7 @@ public class PostureFlank extends AppCompatActivity {
 
             startTimer();
         } else if (checkCurl) {
-            stopTimer();
+//            stopTimer();
         }
     }
 

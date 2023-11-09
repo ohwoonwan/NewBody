@@ -123,6 +123,7 @@ public class Posture extends AppCompatActivity {
                     dumbbellCurlView.setVisibility(View.VISIBLE);
                     dumbbellFlyView.setVisibility(View.VISIBLE);
                     dumbbellTricepsView.setVisibility(View.VISIBLE);
+                    flankView.setVisibility(View.VISIBLE);
                 }
             }
         });
