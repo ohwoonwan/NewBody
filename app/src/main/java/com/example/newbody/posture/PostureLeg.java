@@ -271,6 +271,8 @@ public class PostureLeg extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        guidePaint = new Paint();
+
         boolean isLegStart = isPoseMatching(pose, targetLegRaiseStartSign);
         boolean isLegEnd = isPoseMatching(pose, targetLegRaiseEndSign);
         boolean isLegOver = isPoseMatching(pose, targetLegRaiseOverSign);
@@ -282,10 +284,22 @@ public class PostureLeg extends AppCompatActivity {
                 checkLeg = false;
             }
             check = false;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isLegOver) {
             legPosture.setText("다리를 더이상 올리지 마세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!check && !isLegStart) {
             legPosture.setText("다리을 더 올리세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isLegStart) {
             legPosture.setText("다리를 내리세요");
             if(!checkLeg){
@@ -293,6 +307,10 @@ public class PostureLeg extends AppCompatActivity {
                 checkLeg = true;
             }
             check = true;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 

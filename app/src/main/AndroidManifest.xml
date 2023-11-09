@@ -108,6 +108,8 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".posture.PostureTriceps"
             android:screenOrientation="landscape"/>
+        <activity android:name=".posture.PostureFlank"
+            android:screenOrientation="landscape"/>
         <activity android:name=".workout.Home_Training_WarmUp" />
         <activity android:name=".workout.Home_Training_Squat1" />
         <activity android:name=".workout.Home_Training_Squat2" />

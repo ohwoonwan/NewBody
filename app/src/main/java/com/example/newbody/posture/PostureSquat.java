@@ -275,6 +275,7 @@ public class PostureSquat extends AppCompatActivity {
 
     private void handlePoseDetection(Pose pose) throws InterruptedException {
         Handler h = new Handler();
+        guidePaint = new Paint();
 
         boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
         boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
@@ -287,6 +288,10 @@ public class PostureSquat extends AppCompatActivity {
                 checkSquat = false;
             }
             check = false;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isSquatStart) {
             check = true;
             squatPosture.setText("Good Motion ! 이제 올라가세요");
@@ -294,10 +299,22 @@ public class PostureSquat extends AppCompatActivity {
                 speakSquatStart();
                 checkSquat = true;
             }
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!check && !isSquatOver) {
             squatPosture.setText("더 앉으세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isSquatOver) {
             squatPosture.setText("너무 앉으셨습니다. 다시 하세요.");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
     private void speakSquatEnd() {

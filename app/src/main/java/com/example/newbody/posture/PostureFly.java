@@ -273,6 +273,8 @@ public class PostureFly extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        guidePaint = new Paint();
+
         boolean isFlyStart = isPoseMatching(pose, targetFlyStartSign);
         boolean isFlyEnd = isPoseMatching(pose, targetFlyEndSign);
         boolean isFlyLow = isPoseMatching(pose, targetFlyLowSign);
@@ -284,6 +286,10 @@ public class PostureFly extends AppCompatActivity {
                 checkFly = true;
             }
             checkDown = true;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isFlyStart) {
             if (checkDown) {
                 flyPosture.setText("잘했습니다");
@@ -291,8 +297,16 @@ public class PostureFly extends AppCompatActivity {
                 checkFly = false;
             }
             checkDown = false;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!checkDown && !isFlyLow) {
             flyPosture.setText("더 내리세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 

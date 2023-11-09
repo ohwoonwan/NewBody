@@ -268,6 +268,8 @@ public class PostureSide extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        guidePaint = new Paint();
+
         boolean isSideStart = isPoseMatching(pose, targetSideStartSign);
         boolean isSideEnd = isPoseMatching(pose, targetSideEndSign);
         boolean isSideOver = isPoseMatching(pose, targetSideArmOverSign);
@@ -280,16 +282,32 @@ public class PostureSide extends AppCompatActivity {
                 checkSide = true;
             }
             check = true;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isSideOver) {
             sidePosture.setText("팔을 너무 올리셨습니다");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!check && !isSideStart) {
             sidePosture.setText("더 올리세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isSideEnd) {
             if (check) {
                 sidePosture.setText("잘했어요");
                 speakSideEnd();
                 checkSide = false;
             }
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 

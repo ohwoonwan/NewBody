@@ -53,13 +53,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class PostureCurl extends AppCompatActivity {
+public class PostureFlank extends AppCompatActivity {
 
     private boolean dumbbellStartDetected = false;
     private boolean dumbbellEndDetected = false;
     private boolean checkUp = false;
+
+    private boolean timerRunning = false;
+    private int timerSeconds = 31;
+    private Handler timerHandler = new Handler();
     private boolean checkDown = false;
-    private boolean checkCurl = false;
+    private boolean checkCurl = true;
     private TargetPose targetCurlStartSign;
     private TargetPose targetCurlEndSign;
     private TargetPose targetCurlLowSign;
@@ -70,7 +74,8 @@ public class PostureCurl extends AppCompatActivity {
     PoseDetector detector;
     ImageView guidelineView;
     ImageCapture imageCapture;
-    TextView curlPosture;
+    TextView flankPosture;
+    TextView timer;
 
     Button exit;
 
@@ -84,7 +89,7 @@ public class PostureCurl extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posture_curl);
+        setContentView(R.layout.activity_posture_flank);
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -101,7 +106,7 @@ public class PostureCurl extends AppCompatActivity {
                         // 피치와 속도를 조절합니다.
                         tts.setPitch(0.8f); // 높은 톤
                         tts.setSpeechRate(0.9f); // 약간 빠른 속도
-                        tts.speak("덤벨 컬을 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("플랭크를 시작합니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 } else {
                     Log.e("TTS", "Initialization failed");
@@ -198,7 +203,8 @@ public class PostureCurl extends AppCompatActivity {
         previewView = findViewById(R.id.viewFinder);
         guidelineView = findViewById(R.id.canvas);
         exit = findViewById(R.id.exitButton);
-        curlPosture = findViewById(R.id.postureCurlEx);
+        flankPosture = findViewById(R.id.postureFlankEx);
+        timer = findViewById(R.id.timerEx);
     }
 
     private void runTest(){
@@ -243,8 +249,10 @@ public class PostureCurl extends AppCompatActivity {
     private void initTargetPoses() {
         targetCurlStartSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,150.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,150.0)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,60.0),
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,140.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,140.0)
                 )
         );
 
@@ -269,49 +277,67 @@ public class PostureCurl extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        guidePaint = new Paint();
-
         boolean isCurlStart = isPoseMatching(pose, targetCurlStartSign);
         boolean isCurlEnd = isPoseMatching(pose, targetCurlEndSign);
         boolean isCurlLow = isPoseMatching(pose, targetCurlLowSign);
 
-        if (isCurlEnd) {
-            curlPosture.setText("올리세요");
-            if(!checkCurl){
-                speakDumbbellStart();
-                checkCurl = true;
-            }
-            checkDown = true;
-            guidePaint.setColor(Color.WHITE);
-            guidePaint.setStrokeWidth(3f);
-            guidePaint.setStrokeCap(Paint.Cap.BUTT);
-            guidePaint.setStyle(Paint.Style.STROKE);
-        } else if (isCurlStart) {
+        flankPosture.setText("플랭크 자세를 취하세요.");
+
+        if (isCurlStart) {
             if (checkDown) {
-                curlPosture.setText("잘했습니다");
                 speakDumbbellEnd();
                 checkCurl = false;
             }
             checkDown = false;
-            guidePaint.setColor(Color.WHITE);
-            guidePaint.setStrokeWidth(3f);
-            guidePaint.setStrokeCap(Paint.Cap.BUTT);
-            guidePaint.setStyle(Paint.Style.STROKE);
-        } else if (!checkDown && !isCurlLow) {
-            curlPosture.setText("더 올리세요");
-            guidePaint.setColor(Color.RED);
-            guidePaint.setStrokeWidth(3f);
-            guidePaint.setStrokeCap(Paint.Cap.BUTT);
-            guidePaint.setStyle(Paint.Style.STROKE);
+
+            startTimer();
+        } else if (checkCurl) {
+            stopTimer();
         }
     }
 
-    private void speakDumbbellEnd() {
-        String textToSpeak ="잘했어요 다시 해볼까요?";
-        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    private void startTimer() {
+        if (!timerRunning) {
+            timerRunning = true;
+            timerHandler.postDelayed(timerRunnable, 1000);
+        }
     }
-    private void speakDumbbellStart() {
-        String textToSpeak ="좋아요";
+
+    // 타이머 중지 메서드
+    private void stopTimer() {
+        if (timerRunning) {
+            timerRunning = false;
+            timerHandler.removeCallbacks(timerRunnable);
+        }
+    }
+
+    // 30초 타이머 실행 내용
+    private Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // 1초 증가
+            timerSeconds--;
+
+            // 타이머 숫자를 텍스트로 표시
+            flankPosture.setText("플랭크를 시작합니다 ");
+            timer.setText(timerSeconds + "초");
+
+            // 30초가 지났을 때
+            if (timerSeconds < 0) {
+                flankPosture.setText("잠시 휴식을 가지세요");
+                timer.setText("");
+
+                // 타이머 중지
+                stopTimer();
+            } else {
+                // 1초마다 다시 실행
+                timerHandler.postDelayed(this, 1000);
+            }
+        }
+    };
+
+    private void speakDumbbellEnd() {
+        String textToSpeak ="플랭크 30초 시작합니다.";
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
@@ -342,14 +368,14 @@ public class PostureCurl extends AppCompatActivity {
                     imageCapture = new ImageCapture.Builder().build();
 
                     provider.unbindAll();
-                    provider.bindToLifecycle(PostureCurl.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
+                    provider.bindToLifecycle(PostureFlank.this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
 
                     startAnalysis();
                 } catch (Exception e) {
                     Log.e("debugg", "Error Getting camera Provider", e);
                 }
             }
-        }, ActivityCompat.getMainExecutor(PostureCurl.this));
+        }, ActivityCompat.getMainExecutor(PostureFlank.this));
     }
 
     private void checkPermissions(){
@@ -390,7 +416,7 @@ public class PostureCurl extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String str = results.get(0);
             if(str.equals("나가기") || str.equals("종료")){
-                Intent intent = new Intent(PostureCurl.this, Posture.class);
+                Intent intent = new Intent(PostureFlank.this, Posture.class);
                 startActivity(intent);
             }
         }

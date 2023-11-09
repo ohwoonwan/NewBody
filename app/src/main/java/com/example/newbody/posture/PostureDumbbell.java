@@ -274,6 +274,8 @@ public class PostureDumbbell extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        guidePaint = new Paint();
+
         boolean isDumbbellStart = isPoseMatching(pose, targetDumbbellStartSign);
         boolean isDumbbellEnd = isPoseMatching(pose, targetDumbbellEndSign);
         boolean isDumbbellLow = isPoseMatching(pose, targetDumbbellLowSign);
@@ -285,6 +287,10 @@ public class PostureDumbbell extends AppCompatActivity {
                 checkDumbbell = true;
             }
             checkDown = true;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isDumbbellStart) {
             if (checkDown) {
                 dumbbellPosture.setText("잘했습니다");
@@ -292,8 +298,16 @@ public class PostureDumbbell extends AppCompatActivity {
                 checkDumbbell = false;
             }
             checkDown = false;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!checkDown && !isDumbbellLow) {
             dumbbellPosture.setText("더 내리세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 

@@ -74,6 +74,8 @@ public class PostureInfo extends AppCompatActivity {
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbellfly");
         }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
             uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbelltriceps");
+        }else if(exName.equals("플랭크")){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/raw/dumbbelltriceps");
         }
         postureVideo.setVideoURI(uri);
 
@@ -131,6 +133,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
                     intentN = new Intent(getApplicationContext(), PostureTriceps.class);
+                }else if(exName.equals("플랭크")){
+                    intentN = new Intent(getApplicationContext(), PostureFlank.class);
                 }
                 startActivity(intentN);
                 finish();
@@ -181,6 +185,8 @@ public class PostureInfo extends AppCompatActivity {
                     intentN = new Intent(getApplicationContext(), PostureFly.class);
                 }else if(exName.equals("덤벨 트라이셉스 익스텐션")){
                     intentN = new Intent(getApplicationContext(), PostureTriceps.class);
+                }else if(exName.equals("플랭크")){
+                    intentN = new Intent(getApplicationContext(), PostureFlank.class);
                 }
                 startActivity(intentN);
                 finish();

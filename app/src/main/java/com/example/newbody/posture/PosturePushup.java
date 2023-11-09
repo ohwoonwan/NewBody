@@ -268,6 +268,8 @@ public class PosturePushup extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
+        guidePaint = new Paint();
+
         boolean isPushupStart = isPoseMatching(pose, targetPushupStartSign);
         boolean isPushupEnd = isPoseMatching(pose, targetPushupEndSign);
         boolean isPushupHipOver = isPoseMatching(pose, targetPushupHipOverSign);
@@ -279,6 +281,10 @@ public class PosturePushup extends AppCompatActivity {
                 checkPushup = false;
             }
             check = false;
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isPushupStart) {
             check = true;
             pushupPosture.setText("올라가세요");
@@ -286,10 +292,22 @@ public class PosturePushup extends AppCompatActivity {
                 speakPushupStart();
                 checkPushup = true;
             }
+            guidePaint.setColor(Color.WHITE);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isPushupHipOver) {
             pushupPosture.setText("허리를 내리세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (!check && !isPushupStart) {
             pushupPosture.setText("더 내려가세요");
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 
