@@ -292,6 +292,7 @@ public class PostureFlank extends AppCompatActivity {
 
             startTimer();
         } else if (checkCurl) {
+            flankPosture.setText("플랭크 자세를 취하세요.");
 //            stopTimer();
         }
     }
