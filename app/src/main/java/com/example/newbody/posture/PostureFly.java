@@ -64,6 +64,7 @@ public class PostureFly extends AppCompatActivity {
     private TargetPose targetFlyEndSign;
     private TargetPose targetFlyLowSign;
     private TextToSpeech tts;
+    private Paint guidePaint, guidePointPaint;
 
 
     PreviewView previewView;
@@ -76,7 +77,7 @@ public class PostureFly extends AppCompatActivity {
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
-    Paint guidePointPaint, guidePaint, transPaint;
+    Paint transPaint;
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
@@ -134,13 +135,11 @@ public class PostureFly extends AppCompatActivity {
                     transPaint.setColor(Color.TRANSPARENT);
                     transPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePointPaint = new Paint();
                     guidePointPaint.setColor(Color.RED);
                     guidePointPaint.setStrokeWidth(10f);
                     guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
                     guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePaint = new Paint();
                     guidePaint.setColor(Color.WHITE);
                     guidePaint.setStrokeWidth(3f);
                     guidePaint.setStrokeCap(Paint.Cap.BUTT);
@@ -273,8 +272,6 @@ public class PostureFly extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        guidePaint = new Paint();
-
         boolean isFlyStart = isPoseMatching(pose, targetFlyStartSign);
         boolean isFlyEnd = isPoseMatching(pose, targetFlyEndSign);
         boolean isFlyLow = isPoseMatching(pose, targetFlyLowSign);
@@ -286,10 +283,16 @@ public class PostureFly extends AppCompatActivity {
                 checkFly = true;
             }
             checkDown = true;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isFlyStart) {
             if (checkDown) {
                 flyPosture.setText("잘했습니다");
@@ -297,16 +300,28 @@ public class PostureFly extends AppCompatActivity {
                 checkFly = false;
             }
             checkDown = false;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (!checkDown && !isFlyLow) {
             flyPosture.setText("더 내리세요");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
     }
 

@@ -64,6 +64,7 @@ public class PostureCurl extends AppCompatActivity {
     private TargetPose targetCurlEndSign;
     private TargetPose targetCurlLowSign;
     private TextToSpeech tts;
+    private Paint guidePointPaint, guidePaint;
 
 
     PreviewView previewView;
@@ -76,7 +77,7 @@ public class PostureCurl extends AppCompatActivity {
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
-    Paint guidePointPaint, guidePaint, transPaint;
+    Paint transPaint;
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
@@ -85,6 +86,9 @@ public class PostureCurl extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posture_curl);
+
+        guidePaint = new Paint();
+        guidePointPaint = new Paint();
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -134,13 +138,11 @@ public class PostureCurl extends AppCompatActivity {
                     transPaint.setColor(Color.TRANSPARENT);
                     transPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePointPaint = new Paint();
                     guidePointPaint.setColor(Color.RED);
                     guidePointPaint.setStrokeWidth(10f);
                     guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
                     guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePaint = new Paint();
                     guidePaint.setColor(Color.WHITE);
                     guidePaint.setStrokeWidth(3f);
                     guidePaint.setStrokeCap(Paint.Cap.BUTT);
@@ -269,8 +271,6 @@ public class PostureCurl extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        guidePaint = new Paint();
-
         boolean isCurlStart = isPoseMatching(pose, targetCurlStartSign);
         boolean isCurlEnd = isPoseMatching(pose, targetCurlEndSign);
         boolean isCurlLow = isPoseMatching(pose, targetCurlLowSign);
@@ -282,10 +282,16 @@ public class PostureCurl extends AppCompatActivity {
                 checkCurl = true;
             }
             checkDown = true;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isCurlStart) {
             if (checkDown) {
                 curlPosture.setText("잘했습니다");
@@ -293,16 +299,28 @@ public class PostureCurl extends AppCompatActivity {
                 checkCurl = false;
             }
             checkDown = false;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (!checkDown && !isCurlLow) {
             curlPosture.setText("더 올리세요");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
     }
 

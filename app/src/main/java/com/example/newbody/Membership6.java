@@ -110,7 +110,7 @@ public class Membership6 extends AppCompatActivity {
         final String collectionName = "users";
         userData.put("preference2", selectEx);
 
-        DocumentReference userRecordRef = db.collection(collectionName).document(userUid);
+        DocumentReference userRecordRef = db.collection(collectionName).document(user.getUid());
         userRecordRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

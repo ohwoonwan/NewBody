@@ -65,6 +65,7 @@ public class PostureSide extends AppCompatActivity {
     private TargetPose targetSideEndSign;
     private TargetPose targetSideArmOverSign;
     private TextToSpeech tts;
+    private Paint guidePointPaint, guidePaint;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -76,7 +77,7 @@ public class PostureSide extends AppCompatActivity {
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
-    Paint guidePointPaint, guidePaint, transPaint;
+    Paint transPaint;
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
@@ -85,6 +86,9 @@ public class PostureSide extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posture_side);
+
+        guidePaint = new Paint();
+        guidePointPaint = new Paint();
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -134,13 +138,11 @@ public class PostureSide extends AppCompatActivity {
                     transPaint.setColor(Color.TRANSPARENT);
                     transPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePointPaint = new Paint();
                     guidePointPaint.setColor(Color.RED);
                     guidePointPaint.setStrokeWidth(10f);
                     guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
                     guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePaint = new Paint();
                     guidePaint.setColor(Color.WHITE);
                     guidePaint.setStrokeWidth(3f);
                     guidePaint.setStrokeCap(Paint.Cap.BUTT);
@@ -268,8 +270,6 @@ public class PostureSide extends AppCompatActivity {
     }
 
     private void handlePoseDetection(Pose pose) {
-        guidePaint = new Paint();
-
         boolean isSideStart = isPoseMatching(pose, targetSideStartSign);
         boolean isSideEnd = isPoseMatching(pose, targetSideEndSign);
         boolean isSideOver = isPoseMatching(pose, targetSideArmOverSign);
@@ -282,32 +282,56 @@ public class PostureSide extends AppCompatActivity {
                 checkSide = true;
             }
             check = true;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isSideOver) {
             sidePosture.setText("팔을 너무 올리셨습니다");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (!check && !isSideStart) {
             sidePosture.setText("더 올리세요");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isSideEnd) {
             if (check) {
                 sidePosture.setText("잘했어요");
                 speakSideEnd();
                 checkSide = false;
             }
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
     }
 

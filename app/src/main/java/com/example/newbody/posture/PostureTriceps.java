@@ -63,6 +63,7 @@ public class PostureTriceps extends AppCompatActivity {
     private boolean check = false;
     private boolean checkTriceps = false;
     private TextToSpeech tts;
+    private Paint guidePointPaint, guidePaint;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -74,7 +75,7 @@ public class PostureTriceps extends AppCompatActivity {
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
-    Paint guidePointPaint, guidePaint, transPaint;
+    Paint transPaint;
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
@@ -83,6 +84,9 @@ public class PostureTriceps extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posture_triceps);
+
+        guidePaint = new Paint();
+        guidePointPaint = new Paint();
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -132,13 +136,11 @@ public class PostureTriceps extends AppCompatActivity {
                     transPaint.setColor(Color.TRANSPARENT);
                     transPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePointPaint = new Paint();
                     guidePointPaint.setColor(Color.RED);
                     guidePointPaint.setStrokeWidth(10f);
                     guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
                     guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePaint = new Paint();
                     guidePaint.setColor(Color.WHITE);
                     guidePaint.setStrokeWidth(3f);
                     guidePaint.setStrokeCap(Paint.Cap.BUTT);
@@ -278,7 +280,6 @@ public class PostureTriceps extends AppCompatActivity {
 
     private void handlePoseDetection(Pose pose) throws InterruptedException {
         Handler h = new Handler();
-        guidePaint = new Paint();
 
         boolean isTricepsStart = isPoseMatching(pose, targetTricepsStartSign);
         boolean isTricepsEnd = isPoseMatching(pose, targetTricepsEndSign);
@@ -292,10 +293,16 @@ public class PostureTriceps extends AppCompatActivity {
                 checkTriceps = false;
             }
             check = false;
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isTricepsStart) {
             check = true;
             tricepsPosture.setText("Good Motion ! 이제 내리세요");
@@ -303,22 +310,40 @@ public class PostureTriceps extends AppCompatActivity {
                 speakSquatStart();
                 checkTriceps = true;
             }
-            guidePaint.setColor(Color.WHITE);
+
+            guidePaint.setColor(Color.GREEN);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (!checkTriceps && !isTricepsLow) {
             tricepsPosture.setText("팔을 좀 더 올리세요");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isNotTriceps) {
             tricepsPosture.setText("팔을 위로 올리세요");
+
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
     }
     private void speakSquatEnd() {
