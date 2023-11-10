@@ -63,6 +63,8 @@ public class PostureLeg extends AppCompatActivity {
     private TargetPose targetLegRaiseStartSign;
     private TargetPose targetLegRaiseEndSign;
     private TargetPose targetLegRaiseOverSign;
+
+    private TargetPose targetLegRaiseDownSign;
     private TextToSpeech tts;
     private Paint guidePointPaint, guidePaint;
 
@@ -85,6 +87,9 @@ public class PostureLeg extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posture_leg);
+
+        guidePaint = new Paint();
+        guidePointPaint = new Paint();
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -243,7 +248,6 @@ public class PostureLeg extends AppCompatActivity {
                 Arrays.asList(
                         new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE,100.0),
                         new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE,100.0)
-
                 )
         );
 
@@ -251,7 +255,6 @@ public class PostureLeg extends AppCompatActivity {
                 Arrays.asList(
                         new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 170.0),
                         new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 170.0)
-
                 )
         );
 
@@ -259,7 +262,13 @@ public class PostureLeg extends AppCompatActivity {
                 Arrays.asList(
                         new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 85.0),
                         new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 85.0)
+                )
+        );
 
+        targetLegRaiseDownSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 160.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 160.0)
                 )
         );
     }
@@ -273,6 +282,7 @@ public class PostureLeg extends AppCompatActivity {
         boolean isLegStart = isPoseMatching(pose, targetLegRaiseStartSign);
         boolean isLegEnd = isPoseMatching(pose, targetLegRaiseEndSign);
         boolean isLegOver = isPoseMatching(pose, targetLegRaiseOverSign);
+        boolean isLegDown = isPoseMatching(pose, targetLegRaiseDownSign);
 
         if (isLegEnd) {
             if (check) {
@@ -329,6 +339,16 @@ public class PostureLeg extends AppCompatActivity {
             guidePaint.setStyle(Paint.Style.STROKE);
 
             guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (checkLeg && isLegDown) {
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
             guidePointPaint.setStrokeWidth(10f);
             guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
             guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);

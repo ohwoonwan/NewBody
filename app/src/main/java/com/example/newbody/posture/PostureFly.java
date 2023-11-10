@@ -63,6 +63,7 @@ public class PostureFly extends AppCompatActivity {
     private TargetPose targetFlyStartSign;
     private TargetPose targetFlyEndSign;
     private TargetPose targetFlyLowSign;
+    private TargetPose targetFlyUpSign;
     private TextToSpeech tts;
     private Paint guidePaint, guidePointPaint;
 
@@ -264,6 +265,13 @@ public class PostureFly extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.RIGHT_SHOULDER,175.0)
                 )
         );
+
+        targetFlyUpSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.LEFT_SHOULDER,175.0),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.RIGHT_SHOULDER,175.0)
+                )
+        );
     }
 
     private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
@@ -275,6 +283,7 @@ public class PostureFly extends AppCompatActivity {
         boolean isFlyStart = isPoseMatching(pose, targetFlyStartSign);
         boolean isFlyEnd = isPoseMatching(pose, targetFlyEndSign);
         boolean isFlyLow = isPoseMatching(pose, targetFlyLowSign);
+        boolean isFlyUp = isPoseMatching(pose, targetFlyUpSign);
 
         if (isFlyEnd) {
             flyPosture.setText("올리세요");
@@ -313,6 +322,16 @@ public class PostureFly extends AppCompatActivity {
         } else if (!checkDown && !isFlyLow) {
             flyPosture.setText("더 내리세요");
 
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (checkFly && isFlyUp) {
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);

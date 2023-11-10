@@ -62,6 +62,7 @@ public class PostureSquat extends AppCompatActivity {
     private TargetPose targetSquatStartSign;
     private TargetPose targetSquatEndSign;
     private TargetPose targetSquatOverSign;
+    private TargetPose targetSquatUpSign;
     private boolean check = false;
     private boolean checkSquat = false;
     private TextToSpeech tts;
@@ -268,6 +269,15 @@ public class PostureSquat extends AppCompatActivity {
                         new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 50.0)
                 )
         );
+
+        targetSquatUpSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, 70.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, 70.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_KNEE, PoseLandmark.LEFT_ANKLE, 80.0),
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_KNEE, PoseLandmark.RIGHT_ANKLE, 80.0)
+                )
+        );
     }
 
     private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
@@ -281,6 +291,7 @@ public class PostureSquat extends AppCompatActivity {
         boolean isSquatStart = isPoseMatching(pose, targetSquatStartSign);
         boolean isSquatEnd = isPoseMatching(pose, targetSquatEndSign);
         boolean isSquatOver = isPoseMatching(pose, targetSquatOverSign);
+        boolean isSquatUp = isPoseMatching(pose, targetSquatUpSign);
 
         if (isSquatEnd) {
             if (check) {
@@ -329,6 +340,16 @@ public class PostureSquat extends AppCompatActivity {
         } else if (isSquatOver) {
             squatPosture.setText("너무 앉으셨습니다. 다시 하세요.");
 
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (isSquatUp && checkSquat) {
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);

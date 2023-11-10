@@ -64,6 +64,7 @@ public class PostureSide extends AppCompatActivity {
     private TargetPose targetSideStartSign;
     private TargetPose targetSideEndSign;
     private TargetPose targetSideArmOverSign;
+    private TargetPose targetSideDownSign;
     private TextToSpeech tts;
     private Paint guidePointPaint, guidePaint;
 
@@ -256,10 +257,18 @@ public class PostureSide extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW,20.0)
                 )
         );
+
         targetSideArmOverSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW,100.0),
-                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW,100.0)
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW,105.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW,105.0)
+                )
+        );
+
+        targetSideDownSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_HIP, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW,80.0),
+                        new TargetShape(PoseLandmark.LEFT_HIP, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW,80.0)
                 )
         );
     }
@@ -273,7 +282,7 @@ public class PostureSide extends AppCompatActivity {
         boolean isSideStart = isPoseMatching(pose, targetSideStartSign);
         boolean isSideEnd = isPoseMatching(pose, targetSideEndSign);
         boolean isSideOver = isPoseMatching(pose, targetSideArmOverSign);
-
+        boolean isSideDown = isPoseMatching(pose, targetSideDownSign);
 
         if (isSideStart) {
             sidePosture.setText("팔을 내리세요");
@@ -329,6 +338,16 @@ public class PostureSide extends AppCompatActivity {
             guidePaint.setStyle(Paint.Style.STROKE);
 
             guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (!checkSide && isSideDown) {
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
             guidePointPaint.setStrokeWidth(10f);
             guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
             guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
