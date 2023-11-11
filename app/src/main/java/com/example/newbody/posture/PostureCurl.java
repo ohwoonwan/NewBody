@@ -63,6 +63,7 @@ public class PostureCurl extends AppCompatActivity {
     private TargetPose targetCurlStartSign;
     private TargetPose targetCurlEndSign;
     private TargetPose targetCurlLowSign;
+    private TargetPose targetCurlUpSign;
     private TextToSpeech tts;
     private Paint guidePointPaint, guidePaint;
 
@@ -259,8 +260,15 @@ public class PostureCurl extends AppCompatActivity {
 
         targetCurlLowSign = new TargetPose(
                 Arrays.asList(
-                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,40.0),
-                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,40.0)
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,60.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,60.0)
+                )
+        );
+
+        targetCurlUpSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,140.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,140.0)
                 )
         );
     }
@@ -274,6 +282,7 @@ public class PostureCurl extends AppCompatActivity {
         boolean isCurlStart = isPoseMatching(pose, targetCurlStartSign);
         boolean isCurlEnd = isPoseMatching(pose, targetCurlEndSign);
         boolean isCurlLow = isPoseMatching(pose, targetCurlLowSign);
+        boolean isCurlUp = isPoseMatching(pose, targetCurlUpSign);
 
         if (isCurlEnd) {
             curlPosture.setText("올리세요");
@@ -310,8 +319,18 @@ public class PostureCurl extends AppCompatActivity {
             guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
             guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (!checkDown && !isCurlLow) {
-            curlPosture.setText("더 올리세요");
+            curlPosture.setText("내리세요");
 
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (checkCurl && isCurlUp) {
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);

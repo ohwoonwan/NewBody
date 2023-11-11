@@ -151,6 +151,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[0].getText());
                 select_num = 1;
+                ex[0].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[0]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         ex[1].setOnClickListener(new View.OnClickListener() {
@@ -158,6 +165,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[1].getText());
                 select_num = 2;
+                ex[1].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[1]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         ex[2].setOnClickListener(new View.OnClickListener() {
@@ -165,6 +179,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[2].getText());
                 select_num = 3;
+                ex[2].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[2]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -173,6 +194,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[3].getText());
                 select_num = 4;
+                ex[3].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[3]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -181,6 +209,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[4].getText());
                 select_num = 5;
+                ex[4].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[4]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -189,6 +224,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[5].getText());
                 select_num = 6;
+                ex[5].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[5]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -197,6 +239,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[6].getText());
                 select_num = 7;
+                ex[6].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[6]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -205,6 +254,13 @@ public class Record extends AppCompatActivity {
             public void onClick(View view) {
                 selectE.setText(exName[7].getText());
                 select_num = 8;
+                ex[7].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[7]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 

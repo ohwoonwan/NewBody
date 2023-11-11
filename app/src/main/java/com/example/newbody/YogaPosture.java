@@ -52,18 +52,39 @@ public class YogaPosture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(yogaName[0].getText());
+                yoga[0].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < yoga.length; i++) {
+                    if (yoga[i] != yoga[0]) {
+                        yoga[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         yoga[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectE.setText(yogaName[1].getText());
+                yoga[1].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < yoga.length; i++) {
+                    if (yoga[i] != yoga[1]) {
+                        yoga[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         yoga[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectE.setText(yogaName[2].getText());
+                yoga[2].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < yoga.length; i++) {
+                    if (yoga[i] != yoga[2]) {
+                        yoga[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 

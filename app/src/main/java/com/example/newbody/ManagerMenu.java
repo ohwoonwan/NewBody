@@ -18,18 +18,18 @@ public class ManagerMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_menu);
 
-        member = findViewById(R.id.memberManage);
+//        member = findViewById(R.id.memberManage);
         money = findViewById(R.id.moneyManage);
         logout = findViewById(R.id.logout);
 
-        member.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ManagerMember.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        member.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ManagerMember.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         money.setOnClickListener(new View.OnClickListener() {
             @Override

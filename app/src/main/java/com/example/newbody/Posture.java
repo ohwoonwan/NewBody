@@ -140,18 +140,39 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[0].getText());
+                ex[0].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[0]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         ex[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[1].getText());
+                ex[1].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[1]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
         ex[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[2].getText());
+                ex[2].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[2]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -159,6 +180,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[3].getText());
+                ex[3].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[3]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -166,6 +194,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[4].getText());
+                ex[4].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[4]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -173,6 +208,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[5].getText());
+                ex[5].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[5]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -180,6 +222,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[6].getText());
+                ex[6].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[6]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -187,6 +236,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[7].getText());
+                ex[7].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[7]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
@@ -194,6 +250,13 @@ public class Posture extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectE.setText(exName[8].getText());
+                ex[8].setBackgroundResource(R.drawable.button_check);
+
+                for (int i = 0; i < ex.length; i++) {
+                    if (ex[i] != ex[8]) {
+                        ex[i].setBackgroundResource(R.drawable.button);
+                    }
+                }
             }
         });
 
