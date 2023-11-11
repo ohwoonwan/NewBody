@@ -59,6 +59,7 @@ public class PostureTriceps extends AppCompatActivity {
     private TargetPose targetTricepsStartSign;
     private TargetPose targetTricepsEndSign;
     private TargetPose targetTricepsLowSign;
+    private TargetPose targetTricepsDownSign;
     private TargetPose targetNotTricepsSign;
     private boolean check = false;
     private boolean checkTriceps = false;
@@ -265,6 +266,13 @@ public class PostureTriceps extends AppCompatActivity {
                 )
         );
 
+        targetTricepsDownSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 140.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 140.0)
+                )
+        );
+
         targetNotTricepsSign = new TargetPose(
                 Arrays.asList(
                         new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 90),
@@ -284,6 +292,7 @@ public class PostureTriceps extends AppCompatActivity {
         boolean isTricepsStart = isPoseMatching(pose, targetTricepsStartSign);
         boolean isTricepsEnd = isPoseMatching(pose, targetTricepsEndSign);
         boolean isTricepsLow = isPoseMatching(pose, targetTricepsLowSign);
+        boolean isTricepsDown = isPoseMatching(pose, targetTricepsDownSign);
         boolean isNotTriceps = isPoseMatching(pose, targetNotTricepsSign);
 
         if (isTricepsEnd) {
@@ -335,6 +344,16 @@ public class PostureTriceps extends AppCompatActivity {
         } else if (isNotTriceps) {
             tricepsPosture.setText("팔을 위로 올리세요");
 
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (checkTriceps && isTricepsDown) {
             guidePaint.setColor(Color.RED);
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
