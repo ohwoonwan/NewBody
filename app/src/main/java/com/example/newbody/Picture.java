@@ -24,6 +24,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -122,6 +127,41 @@ public class Picture extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        try {
+            OutputStream outputStream = getActivity().getContentResolver().openOutputStream(uri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+
+            // Firebase Storage에 이미지 업로드
+            uploadImageToFirebase(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    private void uploadImageToFirebase(Uri imageUri) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + System.currentTimeMillis() + ".jpg");
+
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    // 이미지가 성공적으로 업로드되었을 때
+                    // 이미지의 다운로드 URL을 가져와서 저장
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        // Firebase Realtime Database에 URL 저장
+                        saveImageUrlToDatabase(uri.toString());
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    // 업로드 실패 시 처리
+                    e.printStackTrace();
+                });
+    }
+
+    private void saveImageUrlToDatabase(String imageUrl) {
+        // 이미지 URL을 Firebase Realtime Database에 저장
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("images");
+        String key = databaseRef.push().getKey();
+        databaseRef.child(key).setValue(imageUrl);
+    }
 }
