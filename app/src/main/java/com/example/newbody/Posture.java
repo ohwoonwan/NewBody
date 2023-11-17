@@ -87,6 +87,7 @@ public class Posture extends AppCompatActivity {
                                         squatView.setVisibility(View.GONE);
                                         pushupView.setVisibility(View.GONE);
                                         legView.setVisibility(View.GONE);
+                                        flankView.setVisibility(View.GONE);
                                     }else if(preference1.equals("맨몸 운동")){
                                         dumbbellCurlView.setVisibility(View.GONE);
                                         dumbbellFlyView.setVisibility(View.GONE);
@@ -96,10 +97,12 @@ public class Posture extends AppCompatActivity {
                                             dumbbellView.setVisibility(View.GONE);
                                             sideView.setVisibility(View.GONE);
                                             legView.setVisibility(View.GONE);
+                                            flankView.setVisibility(View.GONE);
                                         }else if(preference2.equals("하체 운동")){
                                             pushupView.setVisibility(View.GONE);
                                             dumbbellView.setVisibility(View.GONE);
                                             sideView.setVisibility(View.GONE);
+                                            flankView.setVisibility(View.GONE);
                                         }else if(preference2.equals("복근 운동")){
                                             squatView.setVisibility(View.GONE);
                                             dumbbellView.setVisibility(View.GONE);

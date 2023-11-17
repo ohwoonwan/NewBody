@@ -73,10 +73,10 @@ public class Home extends Fragment {
 
         name = view.findViewById(R.id.name_info);
         bmiResult = view.findViewById(R.id.bmi_result);
-        mAdView = view.findViewById(R.id.adView);
+//        mAdView = view.findViewById(R.id.adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
         premiumCheck();
 

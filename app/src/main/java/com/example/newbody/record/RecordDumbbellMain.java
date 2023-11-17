@@ -90,6 +90,7 @@ public class RecordDumbbellMain extends AppCompatActivity {
 
     private CustomDialog customDialog;
     private TextToSpeech tts;
+    private Paint guidePaint, guidePointPaint;
 
     PreviewView previewView;
     PoseDetector detector;
@@ -100,7 +101,7 @@ public class RecordDumbbellMain extends AppCompatActivity {
 
     Canvas guidelineCanvas;
     Bitmap guidelineBmp, tempBitmap;
-    Paint guidePointPaint, guidePaint, transPaint;
+    Paint transPaint;
 
     private final int UPDATE_TIME = 40;
     private boolean isFrameBeingTested = false, canvasAlreadyClear = true;
@@ -109,6 +110,9 @@ public class RecordDumbbellMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_dumbbell_main);
+
+        guidePaint = new Paint();
+        guidePointPaint = new Paint();
 
         Intent intentS = new Intent(this, VoiceRecognitionService.class);
         startService(intentS);
@@ -360,13 +364,11 @@ public class RecordDumbbellMain extends AppCompatActivity {
                     transPaint.setColor(Color.TRANSPARENT);
                     transPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePointPaint = new Paint();
                     guidePointPaint.setColor(Color.RED);
                     guidePointPaint.setStrokeWidth(10f);
                     guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
                     guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-                    guidePaint = new Paint();
                     guidePaint.setColor(Color.WHITE);
                     guidePaint.setStrokeWidth(3f);
                     guidePaint.setStrokeCap(Paint.Cap.BUTT);
@@ -503,12 +505,42 @@ public class RecordDumbbellMain extends AppCompatActivity {
             dumbbellStartDetected = false; // 다음 연속 감지를 위해 초기화
             dumbbellEndDetected = false;
             checkDumbbell = false;
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+            guidePaint.setColor(Color.GREEN);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         } else if (isSquatStart) {
             dumbbellStartDetected = true;
             if(!checkDumbbell){
                 speakDumbbell();
                 checkDumbbell = true;
             }
+
+            guidePointPaint.setColor(Color.GREEN);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+            guidePaint.setColor(Color.GREEN);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+        } else {
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
         }
     }
 
