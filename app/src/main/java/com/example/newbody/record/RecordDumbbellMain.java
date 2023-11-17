@@ -86,6 +86,9 @@ public class RecordDumbbellMain extends AppCompatActivity {
     private int score = 0;
     private TargetPose targetDumbbellStartSign;
     private TargetPose targetDumbbellEndSign;
+    private TargetPose targetDumbbellUpSign;
+    private TargetPose targetDumbbellLowSign;
+
     private CountDownTimer timer;
 
     private CustomDialog customDialog;
@@ -487,6 +490,24 @@ public class RecordDumbbellMain extends AppCompatActivity {
                         new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 75.0 )
                 )
         );
+
+        targetDumbbellUpSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST,85.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST,85.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 85.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 85.0 )
+                )
+        );
+
+        targetDumbbellLowSign = new TargetPose(
+                Arrays.asList(
+                        new TargetShape(PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_WRIST, 130.0),
+                        new TargetShape(PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_WRIST, 130.0),
+                        new TargetShape(PoseLandmark.RIGHT_ELBOW, PoseLandmark.RIGHT_SHOULDER, PoseLandmark.RIGHT_HIP, 130.0 ),
+                        new TargetShape(PoseLandmark.LEFT_ELBOW, PoseLandmark.LEFT_SHOULDER, PoseLandmark.LEFT_HIP, 130.0 )
+                )
+        );
     }
 
     private boolean isPoseMatching(Pose pose, TargetPose targetPose) {
@@ -497,6 +518,8 @@ public class RecordDumbbellMain extends AppCompatActivity {
     private void handlePoseDetection(Pose pose) {
         boolean isSquatStart = isPoseMatching(pose, targetDumbbellStartSign);
         boolean isSquatEnd = isPoseMatching(pose, targetDumbbellEndSign);
+        boolean isSquatUp = isPoseMatching(pose, targetDumbbellUpSign);
+        boolean isSquatLow = isPoseMatching(pose, targetDumbbellLowSign);
 
         if (dumbbellStartDetected && isSquatEnd) {
             score++;
@@ -531,7 +554,17 @@ public class RecordDumbbellMain extends AppCompatActivity {
             guidePaint.setStrokeWidth(3f);
             guidePaint.setStrokeCap(Paint.Cap.BUTT);
             guidePaint.setStyle(Paint.Style.STROKE);
-        } else {
+        } else if (isSquatLow && checkDumbbell){
+            guidePointPaint.setColor(Color.RED);
+            guidePointPaint.setStrokeWidth(10f);
+            guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePointPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+            guidePaint.setColor(Color.RED);
+            guidePaint.setStrokeWidth(3f);
+            guidePaint.setStrokeCap(Paint.Cap.BUTT);
+            guidePaint.setStyle(Paint.Style.STROKE);
+        } else if (isSquatUp && !checkDumbbell){
             guidePointPaint.setColor(Color.RED);
             guidePointPaint.setStrokeWidth(10f);
             guidePointPaint.setStrokeCap(Paint.Cap.BUTT);
