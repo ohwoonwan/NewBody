@@ -32,7 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private FirebaseFirestore firestore;
 
     private FirebaseUser user;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private String uid;
     private ListenerRegistration listenerRegistration;
     private boolean nameFound = true;
@@ -56,26 +56,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // 검색 기능을 수행하는 메서드
     public void performSearch(String searchWord, String option) {
+        mAuth = FirebaseAuth.getInstance();
         filteredUsers.clear();
         nameFound = false;
+        user = mAuth.getCurrentUser();
+        String currentUid = user.getUid();
 
         if (searchWord == null || option == null || searchWord.isEmpty() || option.isEmpty()) {
             // 검색어가 없을 때 전체 데이터를 불러옵니다.
-            filteredUsers.addAll(originalUsers);
+            for (FriendData userData : originalUsers) {
+                String name = userData.getName();
+                String birth = userData.getBirth();
+                String uid = userData.getUid(); // 친구의 고유 UID
+
+                if (!userData.getUid().equals(currentUid)) {
+                    FriendData friend = new FriendData(name, birth, uid); // 생성자에 데이터 추가
+                    friend.setUid(uid);
+                    filteredUsers.add(friend);
+                }
+            }
         } else {
             for (FriendData userData : originalUsers) {
                 String name = userData.getName();
                 String birth = userData.getBirth();
                 String uid = userData.getUid(); // 친구의 고유 UID
 
-                if (name != null && birth != null) {
+                if (name != null && birth != null && !userData.getUid().equals(currentUid)) {
                     // 검색 옵션에 따라 데이터를 필터링하여 추가합니다.
                     if (option.equals("name") && name.contains(searchWord)) {
                         FriendData friend = new FriendData(name, birth, uid); // 생성자에 데이터 추가
                         friend.setUid(uid);
                         filteredUsers.add(friend);
                         nameFound = true;
-                    } else if (option.equals("birth") && birth.contains(searchWord)) {
+                    } else if (option.equals("birth") && birth.contains(searchWord) && !userData.getUid().equals(currentUid)) {
                         FriendData friend = new FriendData(name, birth, uid); // 생성자에 데이터 추가
                         friend.setUid(uid);
                         filteredUsers.add(friend);
