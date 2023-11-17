@@ -101,7 +101,7 @@ public class VoiceRecognitionService extends Service {
                         speakOut("네");
                     }
                 }
-                new android.os.Handler().postDelayed(() -> mSpeechRecognizer.startListening(mRecognizerIntent), 2000);
+                new android.os.Handler().postDelayed(() -> mSpeechRecognizer.startListening(mRecognizerIntent), 3500);
             }
 
 
